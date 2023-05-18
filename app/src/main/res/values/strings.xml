@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Bangun PC</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_catalog">Katalog</string>
+    <string name="menu_profile">Profil</string>
+    <string name="menu_service">Layanan</string>
+    <string name="placeholder_search">Cari komponen pilihanmu</string>
 </resources>
