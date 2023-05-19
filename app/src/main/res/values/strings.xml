@@ -5,4 +5,6 @@
     <string name="menu_profile">Profil</string>
     <string name="menu_service">Layanan</string>
     <string name="placeholder_search">Cari komponen pilihanmu</string>
+    <string name="section_rakitan_intel">PC Rakitan Intel</string>
+    <string name="section_rakitan_amd">PC Rakitan AMD</string>
 </resources>
