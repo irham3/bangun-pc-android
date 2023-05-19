@@ -7,4 +7,8 @@
     <string name="placeholder_search">Cari komponen pilihanmu</string>
     <string name="section_rakitan_intel">PC Rakitan Intel</string>
     <string name="section_rakitan_amd">PC Rakitan AMD</string>
+    <string name="author_name">Irham Tri Ahmadi</string>
+    <string name="author_email">irhamtriahmadi23@gmail.com</string>
+    <string name="greeting">Halo Kawan,</string>
+    <string name="greeting_description">Rakit PC Impianmu sekarang</string>
 </resources>

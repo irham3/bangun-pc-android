@@ -8,13 +8,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -24,6 +25,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -35,23 +37,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kaizen.bangunpc.R
 import com.kaizen.bangunpc.data.dummyProducts
-import com.kaizen.bangunpc.ui.components.AutoSlidingCarouselPreview
+import com.kaizen.bangunpc.ui.components.CarouselPreview
 import com.kaizen.bangunpc.ui.components.ProductHighlight
 import com.kaizen.bangunpc.ui.components.ProductRow
-import com.kaizen.bangunpc.ui.components.SearchBar
 import com.kaizen.bangunpc.ui.theme.AppTheme
 import com.kaizen.bangunpc.ui.theme.Orange
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
+    navigateToAbout: () -> Unit = {},
+    navigateToService: () -> Unit = {}
 ) {
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
     ) {
-        Banner()
-        AutoSlidingCarouselPreview()
+        TopBar(navigateToAbout = navigateToAbout)
+        CarouselPreview()
+        Service(navigateToService = navigateToService)
         ProductHighlight(
             title = stringResource(R.string.section_rakitan_intel),
             content = { ProductRow(dummyProducts) }
@@ -60,24 +64,29 @@ fun HomeScreen(
             title = stringResource(R.string.section_rakitan_amd),
             content = { ProductRow(dummyProducts) }
         )
-        Service()
     }
 }
 
 @Composable
-fun Banner(
-    modifier: Modifier = Modifier
+fun TopBar(
+    modifier: Modifier = Modifier,
+    navigateToAbout: () -> Unit = {},
 ) {
     Box(modifier = modifier) {
         Image(
             painter = painterResource(id = R.drawable.banner),
             contentDescription = "Banner Image",
             contentScale = ContentScale.Crop,
-            modifier =  modifier
+            modifier = modifier
+                .height(110.dp)
                 .fillMaxWidth()
         )
-        Column (modifier = Modifier.padding(16.dp)){
-            Spacer(modifier = Modifier.height(48.dp))
+        Column (
+            verticalArrangement = Arrangement.Center,
+            modifier = modifier
+                .fillMaxHeight()
+                .padding(16.dp)
+        ){
             Row (
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -85,7 +94,7 @@ fun Banner(
             ){
                 Column {
                     Text(
-                        text = "Halo Kawan,",
+                        text = stringResource(R.string.greeting),
                         color = Color.White,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
@@ -94,32 +103,35 @@ fun Banner(
                         ),
                     )
                     Text(
-                        text = "Rakit PC Impianmu sekarang",
+                        text = stringResource(R.string.greeting_description),
                         color = Color.White,
                         style = MaterialTheme.typography.subtitle1,
                     )
                 }
                 Image(
-                    painter = painterResource(R.drawable.icon_profile),
-                    contentDescription = "Icon Profile",
+                    painter = painterResource(R.drawable.my_photo),
+                    contentDescription = "about_page",
                     modifier = Modifier
+                        .clip(CircleShape)
                         .shadow(20.dp, CircleShape)
                         .size(47.dp)
-                        .clickable {  }
+                        .clickable {
+                            navigateToAbout()
+                        }
                 )
             }
-            Spacer(modifier = Modifier.height(40.dp))
-            SearchBar()
         }
     }
 }
 
 @Composable
-fun Service() {
+fun Service(
+    navigateToService: () -> Unit = {}
+) {
     Column (
         modifier = Modifier
             .padding(horizontal = 12.dp)
-            .border(BorderStroke(1.5.dp, Orange))
+            .border(BorderStroke(1.3.dp, Orange), RoundedCornerShape(8.dp))
     ) {
         Row (
             verticalAlignment = Alignment.CenterVertically,
@@ -143,7 +155,7 @@ fun Service() {
 
             Button(
                 onClick = {
-                //your onclick code here
+                    navigateToService()
                 },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Orange)) {
                 Text(
@@ -167,9 +179,9 @@ fun ServicePreview() {
 @Composable
 fun HomeScreenPreview() {
     AppTheme {
-        Scaffold() {innerPadding ->
+        Scaffold {innerPadding ->
             HomeScreen(
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
             )
         }
     }

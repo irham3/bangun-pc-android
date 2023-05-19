@@ -6,6 +6,7 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
@@ -27,7 +28,8 @@ import com.kaizen.bangunpc.ui.navigation.NavigationItem
 import com.kaizen.bangunpc.ui.navigation.Screen
 import com.kaizen.bangunpc.ui.screen.catalog.CatalogScreen
 import com.kaizen.bangunpc.ui.screen.home.HomeScreen
-import com.kaizen.bangunpc.ui.screen.profile.ProfileScreen
+import com.kaizen.bangunpc.ui.screen.about.AboutScreen
+import com.kaizen.bangunpc.ui.screen.service.ServiceScreen
 import com.kaizen.bangunpc.ui.theme.AppTheme
 
 @Composable
@@ -52,19 +54,36 @@ fun BangunPCApp(
                 .padding(innerPadding)
         ) {
             composable(Screen.Home.route) {
-                HomeScreen()
+                HomeScreen(
+                    navigateToAbout = {
+                        navController.navigate(Screen.About.route)
+                    },
+                    navigateToService = {
+                        navController.navigate(Screen.Service.route)
+                    }
+                )
             }
             composable(Screen.Catalog.route) {
                 CatalogScreen()
             }
-            composable(Screen.Profile.route) {
-                ProfileScreen()
+            composable(Screen.About.route) {
+                AboutScreen()
+            }
+            composable(Screen.Service.route) {
+                ServiceScreen()
             }
         }
     }
 }
 
-
+@Composable
+fun TopBar() {
+    TopAppBar(
+        title = {
+            Text(stringResource(R.string.app_name))
+        },
+    )
+}
 
 @Composable
 private fun BottomBar(
@@ -90,7 +109,7 @@ private fun BottomBar(
             NavigationItem(
                 title = stringResource(R.string.menu_profile),
                 icon = Icons.Default.AccountCircle,
-                screen = Screen.Profile
+                screen = Screen.About
             ),
         )
         BottomNavigation {

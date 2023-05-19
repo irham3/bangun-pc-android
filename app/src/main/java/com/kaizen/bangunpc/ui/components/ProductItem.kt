@@ -32,7 +32,7 @@ fun ProductItem(
 ) {
     Card(
         modifier = modifier
-            .shadow(10.dp)
+            .shadow(8.dp)
             .width(120.dp)
             .clickable {  },
         shape = RoundedCornerShape(8.dp),

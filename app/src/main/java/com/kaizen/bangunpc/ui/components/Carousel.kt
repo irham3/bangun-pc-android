@@ -76,7 +76,7 @@ fun DotsIndicator(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun AutoSlidingCarousel(
+fun Carousel(
     modifier: Modifier = Modifier,
     pagerState: PagerState = remember { PagerState() },
     itemsCount: Int,
@@ -114,20 +114,20 @@ val images = listOf(
 @OptIn(ExperimentalFoundationApi::class)
 @Preview
 @Composable
-fun AutoSlidingCarouselPreview() {
+fun CarouselPreview() {
     AppTheme {
         Card(
             modifier = Modifier.padding(16.dp),
             shape = RoundedCornerShape(16.dp),
         ) {
-            AutoSlidingCarousel(
+            Carousel(
                 itemsCount = images.size,
                 itemContent = { index ->
                     AsyncImage(
                         model = images[index],
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
-                        modifier = Modifier.height(180.dp)
+                        modifier = Modifier.height(160.dp)
                     )
                 }
             )
