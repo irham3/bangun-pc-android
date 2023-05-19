@@ -1,6 +1,5 @@
 package com.kaizen.bangunpc.ui.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -15,6 +14,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -24,7 +24,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kaizen.bangunpc.R
 import com.kaizen.bangunpc.data.Product
-import com.kaizen.bangunpc.ui.theme.Orange
 
 @Composable
 fun ProductItem(
@@ -33,9 +32,9 @@ fun ProductItem(
 ) {
     Card(
         modifier = modifier
+            .shadow(10.dp)
             .width(120.dp)
             .clickable {  },
-        border = BorderStroke(1.dp, Orange),
         shape = RoundedCornerShape(8.dp),
     ) {
         Column {

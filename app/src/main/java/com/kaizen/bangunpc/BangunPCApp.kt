@@ -28,7 +28,7 @@ import com.kaizen.bangunpc.ui.navigation.Screen
 import com.kaizen.bangunpc.ui.screen.catalog.CatalogScreen
 import com.kaizen.bangunpc.ui.screen.home.HomeScreen
 import com.kaizen.bangunpc.ui.screen.profile.ProfileScreen
-import com.kaizen.bangunpc.ui.theme.BangunPCTheme
+import com.kaizen.bangunpc.ui.theme.AppTheme
 
 @Composable
 fun BangunPCApp(
@@ -124,7 +124,7 @@ private fun BottomBar(
 @Preview
 @Composable
 fun BangunPCAppPreview() {
-    BangunPCTheme {
+    AppTheme {
         BangunPCApp()
     }
 }

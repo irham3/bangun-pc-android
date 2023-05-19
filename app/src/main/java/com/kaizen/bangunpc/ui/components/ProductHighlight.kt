@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HomeSection(
+fun ProductHighlight(
     title: String,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
@@ -41,6 +41,6 @@ fun HomeSection(
         ) {
             content()
         }
-        Spacer(modifier = modifier.height(8.dp))
+        Spacer(modifier = modifier.height(16.dp))
     }
 }
