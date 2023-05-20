@@ -31,7 +31,6 @@ import com.kaizen.bangunpc.ui.screen.catalog.CatalogScreen
 import com.kaizen.bangunpc.ui.screen.home.HomeScreen
 import com.kaizen.bangunpc.ui.screen.about.AboutScreen
 import com.kaizen.bangunpc.ui.screen.detail.DetailProductScreen
-import com.kaizen.bangunpc.ui.screen.service.ServiceScreen
 import com.kaizen.bangunpc.ui.theme.AppTheme
 
 @Composable
@@ -60,22 +59,20 @@ fun BangunPCApp(
                     navigateToAbout = {
                         navController.navigate(Screen.About.route)
                     },
-                    navigateToService = {
-                        navController.navigate(Screen.Service.route)
-                    },
                     navigateToDetailProduct = { productId ->
                         navController.navigate(Screen.DetailProduct.createRoute(productId))
                     }
                 )
             }
             composable(Screen.Catalog.route) {
-                CatalogScreen()
+                CatalogScreen(
+                    navigateToDetailProduct = { productId ->
+                        navController.navigate(Screen.DetailProduct.createRoute(productId))
+                    }
+                )
             }
             composable(Screen.About.route) {
                 AboutScreen()
-            }
-            composable(Screen.Service.route) {
-                ServiceScreen()
             }
             composable(
                 route = Screen.DetailProduct.route,

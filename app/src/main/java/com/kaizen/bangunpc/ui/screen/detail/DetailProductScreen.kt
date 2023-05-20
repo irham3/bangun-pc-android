@@ -30,12 +30,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kaizen.bangunpc.R
 import com.kaizen.bangunpc.data.dummyProducts
 import com.kaizen.bangunpc.ui.components.CustomTopBar
+import com.kaizen.bangunpc.ui.components.ScreenTitleText
 import com.kaizen.bangunpc.ui.theme.AppTheme
 import com.kaizen.bangunpc.ui.theme.Orange
 
@@ -61,14 +61,7 @@ fun DetailProductScreen(
                             .clickable { navigateBack() }
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = stringResource(R.string.detail_produk),
-                        color = Color.White,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.h4.copy(
-                            fontWeight = FontWeight.ExtraBold
-                        ),
-                    )
+                    ScreenTitleText(title = stringResource(R.string.detail_produk))
                 }
             }
         )
@@ -81,7 +74,8 @@ fun DetailProductScreen(
                 painter = painterResource(dataProduct.image),
                 contentDescription = null,
                 contentScale = ContentScale.Fit,
-                modifier = Modifier.height(240.dp)
+                modifier = Modifier
+                    .height(240.dp)
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp))
             )

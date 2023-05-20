@@ -2,7 +2,6 @@ package com.kaizen.bangunpc.ui.navigation
 
 sealed class Screen (val route: String){
     object  Home : Screen("home")
-    object  Service : Screen("service")
     object  Catalog : Screen("catalog")
     object  About : Screen("about")
     object DetailProduct : Screen("home/{productId}") {
