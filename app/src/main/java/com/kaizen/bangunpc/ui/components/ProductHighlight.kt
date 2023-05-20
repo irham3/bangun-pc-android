@@ -11,7 +11,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.kaizen.bangunpc.R
 
 @Composable
 fun ProductHighlight(
@@ -29,7 +31,7 @@ fun ProductHighlight(
             Text(
                 modifier = modifier
                     .padding(horizontal = 16.dp, vertical = 16.dp),
-                text = "Lihat Semua",
+                text = stringResource(R.string.lihat_semua),
                 style = MaterialTheme.typography.subtitle2,
 
             )

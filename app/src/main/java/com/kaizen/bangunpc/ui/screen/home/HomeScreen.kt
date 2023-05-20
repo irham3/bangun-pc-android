@@ -5,12 +5,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -28,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -37,7 +33,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kaizen.bangunpc.R
 import com.kaizen.bangunpc.data.dummyProducts
-import com.kaizen.bangunpc.ui.components.CarouselPreview
+import com.kaizen.bangunpc.ui.components.CustomTopBar
+import com.kaizen.bangunpc.ui.components.DummyCarousel
 import com.kaizen.bangunpc.ui.components.ProductHighlight
 import com.kaizen.bangunpc.ui.components.ProductRow
 import com.kaizen.bangunpc.ui.theme.AppTheme
@@ -47,80 +44,61 @@ import com.kaizen.bangunpc.ui.theme.Orange
 fun HomeScreen(
     modifier: Modifier = Modifier,
     navigateToAbout: () -> Unit = {},
-    navigateToService: () -> Unit = {}
+    navigateToService: () -> Unit = {},
+    navigateToDetailProduct: (Long) -> Unit = {}
 ) {
     Column(
-        modifier = modifier
-            .verticalScroll(rememberScrollState())
+        modifier = modifier.verticalScroll(rememberScrollState())
     ) {
-        TopBar(navigateToAbout = navigateToAbout)
-        CarouselPreview()
+        CustomTopBar(
+            height = 100.dp,
+            content = {
+                Row (
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth(),
+                ){
+                    Column {
+                        Text(
+                            text = stringResource(R.string.greeting),
+                            color = Color.White,
+                            overflow = TextOverflow.Ellipsis,
+                            style = MaterialTheme.typography.h4.copy(
+                                fontWeight = FontWeight.ExtraBold
+                            ),
+                        )
+                        Text(
+                            text = stringResource(R.string.greeting_description),
+                            color = Color.White,
+                            style = MaterialTheme.typography.subtitle1,
+                        )
+                    }
+                    Image(
+                        painter = painterResource(R.drawable.my_photo),
+                        contentDescription = "about_page",
+                        modifier = Modifier
+                               .clip(CircleShape)
+                            .shadow(20.dp, CircleShape)
+                            .size(47.dp)
+                            .clickable {
+                                navigateToAbout()
+                            }
+                    )
+                }
+            })
+        DummyCarousel()
         Service(navigateToService = navigateToService)
         ProductHighlight(
             title = stringResource(R.string.section_rakitan_intel),
-            content = { ProductRow(dummyProducts) }
+            content = { ProductRow(dummyProducts.subList(0, 9),
+                navigateToDetailProduct = navigateToDetailProduct) }
         )
         ProductHighlight(
             title = stringResource(R.string.section_rakitan_amd),
-            content = { ProductRow(dummyProducts) }
+            content = { ProductRow(
+                dummyProducts.subList(10, 14),
+                navigateToDetailProduct = navigateToDetailProduct) }
         )
-    }
-}
-
-@Composable
-fun TopBar(
-    modifier: Modifier = Modifier,
-    navigateToAbout: () -> Unit = {},
-) {
-    Box(modifier = modifier) {
-        Image(
-            painter = painterResource(id = R.drawable.banner),
-            contentDescription = "Banner Image",
-            contentScale = ContentScale.Crop,
-            modifier = modifier
-                .height(110.dp)
-                .fillMaxWidth()
-        )
-        Column (
-            verticalArrangement = Arrangement.Center,
-            modifier = modifier
-                .fillMaxHeight()
-                .padding(16.dp)
-        ){
-            Row (
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth(),
-            ){
-                Column {
-                    Text(
-                        text = stringResource(R.string.greeting),
-                        color = Color.White,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.h4.copy(
-                            fontWeight = FontWeight.ExtraBold
-                        ),
-                    )
-                    Text(
-                        text = stringResource(R.string.greeting_description),
-                        color = Color.White,
-                        style = MaterialTheme.typography.subtitle1,
-                    )
-                }
-                Image(
-                    painter = painterResource(R.drawable.my_photo),
-                    contentDescription = "about_page",
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .shadow(20.dp, CircleShape)
-                        .size(47.dp)
-                        .clickable {
-                            navigateToAbout()
-                        }
-                )
-            }
-        }
     }
 }
 

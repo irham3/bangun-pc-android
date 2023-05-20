@@ -1,7 +1,6 @@
 package com.kaizen.bangunpc.ui.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -33,8 +32,7 @@ fun ProductItem(
     Card(
         modifier = modifier
             .shadow(8.dp)
-            .width(120.dp)
-            .clickable {  },
+            .width(120.dp),
         shape = RoundedCornerShape(8.dp),
     ) {
         Column {
@@ -72,7 +70,7 @@ fun ProductItem(
 fun ProductItemPreview() {
     MaterialTheme {
         ProductItem(
-            product = Product(R.drawable.component1, "PC RAKITAN GAMING | INTEL CORE i5 | RX 6600 | SSD 256GB", "Rp 11.641.000"),
+            product = Product(1, R.drawable.rakitan_intel1, "PC RAKITAN GAMING | INTEL CORE i5 | RX 6600 | SSD 256GB", "Rp 11.641.000", "test"),
             modifier = Modifier.padding(8.dp)
         )
     }

@@ -112,25 +112,30 @@ val images = listOf(
 )
 
 @OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun DummyCarousel() {
+    Card(
+        modifier = Modifier.padding(16.dp),
+        shape = RoundedCornerShape(16.dp),
+    ) {
+        Carousel(
+            itemsCount = images.size,
+            itemContent = { index ->
+                AsyncImage(
+                    model = images[index],
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.height(160.dp)
+                )
+            }
+        )
+    }
+}
+
 @Preview
 @Composable
 fun CarouselPreview() {
     AppTheme {
-        Card(
-            modifier = Modifier.padding(16.dp),
-            shape = RoundedCornerShape(16.dp),
-        ) {
-            Carousel(
-                itemsCount = images.size,
-                itemContent = { index ->
-                    AsyncImage(
-                        model = images[index],
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.height(160.dp)
-                    )
-                }
-            )
-        }
+        DummyCarousel()
     }
 }

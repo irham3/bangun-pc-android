@@ -6,7 +6,6 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
@@ -20,15 +19,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.kaizen.bangunpc.ui.navigation.NavigationItem
 import com.kaizen.bangunpc.ui.navigation.Screen
 import com.kaizen.bangunpc.ui.screen.catalog.CatalogScreen
 import com.kaizen.bangunpc.ui.screen.home.HomeScreen
 import com.kaizen.bangunpc.ui.screen.about.AboutScreen
+import com.kaizen.bangunpc.ui.screen.detail.DetailProductScreen
 import com.kaizen.bangunpc.ui.screen.service.ServiceScreen
 import com.kaizen.bangunpc.ui.theme.AppTheme
 
@@ -42,7 +44,7 @@ fun BangunPCApp(
 
     Scaffold(
         bottomBar = {
-            if (currentRoute != Screen.DetailComponent.route)
+            if (currentRoute != Screen.DetailProduct.route)
                 BottomBar(navController)
         },
         modifier = modifier
@@ -60,6 +62,9 @@ fun BangunPCApp(
                     },
                     navigateToService = {
                         navController.navigate(Screen.Service.route)
+                    },
+                    navigateToDetailProduct = { productId ->
+                        navController.navigate(Screen.DetailProduct.createRoute(productId))
                     }
                 )
             }
@@ -72,17 +77,20 @@ fun BangunPCApp(
             composable(Screen.Service.route) {
                 ServiceScreen()
             }
+            composable(
+                route = Screen.DetailProduct.route,
+                arguments = listOf(navArgument("productId") {type = NavType.LongType})
+            ) {
+                val  id = it.arguments?.getLong("productId") ?: -1L
+                DetailProductScreen(
+                    productId = id,
+                    navigateBack = {
+                        navController.navigateUp()
+                    }
+                )
+            }
         }
     }
-}
-
-@Composable
-fun TopBar() {
-    TopAppBar(
-        title = {
-            Text(stringResource(R.string.app_name))
-        },
-    )
 }
 
 @Composable

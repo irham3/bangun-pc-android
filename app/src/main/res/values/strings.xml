@@ -11,4 +11,8 @@
     <string name="author_email">irhamtriahmadi23@gmail.com</string>
     <string name="greeting">Halo Kawan,</string>
     <string name="greeting_description">Rakit PC Impianmu sekarang</string>
+    <string name="lihat_semua">Lihat Semua</string>
+    <string name="about">Tentang Saya</string>
+    <string name="back">back</string>
+    <string name="detail_produk">Detail PC Rakitan</string>
 </resources>
