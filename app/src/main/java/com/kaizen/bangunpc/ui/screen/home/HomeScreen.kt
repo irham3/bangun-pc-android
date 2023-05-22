@@ -1,8 +1,6 @@
 package com.kaizen.bangunpc.ui.screen.home
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,10 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -38,13 +33,10 @@ import com.kaizen.bangunpc.ui.components.DummyCarousel
 import com.kaizen.bangunpc.ui.components.ProductHighlight
 import com.kaizen.bangunpc.ui.components.ProductRow
 import com.kaizen.bangunpc.ui.theme.AppTheme
-import com.kaizen.bangunpc.ui.theme.Orange
-
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     navigateToAbout: () -> Unit = {},
-    navigateToService: () -> Unit = {},
     navigateToDetailProduct: (Long) -> Unit = {}
 ) {
     Column(
@@ -75,19 +67,18 @@ fun HomeScreen(
                     }
                     Image(
                         painter = painterResource(R.drawable.my_photo),
-                        contentDescription = "about_page",
+                        contentDescription = stringResource(R.string.about_page),
                         modifier = Modifier
-                               .clip(CircleShape)
+                            .clip(CircleShape)
                             .shadow(20.dp, CircleShape)
                             .size(47.dp)
                             .clickable {
                                 navigateToAbout()
                             }
                     )
-                }
-            })
+            }
+        })
         DummyCarousel()
-        Service(navigateToService = navigateToService)
         ProductHighlight(
             title = stringResource(R.string.section_rakitan_intel),
             content = { ProductRow(dummyProducts.subList(0, 9),
@@ -99,57 +90,6 @@ fun HomeScreen(
                 dummyProducts.subList(10, 14),
                 navigateToDetailProduct = navigateToDetailProduct) }
         )
-    }
-}
-
-@Composable
-fun Service(
-    navigateToService: () -> Unit = {}
-) {
-    Column (
-        modifier = Modifier
-            .padding(horizontal = 12.dp)
-            .border(BorderStroke(1.3.dp, Orange), RoundedCornerShape(8.dp))
-    ) {
-        Row (
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth(),
-        ){
-            Image(
-                painter = painterResource(R.drawable.logo_gxcomp),
-                contentDescription = "Icon Profile",
-                modifier = Modifier
-                    .size(48.dp)
-            )
-            Text(
-                text = "Butuh Jasa Rakit atau \n" +
-                        "Service PC?",
-                color = Color.Black,
-                style = MaterialTheme.typography.subtitle2,
-            )
-
-            Button(
-                onClick = {
-                    navigateToService()
-                },
-                colors = ButtonDefaults.buttonColors(backgroundColor = Orange)) {
-                Text(
-                    text = "Hubungi Kami",
-                    style = MaterialTheme.typography.subtitle2)
-            }
-
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ServicePreview() {
-    AppTheme {
-        Service()
     }
 }
 

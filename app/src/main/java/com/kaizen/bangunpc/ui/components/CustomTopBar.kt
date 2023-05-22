@@ -5,7 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -39,7 +38,6 @@ fun CustomTopBar(
         Column (
             verticalArrangement = Arrangement.Center,
             modifier = modifier
-                .fillMaxHeight()
                 .padding(16.dp)
         ){
             if (content != null) content()
@@ -48,7 +46,7 @@ fun CustomTopBar(
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@Preview()
+@Preview
 @Composable
 fun CustomTopBarPreview() {
     AppTheme {

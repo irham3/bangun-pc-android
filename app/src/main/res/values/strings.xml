@@ -3,16 +3,15 @@
     <string name="menu_home">Home</string>
     <string name="menu_catalog">Katalog</string>
     <string name="menu_profile">Profil</string>
-    <string name="menu_service">Layanan</string>
-    <string name="placeholder_search">Cari komponen pilihanmu</string>
     <string name="section_rakitan_intel">PC Rakitan Intel</string>
     <string name="section_rakitan_amd">PC Rakitan AMD</string>
     <string name="author_name">Irham Tri Ahmadi</string>
     <string name="author_email">irhamtriahmadi23@gmail.com</string>
     <string name="greeting">Halo Kawan,</string>
     <string name="greeting_description">Rakit PC Impianmu sekarang</string>
-    <string name="lihat_semua">Lihat Semua</string>
     <string name="about">Tentang Saya</string>
     <string name="back">back</string>
-    <string name="detail_produk">Detail PC Rakitan</string>
+    <string name="detail_produk">Detail Produk</string>
+    <string name="catalog">Katalog Produk</string>
+    <string name="about_page">about_page</string>
 </resources>

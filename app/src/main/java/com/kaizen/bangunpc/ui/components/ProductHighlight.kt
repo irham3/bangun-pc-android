@@ -11,9 +11,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.kaizen.bangunpc.R
 
 @Composable
 fun ProductHighlight(
@@ -27,13 +26,13 @@ fun ProductHighlight(
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            SectionText(title, modifier)
             Text(
+                text = title,
+                style = MaterialTheme.typography.h5.copy(
+                    fontWeight = FontWeight.ExtraBold
+                ),
                 modifier = modifier
-                    .padding(horizontal = 16.dp, vertical = 16.dp),
-                text = stringResource(R.string.lihat_semua),
-                style = MaterialTheme.typography.subtitle2,
-
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
             )
         }
         Row(
