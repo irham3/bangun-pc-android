@@ -25,4 +25,5 @@ object NetworkModule {
         install(GoTrue)
         install(Postgrest)
     }
+
 }
