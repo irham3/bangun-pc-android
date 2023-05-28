@@ -1,4 +1,4 @@
-package com.kaizen.bangunpc.data
+package com.kaizen.bangunpc.data.source.remote.result
 
 import kotlinx.serialization.Serializable
 

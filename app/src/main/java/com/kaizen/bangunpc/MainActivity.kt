@@ -9,12 +9,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
-import com.kaizen.bangunpc.data.Component
+import com.kaizen.bangunpc.data.source.remote.result.Component
 import com.kaizen.bangunpc.ui.theme.AppTheme
 import com.kaizen.bangunpc.utils.SupabaseUtil
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,7 +1,7 @@
 package com.kaizen.bangunpc.data
 
 import com.kaizen.bangunpc.R
-
+// Only temporary data class for testing
 data class Product(
     val productId: Long,
     val image: Int,
