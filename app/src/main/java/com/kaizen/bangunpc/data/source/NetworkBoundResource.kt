@@ -10,10 +10,10 @@ import kotlinx.coroutines.flow.map
 abstract class NetworkBoundResource<ResultType : Any, RequestType> {
 
     private var result: Flow<UiState<ResultType>> = flow {
-        emit(UiState.Loading())
+        emit(UiState.Loading)
         val dbSource = loadFromDB().first()
         if (shouldFetch(dbSource)) {
-            emit(UiState.Loading())
+            emit(UiState.Loading)
             when (val apiResult = createCall().first()) {
                 is ApiResult.Success -> {
                     saveCallResult(apiResult.data)

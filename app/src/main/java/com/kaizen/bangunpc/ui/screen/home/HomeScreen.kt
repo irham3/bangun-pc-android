@@ -15,6 +15,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaizen.bangunpc.R
 import com.kaizen.bangunpc.data.dummyProducts
+import com.kaizen.bangunpc.data.source.UiState
 import com.kaizen.bangunpc.ui.components.CustomTopBar
 import com.kaizen.bangunpc.ui.components.DummyCarousel
 import com.kaizen.bangunpc.ui.components.ProductHighlight
@@ -39,11 +42,21 @@ import com.kaizen.bangunpc.ui.theme.AppTheme
 fun HomeScreen(
     modifier: Modifier = Modifier,
     navigateToAbout: () -> Unit = {},
-    navigateToDetailProduct: (Long) -> Unit = {}
+    homeViewModel: HomeViewModel = hiltViewModel(),
+    navigateToDetailProduct: (Long) -> Unit = {},
 ) {
     Column(
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {
+        val components by homeViewModel.componentState.collectAsState(initial = UiState.Loading)
+        components.let { uiState ->
+            when(uiState) {
+                UiState.Loading -> { homeViewModel.getAllComponents() }
+                is UiState.Error -> {}
+                is UiState.Success -> {
+                    Text(text = uiState.data.toString())}
+            }
+        }
         CustomTopBar(
             height = 100.dp,
             content = {
