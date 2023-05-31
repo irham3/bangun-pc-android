@@ -9,7 +9,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
-import com.kaizen.bangunpc.data.source.remote.result.Component
+import com.kaizen.bangunpc.data.source.remote.result.ComponentResult
 import com.kaizen.bangunpc.ui.theme.AppTheme
 import com.kaizen.bangunpc.utils.SupabaseUtil
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
             val supabaseResponse = client.postgrest["gxcomp"].select()
 
             // Mapping supabase response to Component data class
-            val data = supabaseResponse.decodeList<Component>()
+            val data = supabaseResponse.decodeList<ComponentResult>()
             Log.d("supabase", data.toString())
         }
     }

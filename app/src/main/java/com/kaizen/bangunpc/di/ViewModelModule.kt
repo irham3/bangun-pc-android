@@ -1,5 +1,6 @@
 package com.kaizen.bangunpc.di
 
+import com.kaizen.bangunpc.data.source.ComponentRepository
 import com.kaizen.bangunpc.ui.screen.home.HomeViewModel
 import dagger.Module
 import dagger.Provides
@@ -10,6 +11,6 @@ import dagger.hilt.android.components.ActivityComponent
 @InstallIn(ActivityComponent::class)
 object ViewModelModule {
     @Provides
-    fun provideHomeViewModel() : HomeViewModel =
-        HomeViewModel()
+    fun provideHomeViewModel(repo: ComponentRepository) : HomeViewModel =
+        HomeViewModel(repo)
 }

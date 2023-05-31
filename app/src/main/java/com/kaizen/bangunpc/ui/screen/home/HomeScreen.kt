@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaizen.bangunpc.R
 import com.kaizen.bangunpc.data.dummyProducts
 import com.kaizen.bangunpc.ui.components.CustomTopBar
@@ -33,6 +34,7 @@ import com.kaizen.bangunpc.ui.components.DummyCarousel
 import com.kaizen.bangunpc.ui.components.ProductHighlight
 import com.kaizen.bangunpc.ui.components.ProductRow
 import com.kaizen.bangunpc.ui.theme.AppTheme
+
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
@@ -84,6 +86,7 @@ fun HomeScreen(
             content = { ProductRow(dummyProducts.subList(0, 9),
                 navigateToDetailProduct = navigateToDetailProduct) }
         )
+
         ProductHighlight(
             title = stringResource(R.string.section_rakitan_amd),
             content = { ProductRow(

@@ -7,28 +7,28 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
-abstract class NetworkBoundResource<ResultType, RequestType> {
+abstract class NetworkBoundResource<ResultType : Any, RequestType> {
 
-    private var result: Flow<Resource<ResultType>> = flow {
-        emit(Resource.Loading())
+    private var result: Flow<UiState<ResultType>> = flow {
+        emit(UiState.Loading())
         val dbSource = loadFromDB().first()
         if (shouldFetch(dbSource)) {
-            emit(Resource.Loading())
+            emit(UiState.Loading())
             when (val apiResult = createCall().first()) {
                 is ApiResult.Success -> {
                     saveCallResult(apiResult.data)
-                    emitAll(loadFromDB().map { Resource.Success(it) })
+                    emitAll(loadFromDB().map { UiState.Success(it) })
                 }
-                is ApiResult.Empty -> {
-                    emitAll(loadFromDB().map { Resource.Success(it) })
+                is ApiResult.Loading -> {
+                    emitAll(loadFromDB().map { UiState.Success(it) })
                 }
                 is ApiResult.Error -> {
                     onFetchFailed()
-                    emit(Resource.Error(apiResult.errorMessage))
+                    emit(UiState.Error(apiResult.errorMessage))
                 }
             }
         } else {
-            emitAll(loadFromDB().map { Resource.Success(it) })
+            emitAll(loadFromDB().map { UiState.Success(it) })
         }
     }
 
@@ -42,5 +42,5 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
 
     protected abstract suspend fun saveCallResult(data: RequestType)
 
-    fun asFlow(): Flow<Resource<ResultType>> = result
+    fun asFlow(): Flow<UiState<ResultType>> = result
 }
