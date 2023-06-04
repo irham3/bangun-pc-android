@@ -41,10 +41,10 @@ import com.kaizen.bangunpc.ui.theme.Orange
 
 @Composable
 fun DetailProductScreen(
-    productId: Long,
+    productId: Int,
     navigateBack: () -> Unit = {}
 ) {
-    val dataProduct = dummyProducts.first { it.productId == productId }
+    val dataProduct = dummyProducts.first { it.id == productId }
     Column(modifier = Modifier
         .verticalScroll(rememberScrollState())
     ) {

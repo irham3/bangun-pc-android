@@ -15,7 +15,7 @@ import com.kaizen.bangunpc.ui.theme.AppTheme
 
 @Composable
 fun CatalogScreen(
-    navigateToDetailProduct: (Long) -> Unit = {}
+    navigateToDetailProduct: (Int) -> Unit = {}
 ) {
     Column {
         CustomTopBar(

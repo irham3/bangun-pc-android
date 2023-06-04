@@ -3,24 +3,19 @@ package com.kaizen.bangunpc.ui.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.kaizen.bangunpc.data.Product
-import com.kaizen.bangunpc.data.dummyProducts
-import com.kaizen.bangunpc.ui.theme.AppTheme
+import com.kaizen.bangunpc.data.source.local.entity.IProductEntity
 
 @Composable
 fun ProductVerticalGrid(
-    listProduct: List<Product>,
+    listProduct: List<IProductEntity>,
     modifier: Modifier = Modifier,
-    navigateToDetailProduct: (Long) -> Unit = {}
+    navigateToDetailProduct: (Int) -> Unit = {}
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -29,21 +24,24 @@ fun ProductVerticalGrid(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         modifier = modifier
     ) {
-        items(listProduct, key = { it.productId }) { product ->
-            ProductItem(product,
+        items(listProduct, key = { it.id }) { product ->
+            ProductItem(
+                image = product.image,
+                name = product.name,
+                price = product.price,
                 modifier = Modifier.clickable {
-                    navigateToDetailProduct(product.productId)
+                    navigateToDetailProduct(product.id)
                 })
         }
     }
 }
 
-@Preview
-@Composable
-fun ProductVerticalGridPreview() {
-    AppTheme {
-        Scaffold {innerPadding ->
-            ProductVerticalGrid(dummyProducts, modifier = Modifier.padding(innerPadding))
-        }
-    }
-}
+//@Preview
+//@Composable
+//fun ProductVerticalGridPreview() {
+//    AppTheme {
+//        Scaffold {innerPadding ->
+//            ProductVerticalGrid(dummyProducts, modifier = Modifier.padding(innerPadding))
+//        }
+//    }
+//}

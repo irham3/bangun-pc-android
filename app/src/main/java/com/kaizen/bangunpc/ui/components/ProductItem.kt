@@ -1,6 +1,5 @@
 package com.kaizen.bangunpc.ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,17 +15,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.kaizen.bangunpc.R
-import com.kaizen.bangunpc.data.Product
+import coil.compose.AsyncImage
+import com.kaizen.bangunpc.utils.toRupiahFormat
 
 @Composable
 fun ProductItem(
-    product: Product,
+    image: String,
+    name: String,
+    price: Int,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -36,8 +36,8 @@ fun ProductItem(
         shape = RoundedCornerShape(8.dp),
     ) {
         Column {
-            Image(
-                painter = painterResource(product.image),
+            AsyncImage(
+                model = image,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -48,7 +48,7 @@ fun ProductItem(
             Column(modifier = Modifier.padding(8.dp)) {
                 Text(
                     color = Color.Black,
-                    text = product.title,
+                    text = name,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.subtitle1.copy(
@@ -57,7 +57,7 @@ fun ProductItem(
                 )
                 Text(
                     color = Color.Black,
-                    text = product.price,
+                    text = price.toRupiahFormat(),
                     style = MaterialTheme.typography.subtitle2,
                 )
             }
@@ -70,7 +70,9 @@ fun ProductItem(
 fun ProductItemPreview() {
     MaterialTheme {
         ProductItem(
-            product = Product(1, R.drawable.rakitan_intel1, "PC RAKITAN GAMING | INTEL CORE i5 | RX 6600 | SSD 256GB", "Rp 11.641.000", "test"),
+            image = "https://onawoodgnwkncueeyusr.supabase.co/storage/v1/object/public/component-images/motherboards/MSI%20B450%20A%20Pro%20MAX.png?t=2023-05-07T15%3A30%3A29.959Z",
+            name = "PC RAKITAN GAMING | INTEL CORE i5 | RX 6600 | SSD 256GB",
+            price = 1295000,
             modifier = Modifier.padding(8.dp)
         )
     }

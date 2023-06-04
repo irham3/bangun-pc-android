@@ -2,8 +2,8 @@ package com.kaizen.bangunpc.di
 
 import android.content.Context
 import androidx.room.Room
-import com.kaizen.bangunpc.data.source.local.room.ComponentDao
-import com.kaizen.bangunpc.data.source.local.room.ComponentDatabase
+import com.kaizen.bangunpc.data.source.local.room.ProductDao
+import com.kaizen.bangunpc.data.source.local.room.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,13 +16,13 @@ import javax.inject.Singleton
 object DatabaseModule {
     @Singleton
     @Provides
-    fun provideDatabase(@ApplicationContext context: Context) : ComponentDatabase =
+    fun provideDatabase(@ApplicationContext context: Context) : AppDatabase =
         Room.databaseBuilder(
             context,
-            ComponentDatabase::class.java, "Component.db"
+            AppDatabase::class.java, "App.db"
         ).fallbackToDestructiveMigration().build()
 
     @Provides
-    fun provideComponentDao(database: ComponentDatabase) : ComponentDao =
-        database.getComponentDao()
+    fun provideProductDao(database: AppDatabase) : ProductDao =
+        database.getProductDao()
 }

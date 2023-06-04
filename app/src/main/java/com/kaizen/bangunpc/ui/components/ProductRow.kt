@@ -8,24 +8,26 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.kaizen.bangunpc.data.Product
+import com.kaizen.bangunpc.data.source.local.entity.IProductEntity
 
 @Composable
 fun ProductRow(
-    listProduct: List<Product>,
+    listProduct: List<IProductEntity>,
     modifier: Modifier = Modifier,
-    navigateToDetailProduct: (Long) -> Unit
+    navigateToDetailProduct: (Int) -> Unit
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(horizontal = 8.dp),
         modifier = modifier
     ) {
-        items(listProduct, key = { it.productId }) { product ->
+        items(listProduct, key = { it.id }) { product ->
             ProductItem(
-                product,
+                image = product.image,
+                name = product.name,
+                price = product.price,
                 modifier = Modifier.clickable {
-                    navigateToDetailProduct(product.productId)
+                    navigateToDetailProduct(product.id)
                 })
         }
     }

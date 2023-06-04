@@ -1,6 +1,6 @@
 package com.kaizen.bangunpc.utils
 
-import com.kaizen.bangunpc.data.source.local.entity.ComponentEntity
+import com.kaizen.bangunpc.data.source.local.entity.impl.ComponentEntity
 import com.kaizen.bangunpc.data.source.remote.result.ComponentResult
 
 object DataMapper {
@@ -8,7 +8,7 @@ object DataMapper {
         val componentList = ArrayList<ComponentEntity>()
         input.map {
             val component = ComponentEntity(
-                componentId = it.id,
+                id = it.id,
                 name = it.name,
                 price = it.price,
                 url = it.url,
@@ -20,4 +20,5 @@ object DataMapper {
         }
         return componentList
     }
+
 }

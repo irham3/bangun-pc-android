@@ -78,7 +78,7 @@ fun BangunPCApp(
                 route = Screen.DetailProduct.route,
                 arguments = listOf(navArgument("productId") {type = NavType.LongType})
             ) {
-                val  id = it.arguments?.getLong("productId") ?: -1L
+                val id = it.arguments?.getInt("productId") ?: -1
                 DetailProductScreen(
                     productId = id,
                     navigateBack = {

@@ -14,7 +14,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-
     // Only 1 supabaseClient instance that's be used in this app
     @Provides
     @Singleton

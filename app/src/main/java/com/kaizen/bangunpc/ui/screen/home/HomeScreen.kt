@@ -30,7 +30,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaizen.bangunpc.R
-import com.kaizen.bangunpc.data.dummyProducts
 import com.kaizen.bangunpc.data.source.UiState
 import com.kaizen.bangunpc.ui.components.CustomTopBar
 import com.kaizen.bangunpc.ui.components.DummyCarousel
@@ -43,7 +42,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     navigateToAbout: () -> Unit = {},
     homeViewModel: HomeViewModel = hiltViewModel(),
-    navigateToDetailProduct: (Long) -> Unit = {},
+    navigateToDetailProduct: (Int) -> Unit = {},
 ) {
     Column(
         modifier = modifier.verticalScroll(rememberScrollState())
@@ -94,18 +93,18 @@ fun HomeScreen(
             }
         })
         DummyCarousel()
-        ProductHighlight(
-            title = stringResource(R.string.section_rakitan_intel),
-            content = { ProductRow(dummyProducts.subList(0, 9),
-                navigateToDetailProduct = navigateToDetailProduct) }
-        )
-
-        ProductHighlight(
-            title = stringResource(R.string.section_rakitan_amd),
-            content = { ProductRow(
-                dummyProducts.subList(10, 14),
-                navigateToDetailProduct = navigateToDetailProduct) }
-        )
+//        ProductHighlight(
+//            title = stringResource(R.string.section_rakitan_intel),
+//            content = { ProductRow(dummyProducts.subList(0, 9),
+//                navigateToDetailProduct = navigateToDetailProduct) }
+//        )
+//
+//        ProductHighlight(
+//            title = stringResource(R.string.section_rakitan_amd),
+//            content = { ProductRow(
+//                dummyProducts.subList(10, 14),
+//                navigateToDetailProduct = navigateToDetailProduct) }
+//        )
     }
 }
 
