@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.kaizen.bangunpc.R
-import com.kaizen.bangunpc.data.dummyProducts
 import com.kaizen.bangunpc.ui.components.CustomTopBar
 import com.kaizen.bangunpc.ui.components.ProductVerticalGrid
 import com.kaizen.bangunpc.ui.components.ScreenTitleText
@@ -21,7 +20,7 @@ fun CatalogScreen(
         CustomTopBar(
             content = { ScreenTitleText(title = stringResource(R.string.catalog)) }
         )
-        ProductVerticalGrid(dummyProducts, navigateToDetailProduct = navigateToDetailProduct)
+//        ProductVerticalGrid(dummyProducts, navigateToDetailProduct = navigateToDetailProduct)
     }
 }
 

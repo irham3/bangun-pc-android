@@ -1,4 +1,4 @@
-package com.kaizen.bangunpc.data.source.remote
+package com.kaizen.bangunpc.data.source.remote.dataresource
 
 import com.kaizen.bangunpc.data.source.remote.network.ApiResult
 import com.kaizen.bangunpc.data.source.remote.result.ComponentResult
@@ -14,26 +14,26 @@ import kotlinx.coroutines.flow.flowOn
 import java.lang.Exception
 import javax.inject.Inject
 
-class RemoteDataSource @Inject constructor(
+class ProductRDS @Inject constructor(
     private val supabaseClient: SupabaseClient
 ){
-    suspend fun getAllComponents() : Flow<ApiResult<List<ComponentResult>>> =
-        flow {
-            try {
-                val result = supabaseClient.postgrest["gxcomp"].select {
-                    order("id", Order.ASCENDING)
-                }
-                val dataList = result.decodeList<ComponentResult>()
-                if (dataList.isNotEmpty())
-                    emit(ApiResult.Success(dataList))
-                else
-                    emit(ApiResult.Loading)
-            } catch (e : Exception) {
-                emit(ApiResult.Error(e.toString()))
-            }
-        }.flowOn(Dispatchers.IO)
+//    suspend fun getAllComponents() : Flow<ApiResult<List<ComponentResult>>> =
+//        flow {
+//            try {
+//                val result = supabaseClient.postgrest["gxcomp"].select {
+//                    order("id", Order.ASCENDING)
+//                }
+//                val dataList = result.decodeList<ComponentResult>()
+//                if (dataList.isNotEmpty())
+//                    emit(ApiResult.Success(dataList))
+//                else
+//                    emit(ApiResult.Loading)
+//            } catch (e : Exception) {
+//                emit(ApiResult.Error(e.toString()))
+//            }
+//        }.flowOn(Dispatchers.IO)
 
-    suspend fun getAllCpus() : Flow<ApiResult<List<ComponentResult>>> =
+    suspend fun getAllCPUs() : Flow<ApiResult<List<ComponentResult>>> =
         flow {
             try {
                 val result = supabaseClient.postgrest["cpus"]
@@ -52,7 +52,7 @@ class RemoteDataSource @Inject constructor(
             }
         }.flowOn(Dispatchers.IO)
 
-    suspend fun getAllGpus() : Flow<ApiResult<List<ComponentResult>>> =
+    suspend fun getAllGPUs() : Flow<ApiResult<List<ComponentResult>>> =
         flow {
             try {
                 val result = supabaseClient.postgrest["gpus"]

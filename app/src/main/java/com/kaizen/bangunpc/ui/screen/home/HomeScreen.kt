@@ -32,7 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaizen.bangunpc.R
 import com.kaizen.bangunpc.data.source.UiState
 import com.kaizen.bangunpc.ui.components.CustomTopBar
-import com.kaizen.bangunpc.ui.components.DummyCarousel
+import com.kaizen.bangunpc.ui.components.GXCompCarousel
 import com.kaizen.bangunpc.ui.components.ProductHighlight
 import com.kaizen.bangunpc.ui.components.ProductRow
 import com.kaizen.bangunpc.ui.theme.AppTheme
@@ -44,26 +44,21 @@ fun HomeScreen(
     homeViewModel: HomeViewModel = hiltViewModel(),
     navigateToDetailProduct: (Int) -> Unit = {},
 ) {
+//    val components by homeViewModel.componentState.collectAsState(initial = UiState.Loading)
+    val intelPCs by homeViewModel.intelPCState.collectAsState(initial = UiState.Loading)
+    val amdPCs by homeViewModel.amdPCState.collectAsState(initial = UiState.Loading)
+
     Column(
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {
-        val components by homeViewModel.componentState.collectAsState(initial = UiState.Loading)
-        components.let { uiState ->
-            when(uiState) {
-                UiState.Loading -> { homeViewModel.getAllComponents() }
-                is UiState.Error -> {}
-                is UiState.Success -> {
-                    Text(text = uiState.data.toString())}
-            }
-        }
         CustomTopBar(
             height = 100.dp,
             content = {
-                Row (
+                Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth(),
-                ){
+                ) {
                     Column {
                         Text(
                             text = stringResource(R.string.greeting),
@@ -90,32 +85,60 @@ fun HomeScreen(
                                 navigateToAbout()
                             }
                     )
+                }
+            })
+        GXCompCarousel()
+        intelPCs.let { uiState ->
+            when (uiState) {
+                UiState.Loading -> {
+                    homeViewModel.getAllIntelPCs()
+                }
+                is UiState.Error -> {}
+                is UiState.Success -> {
+                    ProductHighlight(
+                        title = stringResource(R.string.section_rakitan_intel),
+                        content = {
+                            ProductRow(
+                                uiState.data,
+                                navigateToDetailProduct = navigateToDetailProduct
+                            )
+                        }
+                    )
+                }
             }
-        })
-        DummyCarousel()
-//        ProductHighlight(
-//            title = stringResource(R.string.section_rakitan_intel),
-//            content = { ProductRow(dummyProducts.subList(0, 9),
-//                navigateToDetailProduct = navigateToDetailProduct) }
-//        )
-//
-//        ProductHighlight(
-//            title = stringResource(R.string.section_rakitan_amd),
-//            content = { ProductRow(
-//                dummyProducts.subList(10, 14),
-//                navigateToDetailProduct = navigateToDetailProduct) }
-//        )
-    }
-}
+        }
 
-@Preview
-@Composable
-fun HomeScreenPreview() {
-    AppTheme {
-        Scaffold {innerPadding ->
-            HomeScreen(
-                modifier = Modifier.padding(innerPadding),
-            )
+        amdPCs.let { uiState ->
+            when (uiState) {
+                UiState.Loading -> {
+                    homeViewModel.getAllAMDPCs()
+                }
+
+                is UiState.Error -> {}
+                is UiState.Success -> {
+                    ProductHighlight(
+                        title = stringResource(R.string.section_rakitan_amd),
+                        content = {
+                            ProductRow(
+                                uiState.data,
+                                navigateToDetailProduct = navigateToDetailProduct
+                            )
+                        }
+                    )
+                }
+            }
         }
     }
 }
+
+//@Preview
+//@Composable
+//fun HomeScreenPreview() {
+//    AppTheme {
+//        Scaffold {innerPadding ->
+//            HomeScreen(
+//                modifier = Modifier.padding(innerPadding),
+//            )
+//        }
+//    }
+//}

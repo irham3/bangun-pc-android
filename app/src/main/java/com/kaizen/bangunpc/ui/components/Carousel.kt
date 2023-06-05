@@ -113,7 +113,7 @@ val images = listOf(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun DummyCarousel() {
+fun GXCompCarousel() {
     Card(
         modifier = Modifier.padding(16.dp),
         shape = RoundedCornerShape(16.dp),
@@ -136,6 +136,6 @@ fun DummyCarousel() {
 @Composable
 fun CarouselPreview() {
     AppTheme {
-        DummyCarousel()
+        GXCompCarousel()
     }
 }

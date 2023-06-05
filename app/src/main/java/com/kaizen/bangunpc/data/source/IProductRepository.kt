@@ -4,10 +4,10 @@ import com.kaizen.bangunpc.data.source.local.entity.ProductEntity
 import kotlinx.coroutines.flow.Flow
 
 interface IProductRepository {
-    fun getAllProducts() : Flow<UiState<List<ProductEntity>>>
+    fun getAllProducts() : Flow<List<ProductEntity>>
     fun getAllFavorites() : Flow<List<ProductEntity>>
-    fun getAllComponents() : Flow<UiState<List<ProductEntity>>>
-    fun getAllPCBuilds() : Flow<UiState<List<ProductEntity>>>
+    fun getAllComponents() : Flow<List<ProductEntity>>
+    fun getAllPCBuilds() : Flow<List<ProductEntity>>
     fun getAllIntelPCs() : Flow<UiState<List<ProductEntity>>>
     fun getAllAMDPCs() : Flow<UiState<List<ProductEntity>>>
     fun getAllCPUs() : Flow<UiState<List<ProductEntity>>>

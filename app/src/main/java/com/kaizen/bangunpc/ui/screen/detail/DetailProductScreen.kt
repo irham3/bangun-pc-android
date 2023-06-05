@@ -33,7 +33,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kaizen.bangunpc.R
-import com.kaizen.bangunpc.data.dummyProducts
 import com.kaizen.bangunpc.ui.components.CustomTopBar
 import com.kaizen.bangunpc.ui.components.ScreenTitleText
 import com.kaizen.bangunpc.ui.theme.AppTheme
@@ -44,7 +43,7 @@ fun DetailProductScreen(
     productId: Int,
     navigateBack: () -> Unit = {}
 ) {
-    val dataProduct = dummyProducts.first { it.id == productId }
+//    val dataProduct = dummyProducts.first { it.id == productId }
     Column(modifier = Modifier
         .verticalScroll(rememberScrollState())
     ) {
@@ -70,35 +69,35 @@ fun DetailProductScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(16.dp)
         ) {
-            Image(
-                painter = painterResource(dataProduct.image),
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
-                modifier = Modifier
-                    .height(240.dp)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp))
-            )
-            Text(
-                text = dataProduct.title,
-                textAlign = TextAlign.Justify,
-                style = MaterialTheme.typography.h6.copy(
-                    fontWeight = FontWeight.ExtraBold
-                ),
-            )
-            Text(
-                text = dataProduct.price,
-                textAlign = TextAlign.Justify,
-                style = MaterialTheme.typography.h6.copy(
-                    fontWeight = FontWeight.ExtraBold
-                ),
-                color = Orange
-            )
-            Text(
-                text = dataProduct.detail,
-                style = MaterialTheme.typography.body2,
-                textAlign = TextAlign.Justify,
-            )
+//            Image(
+//                painter = painterResource(dataProduct.image),
+//                contentDescription = null,
+//                contentScale = ContentScale.Fit,
+//                modifier = Modifier
+//                    .height(240.dp)
+//                    .fillMaxWidth()
+//                    .clip(RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp))
+//            )
+//            Text(
+//                text = dataProduct.title,
+//                textAlign = TextAlign.Justify,
+//                style = MaterialTheme.typography.h6.copy(
+//                    fontWeight = FontWeight.ExtraBold
+//                ),
+//            )
+//            Text(
+//                text = dataProduct.price,
+//                textAlign = TextAlign.Justify,
+//                style = MaterialTheme.typography.h6.copy(
+//                    fontWeight = FontWeight.ExtraBold
+//                ),
+//                color = Orange
+//            )
+//            Text(
+//                text = dataProduct.detail,
+//                style = MaterialTheme.typography.body2,
+//                textAlign = TextAlign.Justify,
+//            )
         }
     }
 
