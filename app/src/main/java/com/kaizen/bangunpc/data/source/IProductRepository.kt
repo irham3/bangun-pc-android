@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface IProductRepository {
     fun getAllProducts() : Flow<List<ProductEntity>>
+    fun getProductById(productId: Int) : Flow<ProductEntity>
     fun getAllFavorites() : Flow<List<ProductEntity>>
     fun getAllComponents() : Flow<List<ProductEntity>>
     fun getAllPCBuilds() : Flow<List<ProductEntity>>

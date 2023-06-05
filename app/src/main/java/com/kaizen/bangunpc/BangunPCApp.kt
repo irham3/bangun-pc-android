@@ -76,7 +76,7 @@ fun BangunPCApp(
             }
             composable(
                 route = Screen.DetailProduct.route,
-                arguments = listOf(navArgument("productId") {type = NavType.LongType})
+                arguments = listOf(navArgument("productId") {type = NavType.IntType})
             ) {
                 val id = it.arguments?.getInt("productId") ?: -1
                 DetailProductScreen(

@@ -1,6 +1,7 @@
 package com.kaizen.bangunpc.di
 
 import com.kaizen.bangunpc.data.source.ProductRepository
+import com.kaizen.bangunpc.ui.screen.detail.DetailViewModel
 import com.kaizen.bangunpc.ui.screen.home.HomeViewModel
 import dagger.Module
 import dagger.Provides
@@ -13,4 +14,8 @@ object ViewModelModule {
     @Provides
     fun provideHomeViewModel(repo: ProductRepository) : HomeViewModel =
         HomeViewModel(repo)
+
+    @Provides
+    fun provideDetailViewModel(repo: ProductRepository) : DetailViewModel =
+        DetailViewModel(repo)
 }
