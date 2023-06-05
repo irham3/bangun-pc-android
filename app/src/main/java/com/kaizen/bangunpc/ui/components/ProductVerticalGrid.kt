@@ -9,11 +9,11 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.kaizen.bangunpc.data.source.local.entity.IProductEntity
+import com.kaizen.bangunpc.data.source.local.entity.ProductEntity
 
 @Composable
 fun ProductVerticalGrid(
-    listProduct: List<IProductEntity>,
+    listProduct: List<ProductEntity>,
     modifier: Modifier = Modifier,
     navigateToDetailProduct: (Int) -> Unit = {}
 ) {

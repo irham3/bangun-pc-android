@@ -2,9 +2,8 @@ package com.kaizen.bangunpc.ui.screen.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kaizen.bangunpc.data.source.ComponentRepository
+import com.kaizen.bangunpc.data.source.ProductRepository
 import com.kaizen.bangunpc.data.source.UiState
-import com.kaizen.bangunpc.data.source.local.entity.impl.ComponentEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: ComponentRepository
+    private val repository: ProductRepository
 ): ViewModel() {
     private val _componentState: MutableStateFlow<UiState<List<ComponentEntity>>> = MutableStateFlow(UiState.Loading)
     val componentState = _componentState.asStateFlow()

@@ -2,6 +2,7 @@ package com.kaizen.bangunpc.data.source.remote
 
 import com.kaizen.bangunpc.data.source.remote.network.ApiResult
 import com.kaizen.bangunpc.data.source.remote.result.ComponentResult
+import com.kaizen.bangunpc.data.source.remote.result.PCBuildResult
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.postgrest.query.Columns
@@ -38,7 +39,9 @@ class RemoteDataSource @Inject constructor(
                 val result = supabaseClient.postgrest["cpus"]
                     .select(
                         columns = Columns.raw("gxcomp(*)")
-                    )
+                    ) {
+                        order("id", Order.ASCENDING)
+                    }
                 val dataList = result.decodeList<ComponentResult>()
                 if (dataList.isNotEmpty())
                     emit(ApiResult.Success(dataList))
@@ -55,7 +58,9 @@ class RemoteDataSource @Inject constructor(
                 val result = supabaseClient.postgrest["gpus"]
                     .select(
                         columns = Columns.raw("gxcomp(*)")
-                    )
+                    ) {
+                        order("id", Order.ASCENDING)
+                    }
                 val dataList = result.decodeList<ComponentResult>()
                 if (dataList.isNotEmpty())
                     emit(ApiResult.Success(dataList))
@@ -72,7 +77,9 @@ class RemoteDataSource @Inject constructor(
                 val result = supabaseClient.postgrest["cases"]
                     .select(
                         columns = Columns.raw("gxcomp(*)")
-                    )
+                    ) {
+                        order("id", Order.ASCENDING)
+                    }
                 val dataList = result.decodeList<ComponentResult>()
                 if (dataList.isNotEmpty())
                     emit(ApiResult.Success(dataList))
@@ -89,7 +96,9 @@ class RemoteDataSource @Inject constructor(
                 val result = supabaseClient.postgrest["memories"]
                     .select(
                         columns = Columns.raw("gxcomp(*)")
-                    )
+                    ) {
+                        order("id", Order.ASCENDING)
+                    }
                 val dataList = result.decodeList<ComponentResult>()
                 if (dataList.isNotEmpty())
                     emit(ApiResult.Success(dataList))
@@ -106,7 +115,9 @@ class RemoteDataSource @Inject constructor(
                 val result = supabaseClient.postgrest["motherboards"]
                     .select(
                         columns = Columns.raw("gxcomp(*)")
-                    )
+                    ) {
+                        order("id", Order.ASCENDING)
+                    }
                 val dataList = result.decodeList<ComponentResult>()
                 if (dataList.isNotEmpty())
                     emit(ApiResult.Success(dataList))
@@ -123,7 +134,9 @@ class RemoteDataSource @Inject constructor(
                 val result = supabaseClient.postgrest["power_supplies"]
                     .select(
                         columns = Columns.raw("gxcomp(*)")
-                    )
+                    ) {
+                        order("id", Order.ASCENDING)
+                    }
                 val dataList = result.decodeList<ComponentResult>()
                 if (dataList.isNotEmpty())
                     emit(ApiResult.Success(dataList))
@@ -137,17 +150,47 @@ class RemoteDataSource @Inject constructor(
     suspend fun getAllStorages() : Flow<ApiResult<List<ComponentResult>>> =
         flow {
             try {
-                val result = supabaseClient.postgrest["storages"].select(
-                    columns = Columns.raw(
-                    """
-                        id_components,
-                        gxcomp(
-                            price, url, name, image, description
-                        )
-                    """
-                    )
-                )
+                val result = supabaseClient.postgrest["storages"]
+                    .select(
+                        columns = Columns.raw("gxcomp(*)")
+                    ) {
+                        order("id", Order.ASCENDING)
+                    }
                 val dataList = result.decodeList<ComponentResult>()
+                if (dataList.isNotEmpty())
+                    emit(ApiResult.Success(dataList))
+                else
+                    emit(ApiResult.Loading)
+            } catch (e : Exception) {
+                emit(ApiResult.Error(e.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+
+    suspend fun getAllIntelPCs() : Flow<ApiResult<List<PCBuildResult>>> =
+        flow {
+            try {
+                val result = supabaseClient.postgrest["pc_builds"].select {
+                    eq("category", 2)
+                    order("id", Order.ASCENDING)
+                }
+                val dataList = result.decodeList<PCBuildResult>()
+                if (dataList.isNotEmpty())
+                    emit(ApiResult.Success(dataList))
+                else
+                    emit(ApiResult.Loading)
+            } catch (e : Exception) {
+                emit(ApiResult.Error(e.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+
+    suspend fun getAllAMDPCs() : Flow<ApiResult<List<PCBuildResult>>> =
+        flow {
+            try {
+                val result = supabaseClient.postgrest["pc_builds"].select {
+                    eq("category", 1)
+                    order("id", Order.ASCENDING)
+                }
+                val dataList = result.decodeList<PCBuildResult>()
                 if (dataList.isNotEmpty())
                     emit(ApiResult.Success(dataList))
                 else

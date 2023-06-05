@@ -1,4 +1,4 @@
-package com.kaizen.bangunpc.data.source.local.entity.impl
+package com.kaizen.bangunpc.data.source.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
