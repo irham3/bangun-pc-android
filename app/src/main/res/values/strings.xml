@@ -14,4 +14,5 @@
     <string name="detail_produk">Detail Produk</string>
     <string name="catalog">Katalog Produk</string>
     <string name="about_page">about_page</string>
+    <string name="menu_favorite">Wishlist</string>
 </resources>

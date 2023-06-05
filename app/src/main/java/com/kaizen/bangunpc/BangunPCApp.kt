@@ -25,6 +25,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.kaizen.bangunpc.ui.components.BottomBar
 import com.kaizen.bangunpc.ui.navigation.NavigationItem
 import com.kaizen.bangunpc.ui.navigation.Screen
 import com.kaizen.bangunpc.ui.screen.catalog.CatalogScreen
@@ -83,61 +84,6 @@ fun BangunPCApp(
                     productId = id,
                     navigateBack = {
                         navController.navigateUp()
-                    }
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun BottomBar(
-    navController: NavHostController,
-    modifier: Modifier = Modifier
-) {
-    BottomNavigation(
-        modifier = modifier
-    ) {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
-        val navigationItems = listOf(
-            NavigationItem(
-                title = stringResource(R.string.menu_home),
-                icon = Icons.Default.Home,
-                screen = Screen.Home
-            ),
-            NavigationItem(
-                title = stringResource(R.string.menu_catalog),
-                icon = Icons.Default.ShoppingBag,
-                screen = Screen.Catalog
-            ),
-            NavigationItem(
-                title = stringResource(R.string.menu_profile),
-                icon = Icons.Default.AccountCircle,
-                screen = Screen.About
-            ),
-        )
-        BottomNavigation {
-            navigationItems.map { item ->
-                BottomNavigationItem(
-                    icon = {
-                        Icon(
-                            imageVector = item.icon,
-                            contentDescription = item.title,
-                        )
-                    },
-                    label = { Text(text = item.title) },
-                    selected = currentRoute == item.screen.route,
-                    selectedContentColor = Black,
-                    unselectedContentColor = LightGray,
-                    onClick = {
-                        navController.navigate(item.screen.route) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            restoreState = true
-                            launchSingleTop = true
-                        }
                     }
                 )
             }
