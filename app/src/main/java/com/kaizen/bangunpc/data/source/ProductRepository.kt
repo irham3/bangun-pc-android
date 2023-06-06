@@ -30,8 +30,8 @@ class ProductRepository @Inject constructor(
     override fun getAllPCBuilds(): Flow<List<ProductEntity>> =
         productLDS.getAllPCBuilds()
 
-    override fun getAllFavorites(): Flow<List<ProductEntity>> =
-        productLDS.getAllFavorites()
+    override fun getWishlist(): Flow<List<ProductEntity>> =
+        productLDS.getWishlist()
 
     override fun getAllIntelPCs(): Flow<UiState<List<ProductEntity>>> =
         object : NetworkBoundResource<List<ProductEntity>, List<PCBuildResult>>() {

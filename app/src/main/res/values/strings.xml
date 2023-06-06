@@ -15,4 +15,6 @@
     <string name="catalog">Katalog Produk</string>
     <string name="about_page">about_page</string>
     <string name="menu_favorite">Wishlist</string>
+    <string name="scroll_to_top">Scroll to top</string>
+    <string name="wishlist">Wishlist Produk</string>
 </resources>

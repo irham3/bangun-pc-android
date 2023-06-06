@@ -19,6 +19,7 @@ import com.kaizen.bangunpc.ui.screen.catalog.CatalogScreen
 import com.kaizen.bangunpc.ui.screen.home.HomeScreen
 import com.kaizen.bangunpc.ui.screen.profile.ProfileScreen
 import com.kaizen.bangunpc.ui.screen.detail.DetailProductScreen
+import com.kaizen.bangunpc.ui.screen.wishlist.WishlistScreen
 import com.kaizen.bangunpc.ui.theme.AppTheme
 
 @Composable
@@ -58,6 +59,9 @@ fun BangunPCApp(
                         navController.navigate(Screen.DetailProduct.createRoute(productId))
                     }
                 )
+            }
+            composable(Screen.Wishlist.route) {
+                WishlistScreen()
             }
             composable(Screen.Profile.route) {
                 ProfileScreen()

@@ -38,14 +38,14 @@ fun BottomBar(
                 screen = Screen.Home
             ),
             NavigationItem(
-                title = stringResource(R.string.menu_favorite),
-                icon = Icons.Default.Favorite,
-                screen = Screen.Wishlist
-            ),
-            NavigationItem(
                 title = stringResource(R.string.menu_catalog),
                 icon = Icons.Default.ShoppingBag,
                 screen = Screen.Catalog
+            ),
+            NavigationItem(
+                title = stringResource(R.string.menu_favorite),
+                icon = Icons.Default.Favorite,
+                screen = Screen.Wishlist
             ),
             NavigationItem(
                 title = stringResource(R.string.menu_profile),

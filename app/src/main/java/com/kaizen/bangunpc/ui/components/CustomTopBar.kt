@@ -22,7 +22,7 @@ import com.kaizen.bangunpc.ui.theme.AppTheme
 @Composable
 fun CustomTopBar(
     modifier: Modifier = Modifier,
-    height: Dp = 80.dp,
+    height: Dp = 50.dp,
     content: @Composable (() -> Unit)? = null
 ) {
     Box(modifier = modifier) {
@@ -38,7 +38,7 @@ fun CustomTopBar(
         Column (
             verticalArrangement = Arrangement.Center,
             modifier = modifier
-                .padding(16.dp)
+                .padding(8.dp)
         ){
             if (content != null) content()
         }
@@ -51,7 +51,9 @@ fun CustomTopBar(
 fun CustomTopBarPreview() {
     AppTheme {
         Scaffold {
-            CustomTopBar()
+            CustomTopBar(
+                content = { ScreenTitleText(title = "Judul") }
+            )
         }
     }
 }

@@ -18,7 +18,7 @@ fun ScreenTitleText(
         color = Color.White,
         modifier = Modifier.wrapContentHeight(),
         overflow = TextOverflow.Ellipsis,
-        style = MaterialTheme.typography.h4.copy(
+        style = MaterialTheme.typography.h5.copy(
             fontWeight = FontWeight.Medium
         ),
     )
