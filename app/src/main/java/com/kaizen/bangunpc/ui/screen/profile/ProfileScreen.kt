@@ -1,4 +1,4 @@
-package com.kaizen.bangunpc.ui.screen.about
+package com.kaizen.bangunpc.ui.screen.profile
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
@@ -29,7 +29,7 @@ import com.kaizen.bangunpc.ui.theme.AppTheme
 import com.kaizen.bangunpc.ui.theme.Orange
 
 @Composable
-fun AboutScreen(modifier: Modifier = Modifier) {
+fun ProfileScreen(modifier: Modifier = Modifier) {
     Column {
         CustomTopBar(
             content = {
@@ -82,7 +82,7 @@ fun ImageProfile(modifier: Modifier = Modifier) {
 fun ProfileScreenPreview() {
     AppTheme {
         Scaffold {
-            AboutScreen()
+            ProfileScreen()
         }
     }
 }

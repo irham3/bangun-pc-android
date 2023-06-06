@@ -1,23 +1,11 @@
 package com.kaizen.bangunpc
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.ShoppingBag
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.graphics.Color.Companion.LightGray
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -26,11 +14,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.kaizen.bangunpc.ui.components.BottomBar
-import com.kaizen.bangunpc.ui.navigation.NavigationItem
 import com.kaizen.bangunpc.ui.navigation.Screen
 import com.kaizen.bangunpc.ui.screen.catalog.CatalogScreen
 import com.kaizen.bangunpc.ui.screen.home.HomeScreen
-import com.kaizen.bangunpc.ui.screen.about.AboutScreen
+import com.kaizen.bangunpc.ui.screen.profile.ProfileScreen
 import com.kaizen.bangunpc.ui.screen.detail.DetailProductScreen
 import com.kaizen.bangunpc.ui.theme.AppTheme
 
@@ -58,7 +45,7 @@ fun BangunPCApp(
             composable(Screen.Home.route) {
                 HomeScreen(
                     navigateToAbout = {
-                        navController.navigate(Screen.About.route)
+                        navController.navigate(Screen.Profile.route)
                     },
                     navigateToDetailProduct = { productId ->
                         navController.navigate(Screen.DetailProduct.createRoute(productId))
@@ -72,8 +59,8 @@ fun BangunPCApp(
                     }
                 )
             }
-            composable(Screen.About.route) {
-                AboutScreen()
+            composable(Screen.Profile.route) {
+                ProfileScreen()
             }
             composable(
                 route = Screen.DetailProduct.route,

@@ -10,7 +10,6 @@ object DataMapper {
         val productList = ArrayList<ProductEntity>()
         input.map {
             val product = ProductEntity(
-                id = it.gxcomp.id,
                 name = it.gxcomp.name,
                 price = it.gxcomp.price,
                 url = it.gxcomp.url,
@@ -29,7 +28,6 @@ object DataMapper {
         val productList = ArrayList<ProductEntity>()
         input.map {
             val product = ProductEntity(
-                id = it.id,
                 name = it.name,
                 price = it.price,
                 url = it.url,

@@ -40,7 +40,7 @@ fun BottomBar(
             NavigationItem(
                 title = stringResource(R.string.menu_favorite),
                 icon = Icons.Default.Favorite,
-                screen = Screen.Favorite
+                screen = Screen.Wishlist
             ),
             NavigationItem(
                 title = stringResource(R.string.menu_catalog),
@@ -50,7 +50,7 @@ fun BottomBar(
             NavigationItem(
                 title = stringResource(R.string.menu_profile),
                 icon = Icons.Default.AccountCircle,
-                screen = Screen.About
+                screen = Screen.Profile
             ),
         )
         BottomNavigation {

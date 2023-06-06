@@ -27,12 +27,12 @@ class HomeViewModel @Inject constructor(
 
     fun getAllComponents() {
         viewModelScope.launch {
-            repository.getAllComponents()
+            repository.getAllCasings()
                 .catch {
                     _componentState.value = UiState.Error(it.message.toString())
                 }
                 .collect {
-                    _componentState.value = UiState.Success(it)
+                    _componentState.value = it
                 }
         }
     }
