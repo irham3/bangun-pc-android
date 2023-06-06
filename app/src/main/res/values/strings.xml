@@ -17,4 +17,5 @@
     <string name="menu_favorite">Wishlist</string>
     <string name="scroll_to_top">Scroll to top</string>
     <string name="wishlist">Wishlist Produk</string>
+    <string name="search_product">Cari produk</string>
 </resources>

@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,6 +26,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -38,56 +40,66 @@ import com.kaizen.bangunpc.R
 import com.kaizen.bangunpc.data.source.UiState
 import com.kaizen.bangunpc.ui.components.CustomTopBar
 import com.kaizen.bangunpc.ui.components.ProductVerticalGrid
-import com.kaizen.bangunpc.ui.components.ScreenTitleText
+import com.kaizen.bangunpc.ui.components.SearchBar
 import com.kaizen.bangunpc.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 
 @Composable
 fun CatalogScreen(
+    modifier: Modifier = Modifier,
     navigateToDetailProduct: (Int) -> Unit = {},
-    catalogViewModel: CatalogViewModel = hiltViewModel()
+    viewModel: CatalogViewModel = hiltViewModel()
 ) {
-    val products by catalogViewModel.productsState.collectAsState(initial = UiState.Loading)
+    val keyword by viewModel.query
+    val products by viewModel.productsState.collectAsState(initial = UiState.Loading)
     val context = LocalContext.current
 
-    val scope = rememberCoroutineScope()
-    val gridState = rememberLazyGridState()
-    val showButton: Boolean by remember {
-        derivedStateOf { gridState.firstVisibleItemIndex > 0 }
-    }
-    Column {
-        CustomTopBar(
-            content = { ScreenTitleText(title = stringResource(R.string.catalog)) }
-        )
-        products.let { uiState ->
-            when(uiState) {
-                is UiState.Error -> {
-                    Toast.makeText(
-                        context,
-                        uiState.errorMessage,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                UiState.Loading -> {
-                    catalogViewModel.getAllProducts()
-                }
-                is UiState.Success -> {
-                    ProductVerticalGrid(
-                        state = gridState,
-                        listProduct = uiState.data,
-                        navigateToDetailProduct = navigateToDetailProduct
+    Box (modifier = modifier){
+        val scope = rememberCoroutineScope()
+        val gridState = rememberLazyGridState()
+        val showSttButton: Boolean by remember {
+            derivedStateOf { gridState.firstVisibleItemIndex > 0 }
+        }
+
+        Column {
+            CustomTopBar(
+                content = {
+                    SearchBar(
+                        query = keyword,
+                        onQueryChange = viewModel::search
                     )
+                }
+            )
+            products.let { uiState ->
+                when(uiState) {
+                    is UiState.Error -> {
+                        Toast.makeText(
+                            context,
+                            uiState.errorMessage,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    UiState.Loading -> {
+                        viewModel.getAllProducts()
+                    }
+                    is UiState.Success -> {
+                        ProductVerticalGrid(
+                            state = gridState,
+                            listProduct = uiState.data,
+                            navigateToDetailProduct = navigateToDetailProduct
+                        )
+                    }
                 }
             }
         }
 
         AnimatedVisibility(
-            visible = showButton,
+            visible = showSttButton,
             enter = fadeIn() + slideInVertically(),
             exit = fadeOut() + slideOutVertically(),
             modifier = Modifier
-                .padding(bottom = 30.dp)
-//                .align(Alignment.BottomCenter)
+                .padding(bottom = 20.dp, end = 20.dp)
+                .align(Alignment.BottomEnd)
         ) {
             ScrollToTopButton(
                 onClick = {
@@ -110,9 +122,11 @@ fun ScrollToTopButton(
         modifier = modifier
             .shadow(10.dp, shape = CircleShape)
             .clip(shape = CircleShape)
-            .size(56.dp),
+            .size(50.dp),
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = Color.White,
+            backgroundColor = Color.Black.copy(
+                alpha = 0.7F
+            ),
             contentColor = MaterialTheme.colors.primary
         )
     ) {
@@ -122,6 +136,7 @@ fun ScrollToTopButton(
         )
     }
 }
+
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Preview

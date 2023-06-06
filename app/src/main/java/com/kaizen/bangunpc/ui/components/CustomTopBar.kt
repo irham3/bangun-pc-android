@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,10 +23,10 @@ import com.kaizen.bangunpc.ui.theme.AppTheme
 @Composable
 fun CustomTopBar(
     modifier: Modifier = Modifier,
-    height: Dp = 50.dp,
+    height: Dp = 60.dp,
     content: @Composable (() -> Unit)? = null
 ) {
-    Box(modifier = modifier) {
+    Box(modifier = modifier.shadow(8.dp)) {
         Image(
             painter = painterResource(id = R.drawable.banner),
             contentDescription = "Banner Image",
@@ -48,11 +49,11 @@ fun CustomTopBar(
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Preview
 @Composable
-fun CustomTopBarPreview() {
+private fun CustomTopBarPreview() {
     AppTheme {
         Scaffold {
             CustomTopBar(
-                content = { ScreenTitleText(title = "Judul") }
+                content = { ScreenTitleText(title = "Title") }
             )
         }
     }

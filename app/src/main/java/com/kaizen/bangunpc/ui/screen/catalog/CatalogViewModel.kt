@@ -1,5 +1,7 @@
 package com.kaizen.bangunpc.ui.screen.catalog
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kaizen.bangunpc.data.source.ProductRepository
@@ -16,6 +18,9 @@ import javax.inject.Inject
 class CatalogViewModel @Inject constructor(
     private val repository: ProductRepository
 ) : ViewModel(){
+    private val _query = mutableStateOf("")
+    val query: State<String> get() = _query
+
     private val _products: MutableStateFlow<UiState<List<ProductEntity>>> = MutableStateFlow(UiState.Loading)
     val productsState = _products.asStateFlow()
 
@@ -29,5 +34,9 @@ class CatalogViewModel @Inject constructor(
                     _products.value = UiState.Success(it)
                 }
         }
+    }
+
+    fun search(newQuery: String) {
+        _query.value = newQuery
     }
 }
