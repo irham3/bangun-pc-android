@@ -24,10 +24,10 @@ import com.kaizen.bangunpc.utils.toRupiahFormat
 
 @Composable
 fun ProductItem(
+    modifier: Modifier = Modifier,
     image: String,
     name: String,
     price: Int,
-    modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
@@ -38,7 +38,7 @@ fun ProductItem(
         Column {
             AsyncImage(
                 model = image,
-                contentDescription = null,
+                contentDescription = name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
