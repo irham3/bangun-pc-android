@@ -13,7 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.kaizen.bangunpc.ui.components.BottomBar
+import com.kaizen.bangunpc.ui.components.BottomNavbarMain
 import com.kaizen.bangunpc.ui.navigation.Screen
 import com.kaizen.bangunpc.ui.screen.catalog.CatalogScreen
 import com.kaizen.bangunpc.ui.screen.home.HomeScreen
@@ -33,7 +33,7 @@ fun BangunPCApp(
     Scaffold(
         bottomBar = {
             if (currentRoute != Screen.DetailProduct.route)
-                BottomBar(navController)
+                BottomNavbarMain(navController)
         },
         modifier = modifier
     ) { innerPadding ->

@@ -1,6 +1,7 @@
 package com.kaizen.bangunpc.data.source
 
 import com.kaizen.bangunpc.data.source.remote.network.ApiResult
+import com.kaizen.bangunpc.ui.common.UiState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first

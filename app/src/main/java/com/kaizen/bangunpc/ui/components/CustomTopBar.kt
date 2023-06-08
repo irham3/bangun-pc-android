@@ -24,18 +24,11 @@ import com.kaizen.bangunpc.ui.theme.AppTheme
 fun CustomTopBar(
     modifier: Modifier = Modifier,
     height: Dp = 60.dp,
+    topBarBackground: @Composable (() -> Unit) = { DefaultTopBarBackground(height = height) },
     content: @Composable (() -> Unit)? = null
 ) {
     Box(modifier = modifier.shadow(8.dp)) {
-        Image(
-            painter = painterResource(id = R.drawable.banner),
-            contentDescription = "Banner Image",
-            contentScale = ContentScale.Crop,
-            modifier = modifier
-                .height(height)
-                .fillMaxWidth()
-        )
-
+        topBarBackground()
         Column (
             verticalArrangement = Arrangement.Center,
             modifier = modifier
@@ -44,6 +37,21 @@ fun CustomTopBar(
             if (content != null) content()
         }
     }
+}
+
+@Composable
+private fun DefaultTopBarBackground(
+    modifier: Modifier = Modifier,
+    height: Dp
+) {
+    Image(
+        painter = painterResource(id = R.drawable.banner),
+        contentDescription = "Banner Image",
+        contentScale = ContentScale.Crop,
+        modifier = modifier
+            .height(height)
+            .fillMaxWidth()
+    )
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")

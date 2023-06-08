@@ -1,4 +1,4 @@
-package com.kaizen.bangunpc.data.source
+package com.kaizen.bangunpc.ui.common
 
 sealed class UiState<out T: Any?> {
 

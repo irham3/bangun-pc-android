@@ -37,7 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaizen.bangunpc.R
-import com.kaizen.bangunpc.data.source.UiState
+import com.kaizen.bangunpc.ui.common.UiState
 import com.kaizen.bangunpc.ui.components.CustomTopBar
 import com.kaizen.bangunpc.ui.components.layouts.ProductVerticalGrid
 import com.kaizen.bangunpc.ui.components.SearchBar

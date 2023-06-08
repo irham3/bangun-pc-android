@@ -11,22 +11,22 @@ data class ProductEntity (
     var id: Int = 0,
 
     @ColumnInfo(name = "name")
-    var name: String,
+    var name: String = "",
 
     @ColumnInfo(name = "price")
-    var price: Int,
+    var price: Int = 0,
 
     @ColumnInfo(name = "url")
-    var url: String,
+    var url: String = "",
 
     @ColumnInfo(name = "description")
-    var description: String,
+    var description: String = "",
 
     @ColumnInfo(name = "image")
-    var image: String,
+    var image: String = "",
 
     @ColumnInfo(name = "category")
-    var category: String,
+    var category: String = "",
 
     @ColumnInfo(name = "isPCBuild")
     var isPCBuild: Boolean = false,

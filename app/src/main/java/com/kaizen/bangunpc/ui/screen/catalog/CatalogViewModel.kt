@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kaizen.bangunpc.data.source.ProductRepository
-import com.kaizen.bangunpc.data.source.UiState
+import com.kaizen.bangunpc.ui.common.UiState
 import com.kaizen.bangunpc.data.source.local.entity.ProductEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

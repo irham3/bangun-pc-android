@@ -3,7 +3,7 @@ package com.kaizen.bangunpc.ui.screen.wishlist
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kaizen.bangunpc.data.source.ProductRepository
-import com.kaizen.bangunpc.data.source.UiState
+import com.kaizen.bangunpc.ui.common.UiState
 import com.kaizen.bangunpc.data.source.local.entity.ProductEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,8 @@ import javax.inject.Inject
 class WishlistViewModel @Inject constructor(
     private val repository: ProductRepository
 ) : ViewModel() {
-    private val _wishlistState: MutableStateFlow<UiState<List<ProductEntity>>> = MutableStateFlow(UiState.Loading)
+    private val _wishlistState: MutableStateFlow<UiState<List<ProductEntity>>> = MutableStateFlow(
+        UiState.Loading)
     val wishlistState = _wishlistState.asStateFlow()
 
     fun getWishlist() {

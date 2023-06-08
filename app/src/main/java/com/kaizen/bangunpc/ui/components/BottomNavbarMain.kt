@@ -22,7 +22,7 @@ import com.kaizen.bangunpc.ui.navigation.NavigationItem
 import com.kaizen.bangunpc.ui.navigation.Screen
 
 @Composable
-fun BottomBar(
+fun BottomNavbarMain(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {

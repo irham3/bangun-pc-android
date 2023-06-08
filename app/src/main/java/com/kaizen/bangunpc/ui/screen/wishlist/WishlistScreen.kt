@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaizen.bangunpc.R
-import com.kaizen.bangunpc.data.source.UiState
+import com.kaizen.bangunpc.ui.common.UiState
 import com.kaizen.bangunpc.ui.components.CustomTopBar
 import com.kaizen.bangunpc.ui.components.ScreenTitleText
 import com.kaizen.bangunpc.ui.components.layouts.ProductVerticalList
