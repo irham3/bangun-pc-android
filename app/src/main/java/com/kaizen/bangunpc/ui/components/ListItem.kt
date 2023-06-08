@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -27,7 +28,7 @@ import com.kaizen.bangunpc.ui.theme.Orange
 import com.kaizen.bangunpc.utils.toRupiahFormat
 
 @Composable
-fun WishlistItem(
+fun ListItem(
     modifier: Modifier = Modifier,
     image: String,
     name: String,
@@ -35,12 +36,14 @@ fun WishlistItem(
 ) {
     Card(
         modifier = modifier
-            .padding(vertical = 4.dp, horizontal = 8.dp)
+            .padding(vertical = 2.dp, horizontal = 4.dp)
             .shadow(8.dp),
         shape = MaterialTheme.shapes.medium,
     ) {
         Row(
-            modifier = modifier.padding(8.dp),
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
@@ -77,7 +80,7 @@ private fun WishlistItemPreview() {
     AppTheme {
         Column {
             for (i in 1..5) {
-                WishlistItem(
+                ListItem(
                     image = "https://onawoodgnwkncueeyusr.supabase.co/storage/v1/object/public/component-images/motherboards/MSI%20B450%20A%20Pro%20MAX.png?t=2023-05-07T15%3A30%3A29.959Z",
                     name = "PC RAKITAN GAMING | INTEL CORE i5 | RX 6600 | SSD 256GB",
                     price = 1295000,

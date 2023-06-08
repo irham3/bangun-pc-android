@@ -61,7 +61,11 @@ fun BangunPCApp(
                 )
             }
             composable(Screen.Wishlist.route) {
-                WishlistScreen()
+                WishlistScreen(
+                    navigateToDetailProduct = { productId ->
+                        navController.navigate(Screen.DetailProduct.createRoute(productId))
+                    }
+                )
             }
             composable(Screen.Profile.route) {
                 ProfileScreen()

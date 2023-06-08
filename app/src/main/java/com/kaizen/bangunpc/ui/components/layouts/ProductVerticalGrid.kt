@@ -1,4 +1,4 @@
-package com.kaizen.bangunpc.ui.components
+package com.kaizen.bangunpc.ui.components.layouts
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.kaizen.bangunpc.data.source.local.entity.ProductEntity
+import com.kaizen.bangunpc.ui.components.GridItem
 
 @Composable
 fun ProductVerticalGrid(
@@ -29,7 +30,7 @@ fun ProductVerticalGrid(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         items(listProduct, key = { it.id }) { product ->
-            ProductItem(
+            GridItem(
                 image = product.image,
                 name = product.name,
                 price = product.price,

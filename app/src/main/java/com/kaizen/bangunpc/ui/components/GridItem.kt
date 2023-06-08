@@ -23,7 +23,7 @@ import coil.compose.AsyncImage
 import com.kaizen.bangunpc.utils.toRupiahFormat
 
 @Composable
-fun ProductItem(
+fun GridItem(
     modifier: Modifier = Modifier,
     image: String,
     name: String,
@@ -69,7 +69,7 @@ fun ProductItem(
 @Preview(showBackground = true)
 fun ProductItemPreview() {
     MaterialTheme {
-        ProductItem(
+        GridItem(
             image = "https://onawoodgnwkncueeyusr.supabase.co/storage/v1/object/public/component-images/motherboards/MSI%20B450%20A%20Pro%20MAX.png?t=2023-05-07T15%3A30%3A29.959Z",
             name = "PC RAKITAN GAMING | INTEL CORE i5 | RX 6600 | SSD 256GB",
             price = 1295000,

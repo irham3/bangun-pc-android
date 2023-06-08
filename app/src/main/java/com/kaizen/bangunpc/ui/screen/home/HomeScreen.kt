@@ -6,13 +6,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -26,7 +24,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaizen.bangunpc.R
@@ -34,8 +31,7 @@ import com.kaizen.bangunpc.data.source.UiState
 import com.kaizen.bangunpc.ui.components.CustomTopBar
 import com.kaizen.bangunpc.ui.components.GXCompCarousel
 import com.kaizen.bangunpc.ui.components.ProductHighlight
-import com.kaizen.bangunpc.ui.components.ProductRow
-import com.kaizen.bangunpc.ui.theme.AppTheme
+import com.kaizen.bangunpc.ui.components.layouts.ProductHorizontalList
 
 @Composable
 fun HomeScreen(
@@ -98,7 +94,7 @@ fun HomeScreen(
                     ProductHighlight(
                         title = stringResource(R.string.section_rakitan_intel),
                         content = {
-                            ProductRow(
+                            ProductHorizontalList(
                                 uiState.data,
                                 navigateToDetailProduct = navigateToDetailProduct
                             )
@@ -119,7 +115,7 @@ fun HomeScreen(
                     ProductHighlight(
                         title = stringResource(R.string.section_rakitan_amd),
                         content = {
-                            ProductRow(
+                            ProductHorizontalList(
                                 uiState.data,
                                 navigateToDetailProduct = navigateToDetailProduct
                             )

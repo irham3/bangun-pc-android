@@ -1,4 +1,4 @@
-package com.kaizen.bangunpc.ui.components
+package com.kaizen.bangunpc.ui.components.layouts
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -9,9 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.kaizen.bangunpc.data.source.local.entity.ProductEntity
+import com.kaizen.bangunpc.ui.components.GridItem
 
 @Composable
-fun ProductRow(
+fun ProductHorizontalList(
     listProduct: List<ProductEntity>,
     modifier: Modifier = Modifier,
     navigateToDetailProduct: (Int) -> Unit
@@ -22,7 +23,7 @@ fun ProductRow(
         modifier = modifier
     ) {
         items(listProduct, key = { it.id }) { product ->
-            ProductItem(
+            GridItem(
                 image = product.image,
                 name = product.name,
                 price = product.price,

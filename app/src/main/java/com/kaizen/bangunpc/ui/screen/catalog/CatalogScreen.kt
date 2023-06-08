@@ -39,7 +39,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaizen.bangunpc.R
 import com.kaizen.bangunpc.data.source.UiState
 import com.kaizen.bangunpc.ui.components.CustomTopBar
-import com.kaizen.bangunpc.ui.components.ProductVerticalGrid
+import com.kaizen.bangunpc.ui.components.layouts.ProductVerticalGrid
 import com.kaizen.bangunpc.ui.components.SearchBar
 import com.kaizen.bangunpc.ui.theme.AppTheme
 import kotlinx.coroutines.launch

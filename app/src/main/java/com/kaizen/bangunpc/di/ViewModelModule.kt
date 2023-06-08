@@ -5,6 +5,7 @@ import com.kaizen.bangunpc.data.source.ProductRepository
 import com.kaizen.bangunpc.ui.screen.catalog.CatalogViewModel
 import com.kaizen.bangunpc.ui.screen.detail.DetailViewModel
 import com.kaizen.bangunpc.ui.screen.home.HomeViewModel
+import com.kaizen.bangunpc.ui.screen.wishlist.WishlistViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,4 +28,8 @@ object ViewModelModule {
     @Provides
     fun provideCatalogViewModel(repo: ProductRepository) : CatalogViewModel =
         CatalogViewModel(repo)
+
+    @Provides
+    fun provideWishlistViewModel(repo: ProductRepository) : WishlistViewModel =
+        WishlistViewModel(repo)
 }
