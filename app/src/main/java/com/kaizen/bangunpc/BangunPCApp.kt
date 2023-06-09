@@ -5,6 +5,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -86,7 +87,10 @@ fun BangunPCApp(
     }
 }
 
-@Preview
+@Preview(
+    device = Devices.PIXEL_4,
+    showSystemUi = true
+)
 @Composable
 fun BangunPCAppPreview() {
     AppTheme {
