@@ -1,13 +1,16 @@
 package com.kaizen.bangunpc.ui.screen.detail
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -37,6 +40,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
@@ -49,8 +53,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.kaizen.bangunpc.R
 import com.kaizen.bangunpc.data.source.local.entity.ProductEntity
-import com.kaizen.bangunpc.ui.components.CustomTopBar
-import com.kaizen.bangunpc.ui.components.ScreenTitleText
+import com.kaizen.bangunpc.ui.components.CircleButton
 import com.kaizen.bangunpc.ui.theme.Green
 import com.kaizen.bangunpc.ui.theme.Orange
 import com.kaizen.bangunpc.utils.toRupiahFormat
@@ -68,48 +71,116 @@ fun DetailProductScreen(
     val isFavorite by viewModel.isFavorite
 
     Scaffold(
-        topBar = {
-            CustomTopBar(
-                content = {
-                    DetailTopBar(
-                        navigateBack = navigateBack
-                    )
-                }
-            )
-        },
         bottomBar = {
-            DetailBottomBar()
+            DetailBottomBar(url = detailState.data.url)
         }
     ) {
-        Column(
-            modifier = modifier
-                .padding(top = 16.dp, start = 16.dp, end = 16.dp)
-        ) {
+        Column {
             DetailHeader(
+                modifier = modifier,
                 detailProduct = detailState.data,
                 setFavorite = viewModel::setFavorite,
+                navigateBack = navigateBack,
                 isFavorite = isFavorite
             )
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(vertical = 16.dp)
-                    .verticalScroll(rememberScrollState())
-            ) {
-                Text(
-                    text = detailState.data.description,
-                    style = MaterialTheme.typography.body2,
-                    textAlign = TextAlign.Justify,
-                )
-
-            }
+            DetailDescription(detailProduct = detailState.data)
         }
+
+    }
+}
+
+@Composable
+private fun DetailHeader(
+    modifier: Modifier = Modifier,
+    navigateBack: () -> Unit,
+    detailProduct: ProductEntity,
+    setFavorite: () -> Unit,
+    isFavorite: Boolean
+) {
+    Box(modifier = modifier){
+        AsyncImage(
+            model = detailProduct.image,
+            contentDescription = detailProduct.name,
+            contentScale = ContentScale.Crop,
+            modifier = modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .clip(RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp))
+        )
+        CircleButton(
+            modifier = modifier.padding(8.dp),
+            onClick = { navigateBack() },
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = stringResource(R.string.back),
+                )
+            },
+            buttonColors = ButtonDefaults.buttonColors(
+                backgroundColor = Color.Black.copy(
+                    alpha = 0.5F
+                ),
+                contentColor = MaterialTheme.colors.primary
+            )
+        )
+    }
+    Column(
+        modifier = modifier
+            .padding(top = 4.dp, start = 16.dp, end = 16.dp)
+    ) {
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(modifier = modifier.weight(1f)) {
+                Text(
+                    color = Color.Black,
+                    text = detailProduct.name,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+                Text(
+                    color = Orange,
+                    text = detailProduct.price.toRupiahFormat(),
+                    style = MaterialTheme.typography.body1.copy(
+                        fontStyle = FontStyle.Italic
+                    )
+                )
+            }
+            FavoriteIcon(setFavorite = setFavorite, isFavorite = isFavorite)
+        }
+    }
+    Divider()
+}
+
+@Composable
+private fun DetailDescription(
+    detailProduct: ProductEntity,
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxHeight()
+            .padding(top = 8.dp, bottom = 60.dp, start = 16.dp, end = 16.dp)
+            .verticalScroll(rememberScrollState())
+    ) {
+        Text(
+            text = detailProduct.description,
+            style = MaterialTheme.typography.body1,
+            textAlign = TextAlign.Justify,
+        )
+
     }
 }
 
 @Composable
 fun DetailBottomBar(
     modifier: Modifier = Modifier,
+    url: String,
 ) {
     Row(
         modifier = modifier
@@ -119,73 +190,8 @@ fun DetailBottomBar(
             .background(Color.White),
         horizontalArrangement = Arrangement.End
     ) {
-        TokopediaButton()
+        TokopediaButton(url)
     }
-}
-
-@Composable
-private fun DetailTopBar(
-    modifier: Modifier = Modifier,
-    navigateBack: () -> Unit
-) {
-    Row {
-        Icon(
-            imageVector = Icons.Default.ArrowBack,
-            tint = Color.White,
-            contentDescription = stringResource(R.string.back),
-            modifier = modifier
-                .size(48.dp)
-                .padding(6.dp)
-                .clickable { navigateBack() }
-        )
-        Spacer(modifier = modifier.width(8.dp))
-        ScreenTitleText(title = stringResource(R.string.detail_produk))
-    }
-}
-
-@Composable
-private fun DetailHeader(
-    modifier: Modifier = Modifier,
-    detailProduct: ProductEntity,
-    setFavorite: () -> Unit,
-    isFavorite: Boolean
-) {
-    AsyncImage(
-        model = detailProduct.image,
-        contentDescription = detailProduct.name,
-        contentScale = ContentScale.Crop,
-        modifier = modifier
-            .fillMaxWidth()
-            .height(200.dp)
-            .clip(RoundedCornerShape(8.dp))
-    )
-    Spacer(modifier = modifier.width(8.dp))
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Column(modifier = modifier.weight(1f)) {
-            Text(
-                color = Color.Black,
-                text = detailProduct.name,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-            )
-            Text(
-                color = Orange,
-                text = detailProduct.price.toRupiahFormat(),
-                style = MaterialTheme.typography.body1.copy(
-                    fontStyle = FontStyle.Italic
-                )
-            )
-        }
-        FavoriteIcon(setFavorite = setFavorite, isFavorite = isFavorite)
-    }
-    Divider()
 }
 
 @Composable
@@ -203,12 +209,20 @@ private fun FavoriteIcon(
 
 @Composable
 private fun TokopediaButton(
+    url: String
 ) {
+    val ctx = LocalContext.current
     Button(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth(),
-        onClick = {},
+        onClick = {
+            val urlIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(url)
+            )
+            ctx.startActivity(urlIntent)
+        },
         colors = ButtonDefaults.buttonColors(backgroundColor = Green))
     {
         Image(
