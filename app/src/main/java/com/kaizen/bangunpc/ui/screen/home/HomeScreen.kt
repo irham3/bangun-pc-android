@@ -40,7 +40,6 @@ fun HomeScreen(
     homeViewModel: HomeViewModel = hiltViewModel(),
     navigateToDetailProduct: (Int) -> Unit = {},
 ) {
-//    val components by homeViewModel.componentState.collectAsState(initial = UiState.Loading)
     val intelPCs by homeViewModel.intelPCState.collectAsState(initial = UiState.Loading)
     val amdPCs by homeViewModel.amdPCState.collectAsState(initial = UiState.Loading)
 

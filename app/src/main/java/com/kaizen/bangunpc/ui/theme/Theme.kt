@@ -9,11 +9,11 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-private val DarkColorPalette = darkColors(
-    primary = Orange,
-    primaryVariant = Navy700,
-    secondary = Turquoise500
-)
+//private val DarkColorPalette = darkColors(
+//    primary = Orange,
+//    primaryVariant = Navy700,
+//    secondary = Turquoise500
+//)
 
 private val LightColorPalette = lightColors(
     primary = White,
@@ -33,7 +33,7 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun AppTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val colors = if (darkTheme) DarkColorPalette
+    val colors = if (darkTheme) LightColorPalette
         else LightColorPalette
 
     val systemUiController = rememberSystemUiController()

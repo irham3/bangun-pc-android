@@ -6,6 +6,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.DesignServices
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ShoppingBag
@@ -48,9 +49,9 @@ fun BottomNavbarMain(
                 screen = Screen.Wishlist
             ),
             NavigationItem(
-                title = stringResource(R.string.menu_profile),
-                icon = Icons.Default.AccountCircle,
-                screen = Screen.Profile
+                title = stringResource(R.string.service),
+                icon = Icons.Default.DesignServices,
+                screen = Screen.Service
             ),
         )
         BottomNavigation {

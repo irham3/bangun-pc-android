@@ -20,6 +20,7 @@ import com.kaizen.bangunpc.ui.screen.catalog.CatalogScreen
 import com.kaizen.bangunpc.ui.screen.home.HomeScreen
 import com.kaizen.bangunpc.ui.screen.profile.ProfileScreen
 import com.kaizen.bangunpc.ui.screen.detail.DetailProductScreen
+import com.kaizen.bangunpc.ui.screen.service.ServiceScreen
 import com.kaizen.bangunpc.ui.screen.wishlist.WishlistScreen
 import com.kaizen.bangunpc.ui.theme.AppTheme
 
@@ -30,10 +31,16 @@ fun BangunPCApp(
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+    val bottomBarRoutes = listOf(
+        Screen.Home.route,
+        Screen.Catalog.route,
+        Screen.Wishlist.route,
+        Screen.Service.route
+    )
 
     Scaffold(
         bottomBar = {
-            if (currentRoute != Screen.DetailProduct.route)
+            if (currentRoute in bottomBarRoutes)
                 BottomNavbarMain(navController)
         },
         modifier = modifier
@@ -68,8 +75,11 @@ fun BangunPCApp(
                     }
                 )
             }
+            composable(Screen.Service.route) {
+                ServiceScreen()
+            }
             composable(Screen.Profile.route) {
-                ProfileScreen()
+                ProfileScreen(navigateBack = {navController.navigateUp()})
             }
             composable(
                 route = Screen.DetailProduct.route,

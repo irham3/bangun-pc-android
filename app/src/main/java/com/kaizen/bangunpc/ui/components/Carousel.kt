@@ -1,7 +1,10 @@
 package com.kaizen.bangunpc.ui.components
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
@@ -26,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -106,26 +110,36 @@ fun Carousel(
         }
     }
 }
-val images = listOf(
-    "https://images.tokopedia.net/img/cache/1200/BgtCLw/2022/11/3/b00947ff-54f2-4536-beaf-62d1d34c15de.jpg",
-    "https://images.tokopedia.net/img/cache/1200/BgtCLw/2022/11/4/d491cd1e-a22c-4e8e-a326-0838467a3c8d.jpg",
+
+val carouselItems = listOf(
+    Pair("https://images.tokopedia.net/img/cache/1200/BgtCLw/2022/11/3/b00947ff-54f2-4536-beaf-62d1d34c15de.jpg", "https://tokopedia.link/epwE0EYsvAb"),
+    Pair("https://images.tokopedia.net/img/cache/1200/BgtCLw/2023/5/24/aa7edca8-b28b-487b-8a62-957c872693f2.jpg", "https://tokopedia.link/NcncH1NtvAb"),
 )
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GXCompCarousel() {
+    val ctx = LocalContext.current
     Card(
         modifier = Modifier.padding(16.dp),
         shape = RoundedCornerShape(16.dp),
     ) {
         Carousel(
-            itemsCount = images.size,
+            itemsCount = carouselItems.size,
             itemContent = { index ->
                 AsyncImage(
-                    model = images[index],
+                    model = carouselItems[index].first,
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.height(160.dp)
+                    modifier = Modifier
+                        .height(160.dp)
+                        .clickable {
+                            val urlIntent = Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(carouselItems[index].second)
+                            )
+                            ctx.startActivity(urlIntent)
+                        }
                 )
             }
         )

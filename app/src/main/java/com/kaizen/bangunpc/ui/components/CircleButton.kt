@@ -20,7 +20,6 @@ fun CircleButton(
     Button(
         onClick = onClick,
         modifier = modifier
-            .shadow(10.dp, shape = CircleShape)
             .clip(shape = CircleShape)
             .size(50.dp),
         colors = buttonColors

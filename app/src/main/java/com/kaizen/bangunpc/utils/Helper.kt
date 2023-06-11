@@ -6,5 +6,5 @@ import java.util.Locale
 fun Int.toRupiahFormat(): String {
     val localeID = Locale("in", "ID")
     val formatRupiah = NumberFormat.getCurrencyInstance(localeID)
-    return formatRupiah.format(this.toDouble())
+    return formatRupiah.format(this.toDouble().toInt())
 }

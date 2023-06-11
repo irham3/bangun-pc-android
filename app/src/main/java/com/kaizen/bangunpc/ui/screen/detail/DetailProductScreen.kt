@@ -55,7 +55,6 @@ import com.kaizen.bangunpc.R
 import com.kaizen.bangunpc.data.source.local.entity.ProductEntity
 import com.kaizen.bangunpc.ui.components.CircleButton
 import com.kaizen.bangunpc.ui.theme.Green
-import com.kaizen.bangunpc.ui.theme.Orange
 import com.kaizen.bangunpc.utils.toRupiahFormat
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -140,14 +139,14 @@ private fun DetailHeader(
                     text = detailProduct.name,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
-                    fontSize = 16.sp,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                 )
                 Text(
-                    color = Orange,
+                    color = Color.Black,
                     text = detailProduct.price.toRupiahFormat(),
                     style = MaterialTheme.typography.body1.copy(
-                        fontStyle = FontStyle.Italic
+                        fontStyle = FontStyle.Normal
                     )
                 )
             }
@@ -201,7 +200,9 @@ private fun FavoriteIcon(
 ) {
     IconButton(onClick = setFavorite) {
         Icon(
-            imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Filled.FavoriteBorder,
+            imageVector = if (isFavorite) Icons.Default.Favorite
+                            else Icons.Filled.FavoriteBorder,
+            tint = if(isFavorite) Color.Red else Color.Black,
             contentDescription = if (isFavorite) "Remove from wishlist" else "Add to wishlist"
         )
     }
@@ -227,7 +228,7 @@ private fun TokopediaButton(
     {
         Image(
             painter = painterResource(id = R.drawable.tokopedia_logo),
-            contentDescription = null,
+            contentDescription = stringResource(R.string.tokopedia_logo),
             modifier = Modifier.size(28.dp)
         )
         Spacer(modifier = Modifier.width(8.dp))

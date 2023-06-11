@@ -9,7 +9,7 @@
     <string name="author_email">irhamtriahmadi23@gmail.com</string>
     <string name="greeting">Halo Kawan,</string>
     <string name="greeting_description">Rakit PC Impianmu sekarang</string>
-    <string name="about">Tentang Saya</string>
+    <string name="profile">Profilku</string>
     <string name="back">back</string>
     <string name="detail_produk">Detail Produk</string>
     <string name="catalog">Katalog Produk</string>
@@ -18,4 +18,9 @@
     <string name="scroll_to_top">Scroll to top</string>
     <string name="wishlist">Wishlist Produk</string>
     <string name="search_product">Cari produk</string>
+    <string name="service">Servis</string>
+    <string name="service_title">Servis Kami</string>
+    <string name="gxcomp_description">GXComp menyediakan jasa untuk merakit PC sesuai request dan jasa service PC. Segera hubungi kami untuk kepentingan Anda.</string>
+    <string name="gxcomp">GXComp</string>
+    <string name="tokopedia_logo">Tokopedia Logo</string>
 </resources>
