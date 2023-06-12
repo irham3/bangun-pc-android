@@ -10,9 +10,4 @@ interface DetailUiState {
         override val error: String = "Undefined error"
     ) : DetailUiState
 
-    data class isFavorite(
-        val data: Boolean = false,
-        override val error: String = "Undefined error"
-    ) : DetailUiState
-
 }

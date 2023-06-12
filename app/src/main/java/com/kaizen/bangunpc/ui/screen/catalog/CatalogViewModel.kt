@@ -9,6 +9,7 @@ import com.kaizen.bangunpc.data.source.ProductRepository
 import com.kaizen.bangunpc.ui.common.UiState
 import com.kaizen.bangunpc.data.source.local.entity.ProductEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -37,6 +38,36 @@ class CatalogViewModel @Inject constructor(
         }
     }
 
+    fun getProductsByCategory(chipList: List<String>) {
+        chipList.forEachIndexed { index, _ ->
+            when(index) {
+                0 -> getAllProducts()
+                1 -> setProductsDataByCategory(repository.getAllIntelPCs())
+                1 -> setProductsDataByCategory(repository.getAllAMDPCs())
+                1 -> setProductsDataByCategory(repository.getAllMotherboards())
+                2 -> setProductsDataByCategory(repository.getAllStorages())
+                2 -> setProductsDataByCategory(repository.getAllCPUs())
+                2 -> setProductsDataByCategory(repository.getAllGPUs())
+                2 -> setProductsDataByCategory(repository.getAllCasings())
+                2 -> setProductsDataByCategory(repository.getAllMemories())
+                2 -> setProductsDataByCategory(repository.getAllPSUs())
+            }
+        }
+        viewModelScope.launch {
+        }
+    }
+
+    private fun setProductsDataByCategory(dataFlowState: Flow<UiState<List<ProductEntity>>>) {
+        viewModelScope.launch {
+            dataFlowState
+                .catch {
+                    _products.value = UiState.Error(it.message.toString())
+                }
+                .collect {
+                    _products.value = it
+                }
+        }
+    }
     fun search(newQuery: String) {
         _query.value = newQuery
         if(newQuery.isNotEmpty()) {
@@ -46,8 +77,6 @@ class CatalogViewModel @Inject constructor(
                         _products.value = UiState.Error(it.message.toString())
                     }
                     .collect {
-                        Log.e("products", newQuery)
-                        Log.e("products", it.toString())
                         _products.value = UiState.Success(it)
                     }
             }

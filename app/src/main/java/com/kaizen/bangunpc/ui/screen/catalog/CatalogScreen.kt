@@ -1,6 +1,7 @@
 package com.kaizen.bangunpc.ui.screen.catalog
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -9,7 +10,11 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
@@ -37,6 +42,7 @@ import com.kaizen.bangunpc.ui.components.CircleButton
 import com.kaizen.bangunpc.ui.components.CustomTopBar
 import com.kaizen.bangunpc.ui.components.layouts.ProductVerticalGrid
 import com.kaizen.bangunpc.ui.components.SearchBar
+import com.kaizen.bangunpc.ui.components.TextChipGroup
 import com.kaizen.bangunpc.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 
@@ -66,6 +72,22 @@ fun CatalogScreen(
                     )
 
                 }
+            )
+            TextChipGroup(
+                chipList = listOf(
+                    "Lihat Semua",
+                    "PC Intel",
+                    "PC AMD",
+                    "Motherboard",
+                    "Storage",
+                    "CPU",
+                    "GPU",
+                    "Casing",
+                    "Memory",
+                    "Power Supply"
+                ),
+                onSelected = viewModel::getProductsByCategory
+
             )
             products.let { uiState ->
                 when(uiState) {
@@ -119,6 +141,13 @@ fun CatalogScreen(
             )
         }
     }
+}
+
+@Composable
+fun CategoryChips(
+    modifier: Modifier = Modifier,
+    viewModel: CatalogViewModel
+) {
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
