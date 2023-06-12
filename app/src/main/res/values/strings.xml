@@ -23,4 +23,7 @@
     <string name="gxcomp_description">GXComp menyediakan jasa untuk merakit PC sesuai request dan jasa service PC. Segera hubungi kami untuk kepentingan Anda.</string>
     <string name="gxcomp">GXComp</string>
     <string name="tokopedia_logo">Tokopedia Logo</string>
+    <string name="gxcomp_tokopedia">https://www.tokopedia.com/gxcompbandung</string>
+    <string name="gxcomp_shopee">https://shopee.co.id/gxcomp</string>
+    <string name="gxcomp_whatsapp">https://wa.me/6281222441123</string>
 </resources>
