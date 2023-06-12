@@ -16,6 +16,9 @@ class ProductLDS @Inject constructor(
     fun getAllProducts() : Flow<List<ProductEntity>> =
         productDao.getAllProducts()
 
+    fun getProductsName(name: String) : Flow<List<ProductEntity>> =
+        productDao.getProductsByName(name)
+
     fun getProductById(productId: Int) : Flow<ProductEntity> =
         productDao.getProductById(productId)
 

@@ -22,6 +22,9 @@ class ProductRepository @Inject constructor(
     override fun getAllProducts(): Flow<List<ProductEntity>> =
         productLDS.getAllProducts()
 
+    override fun getProductsByName(query: String): Flow<List<ProductEntity>> =
+        productLDS.getProductsName(query)
+
     override fun getProductById(productId: Int): Flow<ProductEntity> =
         productLDS.getProductById(productId)
 

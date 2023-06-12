@@ -1,5 +1,6 @@
 package com.kaizen.bangunpc.ui.screen.catalog
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -38,5 +39,19 @@ class CatalogViewModel @Inject constructor(
 
     fun search(newQuery: String) {
         _query.value = newQuery
+        if(newQuery.isNotEmpty()) {
+            viewModelScope.launch {
+                repository.getProductsByName(newQuery)
+                    .catch {
+                        _products.value = UiState.Error(it.message.toString())
+                    }
+                    .collect {
+                        Log.e("products", newQuery)
+                        Log.e("products", it.toString())
+                        _products.value = UiState.Success(it)
+                    }
+            }
+        } else
+            getAllProducts()
     }
 }
