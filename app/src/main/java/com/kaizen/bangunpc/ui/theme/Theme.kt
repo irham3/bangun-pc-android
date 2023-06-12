@@ -16,7 +16,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 //)
 
 private val LightColorPalette = lightColors(
-    primary = White,
+    primary = DarkOrange,
     background = Gray,
     primaryVariant = Navy700,
     secondary = Turquoise500
@@ -35,14 +35,6 @@ private val LightColorPalette = lightColors(
 fun AppTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) LightColorPalette
         else LightColorPalette
-
-    val systemUiController = rememberSystemUiController()
-    SideEffect {
-        systemUiController.setStatusBarColor(
-            color = Orange,
-            darkIcons = false
-        )
-    }
 
     MaterialTheme(
         colors = colors,

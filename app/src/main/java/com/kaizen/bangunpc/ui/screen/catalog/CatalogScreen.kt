@@ -134,14 +134,3 @@ fun CatalogScreen(
         }
     }
 }
-
-//@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-//@Preview
-//@Composable
-//fun ProductVerticalGridPreview() {
-//    AppTheme {
-//        Scaffold {
-//            CatalogScreen()
-//        }
-//    }
-//}

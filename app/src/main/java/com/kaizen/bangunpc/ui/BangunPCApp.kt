@@ -3,6 +3,7 @@ package com.kaizen.bangunpc
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
@@ -14,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kaizen.bangunpc.ui.components.BottomNavbarMain
 import com.kaizen.bangunpc.ui.navigation.Screen
 import com.kaizen.bangunpc.ui.screen.catalog.CatalogScreen
@@ -23,12 +25,20 @@ import com.kaizen.bangunpc.ui.screen.detail.DetailProductScreen
 import com.kaizen.bangunpc.ui.screen.service.ServiceScreen
 import com.kaizen.bangunpc.ui.screen.wishlist.WishlistScreen
 import com.kaizen.bangunpc.ui.theme.AppTheme
+import com.kaizen.bangunpc.ui.theme.Orange
 
 @Composable
 fun BangunPCApp(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
+    val systemUiController = rememberSystemUiController()
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = Orange,
+            darkIcons = false
+        )
+    }
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val bottomBarRoutes = listOf(

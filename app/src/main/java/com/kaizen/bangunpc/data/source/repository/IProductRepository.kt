@@ -1,4 +1,4 @@
-package com.kaizen.bangunpc.data.source
+package com.kaizen.bangunpc.data.source.repository
 
 import com.kaizen.bangunpc.data.source.local.entity.ProductEntity
 import com.kaizen.bangunpc.ui.common.UiState

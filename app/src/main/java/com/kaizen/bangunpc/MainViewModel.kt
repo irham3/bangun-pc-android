@@ -2,9 +2,8 @@ package com.kaizen.bangunpc
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kaizen.bangunpc.data.source.ProductRepository
+import com.kaizen.bangunpc.data.source.repository.impl.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

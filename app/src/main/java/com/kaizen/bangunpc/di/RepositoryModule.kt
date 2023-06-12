@@ -1,7 +1,7 @@
 package com.kaizen.bangunpc.di
 
-import com.kaizen.bangunpc.data.source.ProductRepository
-import com.kaizen.bangunpc.data.source.IProductRepository
+import com.kaizen.bangunpc.data.source.repository.impl.ProductRepository
+import com.kaizen.bangunpc.data.source.repository.IProductRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

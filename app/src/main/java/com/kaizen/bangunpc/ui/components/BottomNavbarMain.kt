@@ -54,7 +54,9 @@ fun BottomNavbarMain(
                 screen = Screen.Service
             ),
         )
-        BottomNavigation {
+        BottomNavigation (
+            backgroundColor = Color.White
+        ){
             navigationItems.map { item ->
                 BottomNavigationItem(
                     icon = {

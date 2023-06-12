@@ -1,0 +1,70 @@
+package com.kaizen.bangunpc.ui.components
+
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
+import com.kaizen.bangunpc.ui.theme.AppTheme
+
+@Composable
+fun ShowHidePasswordTextField() {
+    var password by remember { mutableStateOf(value = "") }
+    var showPassword by remember { mutableStateOf(value = false) }
+    OutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth(),
+        value = password,
+        visualTransformation =
+            if (showPassword) VisualTransformation.None
+            else PasswordVisualTransformation(),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        onValueChange = { newText ->
+            password = newText
+        },
+        label = {
+            Text(text = "Password")
+        },
+        placeholder = { Text(text = "Masukkan Password Anda") },
+        shape = RoundedCornerShape(percent = 20),
+        trailingIcon = {
+            if (showPassword) {
+                IconButton(onClick = { showPassword = false }) {
+                    Icon(
+                        imageVector = Icons.Filled.Visibility,
+                        contentDescription = "Hide Password"
+                    )
+                }
+            } else {
+                IconButton(
+                    onClick = { showPassword = true }) {
+                    Icon(
+                        imageVector = Icons.Filled.VisibilityOff,
+                        contentDescription = "Show Password"
+                    )
+                }
+            }
+        }
+    )
+}
+
+@Preview(
+    showBackground = true
+)
+@Composable
+private fun Preview() {
+    AppTheme {
+        ShowHidePasswordTextField()
+    }
+}

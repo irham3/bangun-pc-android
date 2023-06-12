@@ -1,11 +1,13 @@
-package com.kaizen.bangunpc.data.source
+package com.kaizen.bangunpc.data.source.repository.impl
 
+import com.kaizen.bangunpc.data.source.NetworkBoundResource
 import com.kaizen.bangunpc.data.source.local.datasource.ProductLDS
 import com.kaizen.bangunpc.data.source.local.entity.ProductEntity
 import com.kaizen.bangunpc.data.source.remote.dataresource.ProductRDS
 import com.kaizen.bangunpc.data.source.remote.result.ComponentResult
 import com.kaizen.bangunpc.data.source.remote.network.ApiResult
 import com.kaizen.bangunpc.data.source.remote.result.PCBuildResult
+import com.kaizen.bangunpc.data.source.repository.IProductRepository
 import com.kaizen.bangunpc.ui.common.UiState
 import com.kaizen.bangunpc.utils.AppExecutors
 import com.kaizen.bangunpc.utils.DataMapper

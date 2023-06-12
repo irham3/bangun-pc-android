@@ -2,7 +2,7 @@ package com.kaizen.bangunpc.ui.screen.wishlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kaizen.bangunpc.data.source.ProductRepository
+import com.kaizen.bangunpc.data.source.repository.impl.ProductRepository
 import com.kaizen.bangunpc.ui.common.UiState
 import com.kaizen.bangunpc.data.source.local.entity.ProductEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
