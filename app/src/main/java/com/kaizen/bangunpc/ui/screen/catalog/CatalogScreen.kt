@@ -64,6 +64,7 @@ fun CatalogScreen(
                         query = keyword,
                         onQueryChange = viewModel::search
                     )
+
                 }
             )
             products.let { uiState ->

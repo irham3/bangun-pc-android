@@ -1,5 +1,6 @@
 package com.kaizen.bangunpc.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -25,11 +26,13 @@ import com.kaizen.bangunpc.ui.theme.Orange
 
 @Composable
 fun TextChip(
-    isSelected: Boolean,
     text: String,
-    onChecked: (Boolean) -> Unit,
+    onSelected: () -> Unit,
     selectedColor: Color = Orange
 ) {
+    val isSelected = remember {
+        mutableStateOf(false)
+    }
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
@@ -40,43 +43,54 @@ fun TextChip(
             )
             .border(
                 width = 1.dp,
-                color = if (isSelected) selectedColor else Orange,
-                shape = Shapes().medium
+                color = if (isSelected.value) selectedColor else Orange,
+                shape = Shapes().small
             )
             .background(
-                color = if (isSelected) selectedColor else Transparent,
-                shape = Shapes().medium
+                color = if (isSelected.value) selectedColor else Transparent,
+                shape = Shapes().small
             )
-            .clip(shape = Shapes().medium)
+            .clip(shape = Shapes().small)
             .clickable {
-                onChecked(!isSelected)
+                isSelected.value = !isSelected.value
+                if(isSelected.value) {
+                    onSelected()
+                }
             }
             .padding(4.dp)
     ) {
         Text(
             text = text,
-            color = if (isSelected) White else Unspecified
+            color = if (isSelected.value) White else Unspecified
         )
     }
 }
 // Chip View
 
 @Preview(
-    showBackground = true
+    showBackground = true,
+    showSystemUi = true
 )
 @Composable
 private fun TextChipPreview() {
-    val textChipRememberOneState = remember {
-        mutableStateOf(false)
-    }
     AppTheme {
-        TextChip(
-            isSelected = textChipRememberOneState.value,
-            text = "Motherboard",
-            selectedColor = Orange,
-            onChecked = {
-                textChipRememberOneState.value = it
-            }
-        )
+        Row() {
+
+            TextChip(
+                text = "Motherboard",
+                selectedColor = Orange,
+                onSelected = {
+                    Log.e("Chip", "selected1")
+                }
+            )
+
+            TextChip(
+                text = "Motherboard",
+                selectedColor = Orange,
+                onSelected = {
+                    Log.e("Chip", "selected2")
+                }
+            )
+        }
     }
 }
