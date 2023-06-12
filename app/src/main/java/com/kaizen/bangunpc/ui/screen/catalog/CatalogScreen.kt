@@ -1,7 +1,5 @@
 package com.kaizen.bangunpc.ui.screen.catalog
 
-import android.annotation.SuppressLint
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -10,16 +8,11 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
@@ -33,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kaizen.bangunpc.R
@@ -43,7 +35,6 @@ import com.kaizen.bangunpc.ui.components.CustomTopBar
 import com.kaizen.bangunpc.ui.components.layouts.ProductVerticalGrid
 import com.kaizen.bangunpc.ui.components.SearchBar
 import com.kaizen.bangunpc.ui.components.TextChipGroup
-import com.kaizen.bangunpc.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 
 @Composable
@@ -73,19 +64,20 @@ fun CatalogScreen(
 
                 }
             )
+            val categoryList = listOf(
+                "Lihat Semua",
+                "PC Intel",
+                "PC AMD",
+                "Motherboard",
+                "Storage",
+                "CPU",
+                "GPU",
+                "Casing",
+                "Memory",
+                "Power Supply"
+            )
             TextChipGroup(
-                chipList = listOf(
-                    "Lihat Semua",
-                    "PC Intel",
-                    "PC AMD",
-                    "Motherboard",
-                    "Storage",
-                    "CPU",
-                    "GPU",
-                    "Casing",
-                    "Memory",
-                    "Power Supply"
-                ),
+                chipList = categoryList,
                 onSelected = viewModel::getProductsByCategory
 
             )
@@ -143,20 +135,13 @@ fun CatalogScreen(
     }
 }
 
-@Composable
-fun CategoryChips(
-    modifier: Modifier = Modifier,
-    viewModel: CatalogViewModel
-) {
-}
-
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@Preview
-@Composable
-fun ProductVerticalGridPreview() {
-    AppTheme {
-        Scaffold {
-            CatalogScreen()
-        }
-    }
-}
+//@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+//@Preview
+//@Composable
+//fun ProductVerticalGridPreview() {
+//    AppTheme {
+//        Scaffold {
+//            CatalogScreen()
+//        }
+//    }
+//}

@@ -1,6 +1,5 @@
 package com.kaizen.bangunpc.ui.screen.catalog
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -38,22 +37,18 @@ class CatalogViewModel @Inject constructor(
         }
     }
 
-    fun getProductsByCategory(chipList: List<String>) {
-        chipList.forEachIndexed { index, _ ->
-            when(index) {
-                0 -> getAllProducts()
-                1 -> setProductsDataByCategory(repository.getAllIntelPCs())
-                1 -> setProductsDataByCategory(repository.getAllAMDPCs())
-                1 -> setProductsDataByCategory(repository.getAllMotherboards())
-                2 -> setProductsDataByCategory(repository.getAllStorages())
-                2 -> setProductsDataByCategory(repository.getAllCPUs())
-                2 -> setProductsDataByCategory(repository.getAllGPUs())
-                2 -> setProductsDataByCategory(repository.getAllCasings())
-                2 -> setProductsDataByCategory(repository.getAllMemories())
-                2 -> setProductsDataByCategory(repository.getAllPSUs())
-            }
-        }
-        viewModelScope.launch {
+    fun getProductsByCategory(chipList: String) {
+        when(chipList) {
+            "Lihat Semua" -> getAllProducts()
+            "PC Intel" -> setProductsDataByCategory(repository.getAllIntelPCs())
+            "PC AMD" -> setProductsDataByCategory(repository.getAllAMDPCs())
+            "Motherboard" -> setProductsDataByCategory(repository.getAllMotherboards())
+            "Storage" -> setProductsDataByCategory(repository.getAllStorages())
+            "CPU" -> setProductsDataByCategory(repository.getAllCPUs())
+            "GPU" -> setProductsDataByCategory(repository.getAllGPUs())
+            "Casing" -> setProductsDataByCategory(repository.getAllCasings())
+            "Memory" -> setProductsDataByCategory(repository.getAllMemories())
+            "Power Supply" -> setProductsDataByCategory(repository.getAllPSUs())
         }
     }
 

@@ -31,9 +31,9 @@ import com.kaizen.bangunpc.ui.theme.Orange
 fun TextChipGroup(
     modifier: Modifier = Modifier,
     chipList: List<String>,
-    onSelected: (List<String>) -> Unit
+    onSelected: (String) -> Unit
 ) {
-    var selected by remember { mutableStateOf("") }
+    var selected by remember { mutableStateOf("Lihat Semua") }
     LazyRow(
         modifier = modifier.fillMaxWidth(),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
@@ -41,7 +41,7 @@ fun TextChipGroup(
         items(chipList) { it ->
             TextChip(text = it, selected = selected, onSelected = {
                 selected = it
-                onSelected(chipList)
+                onSelected(it)
             })
         }
     }
