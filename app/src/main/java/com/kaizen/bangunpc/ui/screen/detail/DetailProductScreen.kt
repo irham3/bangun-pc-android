@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
@@ -32,6 +33,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -51,10 +53,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kaizen.bangunpc.R
 import com.kaizen.bangunpc.data.source.local.entity.ProductEntity
 import com.kaizen.bangunpc.ui.components.CircleButton
 import com.kaizen.bangunpc.ui.theme.Green
+import com.kaizen.bangunpc.ui.theme.Orange
 import com.kaizen.bangunpc.utils.toRupiahFormat
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -65,10 +69,17 @@ fun DetailProductScreen(
     viewModel: DetailViewModel = hiltViewModel(),
     navigateBack: () -> Unit = {}
 ) {
-    viewModel.getDetailProduct(productId)
+    val systemUiController = rememberSystemUiController()
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = Orange,
+            darkIcons = false
+        )
+    }
     val detailState by viewModel.detailState.collectAsState()
     val isFavorite by viewModel.isFavorite
 
+    viewModel.getDetailProduct(productId)
     Scaffold(
         bottomBar = {
             DetailBottomBar(url = detailState.data.url)
@@ -107,7 +118,14 @@ private fun DetailHeader(
                 .clip(RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp))
         )
         CircleButton(
-            modifier = modifier.padding(8.dp),
+            modifier = modifier
+                .padding(8.dp)
+                .background(
+                    color = Color.Black.copy(
+                        alpha = 0.5F
+                    ),
+                    shape = CircleShape
+                ),
             onClick = { navigateBack() },
             icon = {
                 Icon(

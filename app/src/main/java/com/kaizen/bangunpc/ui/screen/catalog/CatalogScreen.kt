@@ -16,6 +16,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -28,6 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kaizen.bangunpc.R
 import com.kaizen.bangunpc.ui.common.UiState
 import com.kaizen.bangunpc.ui.components.CircleButton
@@ -35,6 +37,7 @@ import com.kaizen.bangunpc.ui.components.CustomTopBar
 import com.kaizen.bangunpc.ui.components.layouts.ProductVerticalGrid
 import com.kaizen.bangunpc.ui.components.SearchBar
 import com.kaizen.bangunpc.ui.components.TextChipGroup
+import com.kaizen.bangunpc.ui.theme.Orange
 import kotlinx.coroutines.launch
 
 @Composable
@@ -43,6 +46,13 @@ fun CatalogScreen(
     navigateToDetailProduct: (Int) -> Unit = {},
     viewModel: CatalogViewModel = hiltViewModel()
 ) {
+    val systemUiController = rememberSystemUiController()
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = Orange,
+            darkIcons = false
+        )
+    }
     val keyword by viewModel.query
     val products by viewModel.productsState.collectAsState(initial = UiState.Loading)
     val context = LocalContext.current

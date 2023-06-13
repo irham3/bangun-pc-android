@@ -13,6 +13,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -26,22 +27,31 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kaizen.bangunpc.R
 import com.kaizen.bangunpc.ui.common.UiState
 import com.kaizen.bangunpc.ui.components.CustomTopBar
 import com.kaizen.bangunpc.ui.components.GXCompCarousel
 import com.kaizen.bangunpc.ui.components.ProductHighlight
 import com.kaizen.bangunpc.ui.components.layouts.ProductHorizontalList
+import com.kaizen.bangunpc.ui.theme.Orange
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    navigateToAbout: () -> Unit = {},
     homeViewModel: HomeViewModel = hiltViewModel(),
+    navigateToAbout: () -> Unit = {},
     navigateToDetailProduct: (Int) -> Unit = {},
 ) {
     val intelPCs by homeViewModel.intelPCState.collectAsState(initial = UiState.Loading)
     val amdPCs by homeViewModel.amdPCState.collectAsState(initial = UiState.Loading)
+    val systemUiController = rememberSystemUiController()
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = Orange,
+            darkIcons = false
+        )
+    }
 
     Column(
         modifier = modifier.verticalScroll(rememberScrollState())

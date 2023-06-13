@@ -1,5 +1,6 @@
 package com.kaizen.bangunpc.di
 
+import com.kaizen.bangunpc.data.source.repository.IUserRepository
 import com.kaizen.bangunpc.data.source.repository.impl.ProductRepository
 import com.kaizen.bangunpc.data.source.repository.IProductRepository
 import dagger.Binds
@@ -11,5 +12,8 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
     @Binds
-    abstract fun provideRepository(componentRepository: ProductRepository) : IProductRepository
+    abstract fun provideProductRepository(productRepository: ProductRepository) : IProductRepository
+
+    @Binds
+    abstract fun provideUserRepository(repository: IUserRepository) : IUserRepository
 }

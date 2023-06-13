@@ -1,5 +1,14 @@
 package com.kaizen.bangunpc.utils
 
+import android.view.ViewTreeObserver
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -7,4 +16,26 @@ fun Int.toRupiahFormat(): String {
     val localeID = Locale("in", "ID")
     val formatRupiah = NumberFormat.getCurrencyInstance(localeID)
     return formatRupiah.format(this.toDouble().toInt())
+}
+
+@Composable
+fun rememberImeState(): State<Boolean> {
+    val imeState = remember {
+        mutableStateOf(false)
+    }
+
+    val view = LocalView.current
+    DisposableEffect(view) {
+        val listener = ViewTreeObserver.OnGlobalLayoutListener {
+            val isKeyboardOpen = ViewCompat.getRootWindowInsets(view)
+                ?.isVisible(WindowInsetsCompat.Type.ime()) ?: true
+            imeState.value = isKeyboardOpen
+        }
+
+        view.viewTreeObserver.addOnGlobalLayoutListener(listener)
+        onDispose {
+            view.viewTreeObserver.removeOnGlobalLayoutListener(listener)
+        }
+    }
+    return imeState
 }

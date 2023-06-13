@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,6 +18,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -31,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kaizen.bangunpc.R
 import com.kaizen.bangunpc.ui.components.CircleButton
 import com.kaizen.bangunpc.ui.components.CustomTopBar
@@ -42,7 +45,14 @@ import com.kaizen.bangunpc.ui.theme.Orange
 fun ServiceScreen(
     modifier: Modifier = Modifier
 ) {
-    Column() {
+    val systemUiController = rememberSystemUiController()
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = Orange,
+            darkIcons = false
+        )
+    }
+    Column {
         CustomTopBar(
             content = {
                 ScreenTitleText(title = stringResource(R.string.service_title))
@@ -103,7 +113,11 @@ private fun BorderCircularButton(
 ) {
     CircleButton(
         modifier = modifier
-            .padding(8.dp)
+            .padding(4.dp)
+            .background(
+                color = Color.Transparent,
+                shape = CircleShape
+            )
             .border(BorderStroke(2.dp, Orange), CircleShape),
         onClick = {
             val urlIntent = Intent(
