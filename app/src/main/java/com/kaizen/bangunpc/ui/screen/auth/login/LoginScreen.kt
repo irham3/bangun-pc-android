@@ -1,11 +1,9 @@
-package com.kaizen.bangunpc.ui.screen.auth.register
+package com.kaizen.bangunpc.ui.screen.auth.login
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material.Button
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,9 +22,9 @@ import com.kaizen.bangunpc.ui.theme.AppTheme
 import com.kaizen.bangunpc.ui.theme.DarkOrange
 
 @Composable
-fun RegisterScreen(
+fun LoginScreen(
     modifier: Modifier = Modifier
-) {
+){
     Column(
         modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 72.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -37,7 +35,7 @@ fun RegisterScreen(
             modifier = modifier.fillMaxWidth()
         ) {
             Text(
-                text = "Daftar",
+                text = "Masuk",
                 fontWeight = FontWeight.Bold,
                 style = TextStyle(
                     fontSize = 36.sp,
@@ -54,58 +52,48 @@ fun RegisterScreen(
 
         }
         Spacer(modifier = Modifier.height(20.dp))
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            OutlinedTextField(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                label = { Text(text = "Nama Lengkap") },
-                value = username.value,
-                shape = RoundedCornerShape(percent = 20),
-                onValueChange = { username.value = it }
-            )
-            OutlinedTextField(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                label = { Text(text = "Email") },
-                value = username.value,
-                shape = RoundedCornerShape(percent = 20),
-                onValueChange = { username.value = it }
-            )
-            ShowHidePasswordTextField()
-            ShowHidePasswordTextField(label = "Konfirmasi Password")
-        }
+        OutlinedTextField(
+            modifier = Modifier
+                .fillMaxWidth(),
+            label = { Text(text = "Email") },
+            placeholder = { Text(text = "Masukkan Email Anda") },
+            value = username.value,
+            shape = RoundedCornerShape(percent = 20),
+            onValueChange = { username.value = it }
+        )
 
         Spacer(modifier = Modifier.height(20.dp))
-        Button(
-            onClick = { },
-            shape = RoundedCornerShape(8.dp),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp)
-        ) {
-            Text(
-                text = "Daftar",
-                fontWeight = FontWeight.Bold,
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily.SansSerif
+        ShowHidePasswordTextField()
+
+        Spacer(modifier = Modifier.height(20.dp))
+            Button(
+                onClick = { },
+                shape = RoundedCornerShape(8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+            ) {
+                Text(
+                    text = "Masuk",
+                    fontWeight = FontWeight.Bold,
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        fontFamily = FontFamily.SansSerif
+                    )
                 )
-            )
-        }
+            }
 
         Spacer(modifier = Modifier.height(20.dp))
         Row {
             Text(
-                text = "Sudah punya akun? ",
+                text = "Belum punya akun? ",
                 style = TextStyle(
                     fontSize = 14.sp,
                     fontFamily = FontFamily.Default
                 )
             )
             ClickableText(
-                text = AnnotatedString("Masuk Sekarang"),
+                text = AnnotatedString("Daftar Sekarang"),
                 onClick = { },
                 style = TextStyle(
                     color = DarkOrange,
@@ -123,8 +111,8 @@ fun RegisterScreen(
     showSystemUi = true
 )
 @Composable
-private fun RegisterPreview() {
+private fun LoginPreview() {
     AppTheme {
-        RegisterScreen()
+        LoginScreen()
     }
 }

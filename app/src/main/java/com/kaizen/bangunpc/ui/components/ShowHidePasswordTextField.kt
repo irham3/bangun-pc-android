@@ -19,7 +19,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.kaizen.bangunpc.ui.theme.AppTheme
 
 @Composable
-fun ShowHidePasswordTextField() {
+fun ShowHidePasswordTextField(
+    label: String = "Password"
+) {
     var password by remember { mutableStateOf(value = "") }
     var showPassword by remember { mutableStateOf(value = false) }
     OutlinedTextField(
@@ -34,9 +36,8 @@ fun ShowHidePasswordTextField() {
             password = newText
         },
         label = {
-            Text(text = "Password")
+            Text(text = label)
         },
-        placeholder = { Text(text = "Masukkan Password Anda") },
         shape = RoundedCornerShape(percent = 20),
         trailingIcon = {
             if (showPassword) {
