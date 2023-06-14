@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
@@ -12,21 +13,26 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kaizen.bangunpc.ui.components.GoogleButton
 import com.kaizen.bangunpc.ui.components.ShowHidePasswordTextField
+import com.kaizen.bangunpc.ui.screen.auth.AuthViewModel
 import com.kaizen.bangunpc.ui.theme.AppTheme
 import com.kaizen.bangunpc.ui.theme.DarkOrange
 import com.kaizen.bangunpc.ui.theme.Gray
@@ -35,6 +41,7 @@ import com.kaizen.bangunpc.utils.rememberImeState
 @Composable
 fun RegisterScreen(
     modifier: Modifier = Modifier,
+    authViewModel: AuthViewModel = hiltViewModel(),
     navigateToLogin: (Int) -> Unit
 ) {
     val systemUiController = rememberSystemUiController()
@@ -46,6 +53,11 @@ fun RegisterScreen(
     }
     val imeState = rememberImeState()
     val scrollState = rememberScrollState()
+
+    var fullname by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
     //  Scroll content when keyboard is shown
     LaunchedEffect(key1 = imeState.value) {
         if (imeState.value) {
@@ -58,7 +70,6 @@ fun RegisterScreen(
             .padding(start = 16.dp, end = 16.dp, top = 72.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val username = remember { mutableStateOf(TextFieldValue()) }
 
         Column(
             modifier = modifier.fillMaxWidth()
@@ -80,35 +91,43 @@ fun RegisterScreen(
             )
 
         }
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = modifier.height(20.dp))
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             OutlinedTextField(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth(),
                 label = { Text(text = "Nama Lengkap") },
-                value = username.value,
+                value = fullname,
                 shape = RoundedCornerShape(percent = 20),
-                onValueChange = { username.value = it }
+                onValueChange = { fullname = it }
             )
             OutlinedTextField(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth(),
                 label = { Text(text = "Email") },
-                value = username.value,
+                value = email,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 shape = RoundedCornerShape(percent = 20),
-                onValueChange = { username.value = it }
+                onValueChange = { email = it }
             )
-            ShowHidePasswordTextField()
-            ShowHidePasswordTextField(label = "Konfirmasi Password")
+            ShowHidePasswordTextField(
+                value = password, 
+                onValueChange = {password = it}
+            )
+            ShowHidePasswordTextField(
+                value = confirmPassword, 
+                onValueChange = {confirmPassword = it},
+                label = "Konfirmasi Password"
+            )
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = modifier.height(20.dp))
         Button(
-            onClick = { },
+            onClick = { authViewModel.loginWithEmail(email, password, fullname) },
             shape = RoundedCornerShape(8.dp),
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .height(50.dp)
         ) {
@@ -121,9 +140,11 @@ fun RegisterScreen(
                 )
             )
         }
-        Spacer(modifier = Modifier.height(20.dp))
-        GoogleButton()
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = modifier.height(20.dp))
+        GoogleButton(
+            onClick = authViewModel::loginWithGoogle
+        )
+        Spacer(modifier = modifier.height(20.dp))
         Row {
             Text(
                 text = "Sudah punya akun? ",

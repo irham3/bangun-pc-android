@@ -4,10 +4,10 @@ import com.kaizen.bangunpc.data.source.NetworkBoundResource
 import com.kaizen.bangunpc.data.source.local.datasource.ProductLDS
 import com.kaizen.bangunpc.data.source.local.entity.ProductEntity
 import com.kaizen.bangunpc.data.source.remote.dataresource.ProductRDS
-import com.kaizen.bangunpc.data.source.remote.result.ComponentResult
+import com.kaizen.bangunpc.data.source.remote.dto.ComponentDto
 import com.kaizen.bangunpc.data.source.remote.network.ApiResult
-import com.kaizen.bangunpc.data.source.remote.result.PCBuildResult
-import com.kaizen.bangunpc.data.source.repository.IProductRepository
+import com.kaizen.bangunpc.data.source.remote.dto.PCBuildDto
+import com.kaizen.bangunpc.data.source.repository.ProductRepository
 import com.kaizen.bangunpc.ui.common.UiState
 import com.kaizen.bangunpc.utils.AppExecutors
 import com.kaizen.bangunpc.utils.DataMapper
@@ -16,11 +16,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ProductRepository @Inject constructor(
+class ProductRepositoryImpl @Inject constructor(
     private val productRDS: ProductRDS,
     private val productLDS: ProductLDS,
     private val appExecutors: AppExecutors
-) : IProductRepository {
+) : ProductRepository {
     override fun getAllProducts(): Flow<List<ProductEntity>> =
         productLDS.getAllProducts()
 
@@ -40,15 +40,15 @@ class ProductRepository @Inject constructor(
         productLDS.getWishlist()
 
     override fun getAllIntelPCs(): Flow<UiState<List<ProductEntity>>> =
-        object : NetworkBoundResource<List<ProductEntity>, List<PCBuildResult>>() {
+        object : NetworkBoundResource<List<ProductEntity>, List<PCBuildDto>>() {
             override fun loadFromDB(): Flow<List<ProductEntity>> =
                 productLDS.getAllIntelPCs()
 
-            override suspend fun createCall(): Flow<ApiResult<List<PCBuildResult>>> =
+            override suspend fun createCall(): Flow<ApiResult<List<PCBuildDto>>> =
                 productRDS.getAllIntelPCs()
 
-            override suspend fun saveCallResult(data: List<PCBuildResult>) {
-                val componentList = DataMapper.mapPCBuildResultToProductEntity(data, "intel")
+            override suspend fun saveCallResult(data: List<PCBuildDto>) {
+                val componentList = DataMapper.mapPCBuildDtoToProductEntity(data, "intel")
                 productLDS.insert(componentList)
             }
 
@@ -58,15 +58,15 @@ class ProductRepository @Inject constructor(
         }.asFlow()
 
     override fun getAllAMDPCs(): Flow<UiState<List<ProductEntity>>> =
-        object : NetworkBoundResource<List<ProductEntity>, List<PCBuildResult>>() {
+        object : NetworkBoundResource<List<ProductEntity>, List<PCBuildDto>>() {
             override fun loadFromDB(): Flow<List<ProductEntity>> =
                 productLDS.getAllAMDPCs()
 
-            override suspend fun createCall(): Flow<ApiResult<List<PCBuildResult>>> =
+            override suspend fun createCall(): Flow<ApiResult<List<PCBuildDto>>> =
                 productRDS.getAllAMDPCs()
 
-            override suspend fun saveCallResult(data: List<PCBuildResult>) {
-                val componentList = DataMapper.mapPCBuildResultToProductEntity(data, "amd")
+            override suspend fun saveCallResult(data: List<PCBuildDto>) {
+                val componentList = DataMapper.mapPCBuildDtoToProductEntity(data, "amd")
                 productLDS.insert(componentList)
             }
 
@@ -76,15 +76,15 @@ class ProductRepository @Inject constructor(
         }.asFlow()
 
     override fun getAllCPUs(): Flow<UiState<List<ProductEntity>>> =
-        object : NetworkBoundResource<List<ProductEntity>, List<ComponentResult>>() {
+        object : NetworkBoundResource<List<ProductEntity>, List<ComponentDto>>() {
             override fun loadFromDB(): Flow<List<ProductEntity>> =
                 productLDS.getAllCPUs()
 
-            override suspend fun createCall(): Flow<ApiResult<List<ComponentResult>>> =
+            override suspend fun createCall(): Flow<ApiResult<List<ComponentDto>>> =
                 productRDS.getAllCPUs()
 
-            override suspend fun saveCallResult(data: List<ComponentResult>) {
-                val componentList = DataMapper.mapComponentResultToProductEntity(data, "cpu")
+            override suspend fun saveCallResult(data: List<ComponentDto>) {
+                val componentList = DataMapper.mapComponentDtoToProductEntity(data, "cpu")
                 productLDS.insert(componentList)
             }
 
@@ -94,15 +94,15 @@ class ProductRepository @Inject constructor(
         }.asFlow()
 
     override fun getAllGPUs(): Flow<UiState<List<ProductEntity>>> =
-        object : NetworkBoundResource<List<ProductEntity>, List<ComponentResult>>() {
+        object : NetworkBoundResource<List<ProductEntity>, List<ComponentDto>>() {
             override fun loadFromDB(): Flow<List<ProductEntity>> =
                 productLDS.getAllGPUs()
 
-            override suspend fun createCall(): Flow<ApiResult<List<ComponentResult>>> =
+            override suspend fun createCall(): Flow<ApiResult<List<ComponentDto>>> =
                 productRDS.getAllGPUs()
 
-            override suspend fun saveCallResult(data: List<ComponentResult>) {
-                val componentList = DataMapper.mapComponentResultToProductEntity(data, "gpu")
+            override suspend fun saveCallResult(data: List<ComponentDto>) {
+                val componentList = DataMapper.mapComponentDtoToProductEntity(data, "gpu")
                 productLDS.insert(componentList)
             }
 
@@ -112,15 +112,15 @@ class ProductRepository @Inject constructor(
         }.asFlow()
 
     override fun getAllCasings(): Flow<UiState<List<ProductEntity>>> =
-        object : NetworkBoundResource<List<ProductEntity>, List<ComponentResult>>() {
+        object : NetworkBoundResource<List<ProductEntity>, List<ComponentDto>>() {
             override fun loadFromDB(): Flow<List<ProductEntity>> =
                 productLDS.getAllCasings()
 
-            override suspend fun createCall(): Flow<ApiResult<List<ComponentResult>>> =
+            override suspend fun createCall(): Flow<ApiResult<List<ComponentDto>>> =
                 productRDS.getAllCasings()
 
-            override suspend fun saveCallResult(data: List<ComponentResult>) {
-                val componentList = DataMapper.mapComponentResultToProductEntity(data, "casing")
+            override suspend fun saveCallResult(data: List<ComponentDto>) {
+                val componentList = DataMapper.mapComponentDtoToProductEntity(data, "casing")
                 productLDS.insert(componentList)
             }
 
@@ -130,15 +130,15 @@ class ProductRepository @Inject constructor(
         }.asFlow()
 
     override fun getAllMemories(): Flow<UiState<List<ProductEntity>>> =
-        object : NetworkBoundResource<List<ProductEntity>, List<ComponentResult>>() {
+        object : NetworkBoundResource<List<ProductEntity>, List<ComponentDto>>() {
             override fun loadFromDB(): Flow<List<ProductEntity>> =
                 productLDS.getAllMemories()
 
-            override suspend fun createCall(): Flow<ApiResult<List<ComponentResult>>> =
+            override suspend fun createCall(): Flow<ApiResult<List<ComponentDto>>> =
                 productRDS.getAllMemories()
 
-            override suspend fun saveCallResult(data: List<ComponentResult>) {
-                val componentList = DataMapper.mapComponentResultToProductEntity(data, "memory")
+            override suspend fun saveCallResult(data: List<ComponentDto>) {
+                val componentList = DataMapper.mapComponentDtoToProductEntity(data, "memory")
                 productLDS.insert(componentList)
             }
 
@@ -148,15 +148,15 @@ class ProductRepository @Inject constructor(
         }.asFlow()
 
     override fun getAllMotherboards(): Flow<UiState<List<ProductEntity>>> =
-        object : NetworkBoundResource<List<ProductEntity>, List<ComponentResult>>() {
+        object : NetworkBoundResource<List<ProductEntity>, List<ComponentDto>>() {
             override fun loadFromDB(): Flow<List<ProductEntity>> =
                 productLDS.getAllMotherboards()
 
-            override suspend fun createCall(): Flow<ApiResult<List<ComponentResult>>> =
+            override suspend fun createCall(): Flow<ApiResult<List<ComponentDto>>> =
                 productRDS.getAllMotherboards()
 
-            override suspend fun saveCallResult(data: List<ComponentResult>) {
-                val componentList = DataMapper.mapComponentResultToProductEntity(data, "motherboard")
+            override suspend fun saveCallResult(data: List<ComponentDto>) {
+                val componentList = DataMapper.mapComponentDtoToProductEntity(data, "motherboard")
                 productLDS.insert(componentList)
             }
 
@@ -166,15 +166,15 @@ class ProductRepository @Inject constructor(
         }.asFlow()
 
     override fun getAllPSUs(): Flow<UiState<List<ProductEntity>>> =
-        object : NetworkBoundResource<List<ProductEntity>, List<ComponentResult>>() {
+        object : NetworkBoundResource<List<ProductEntity>, List<ComponentDto>>() {
             override fun loadFromDB(): Flow<List<ProductEntity>> =
                 productLDS.getAllPSUs()
 
-            override suspend fun createCall(): Flow<ApiResult<List<ComponentResult>>> =
+            override suspend fun createCall(): Flow<ApiResult<List<ComponentDto>>> =
                 productRDS.getAllPSUs()
 
-            override suspend fun saveCallResult(data: List<ComponentResult>) {
-                val componentList = DataMapper.mapComponentResultToProductEntity(data, "psu")
+            override suspend fun saveCallResult(data: List<ComponentDto>) {
+                val componentList = DataMapper.mapComponentDtoToProductEntity(data, "psu")
                 productLDS.insert(componentList)
             }
 
@@ -184,13 +184,13 @@ class ProductRepository @Inject constructor(
         }.asFlow()
 
     override fun getAllStorages(): Flow<UiState<List<ProductEntity>>> =
-        object : NetworkBoundResource<List<ProductEntity>, List<ComponentResult>>() {
+        object : NetworkBoundResource<List<ProductEntity>, List<ComponentDto>>() {
             override fun loadFromDB(): Flow<List<ProductEntity>> =
                 productLDS.getAllStorages()
-            override suspend fun createCall(): Flow<ApiResult<List<ComponentResult>>> =
+            override suspend fun createCall(): Flow<ApiResult<List<ComponentDto>>> =
                 productRDS.getAllStorages()
-            override suspend fun saveCallResult(data: List<ComponentResult>) {
-                val componentList = DataMapper.mapComponentResultToProductEntity(data, "storage")
+            override suspend fun saveCallResult(data: List<ComponentDto>) {
+                val componentList = DataMapper.mapComponentDtoToProductEntity(data, "storage")
                 productLDS.insert(componentList)
             }
             override fun shouldFetch(data: List<ProductEntity>?): Boolean =

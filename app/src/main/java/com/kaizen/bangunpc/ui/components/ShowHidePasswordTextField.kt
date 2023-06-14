@@ -20,21 +20,20 @@ import com.kaizen.bangunpc.ui.theme.AppTheme
 
 @Composable
 fun ShowHidePasswordTextField(
-    label: String = "Password"
+    label: String = "Password",
+    value: String,
+    onValueChange: (String) -> Unit
 ) {
-    var password by remember { mutableStateOf(value = "") }
     var showPassword by remember { mutableStateOf(value = false) }
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth(),
-        value = password,
+        value = value,
         visualTransformation =
             if (showPassword) VisualTransformation.None
             else PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-        onValueChange = { newText ->
-            password = newText
-        },
+        onValueChange = onValueChange,
         label = {
             Text(text = label)
         },
@@ -66,6 +65,12 @@ fun ShowHidePasswordTextField(
 @Composable
 private fun Preview() {
     AppTheme {
-        ShowHidePasswordTextField()
+        var password by remember { mutableStateOf(value = "") }
+        ShowHidePasswordTextField(
+            value = password,
+            onValueChange = {
+                password = it
+            }
+        )
     }
 }

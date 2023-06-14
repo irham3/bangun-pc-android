@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kaizen.bangunpc.data.source.repository.impl.ProductRepository
+import com.kaizen.bangunpc.data.source.repository.impl.ProductRepositoryImpl
 import com.kaizen.bangunpc.ui.common.UiState
 import com.kaizen.bangunpc.data.source.local.entity.ProductEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CatalogViewModel @Inject constructor(
-    private val repository: ProductRepository
+    private val repository: ProductRepositoryImpl
 ) : ViewModel(){
     private val _query = mutableStateOf("")
     val query: State<String> get() = _query

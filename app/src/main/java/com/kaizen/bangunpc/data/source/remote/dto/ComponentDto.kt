@@ -1,10 +1,10 @@
-package com.kaizen.bangunpc.data.source.remote.result
+package com.kaizen.bangunpc.data.source.remote.dto
 
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ComponentResult(
+data class ComponentDto(
     val gxcomp: @Contextual Gxcomp
 )
 

@@ -1,12 +1,12 @@
 package com.kaizen.bangunpc.utils
 
 import com.kaizen.bangunpc.data.source.local.entity.ProductEntity
-import com.kaizen.bangunpc.data.source.remote.result.ComponentResult
-import com.kaizen.bangunpc.data.source.remote.result.PCBuildResult
+import com.kaizen.bangunpc.data.source.remote.dto.ComponentDto
+import com.kaizen.bangunpc.data.source.remote.dto.PCBuildDto
 
 object DataMapper {
 
-    fun mapComponentResultToProductEntity(input: List<ComponentResult>, category: String): List<ProductEntity> {
+    fun mapComponentDtoToProductEntity(input: List<ComponentDto>, category: String): List<ProductEntity> {
         val productList = ArrayList<ProductEntity>()
         input.map {
             val product = ProductEntity(
@@ -24,7 +24,7 @@ object DataMapper {
         return productList
     }
 
-    fun mapPCBuildResultToProductEntity(input: List<PCBuildResult>, category: String): List<ProductEntity> {
+    fun mapPCBuildDtoToProductEntity(input: List<PCBuildDto>, category: String): List<ProductEntity> {
         val productList = ArrayList<ProductEntity>()
         input.map {
             val product = ProductEntity(

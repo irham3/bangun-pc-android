@@ -4,7 +4,7 @@ import com.kaizen.bangunpc.data.source.local.entity.ProductEntity
 import com.kaizen.bangunpc.ui.common.UiState
 import kotlinx.coroutines.flow.Flow
 
-interface IProductRepository {
+interface ProductRepository {
     fun getAllProducts() : Flow<List<ProductEntity>>
     fun getProductsByName(query: String) : Flow<List<ProductEntity>>
     fun getProductById(productId: Int) : Flow<ProductEntity>

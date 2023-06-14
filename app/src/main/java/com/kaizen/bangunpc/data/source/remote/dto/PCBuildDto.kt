@@ -1,9 +1,9 @@
-package com.kaizen.bangunpc.data.source.remote.result
+package com.kaizen.bangunpc.data.source.remote.dto
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PCBuildResult(
+data class PCBuildDto(
     val id: Int,
     val price: Int,
     val url: String,

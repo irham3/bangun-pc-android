@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kaizen.bangunpc.data.source.repository.impl.ProductRepository
+import com.kaizen.bangunpc.data.source.repository.impl.ProductRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private  val repository: ProductRepository
+    private  val repository: ProductRepositoryImpl
 ) : ViewModel(){
     private val _detailState = MutableStateFlow(DetailUiState.Product())
     val detailState = _detailState.asStateFlow()

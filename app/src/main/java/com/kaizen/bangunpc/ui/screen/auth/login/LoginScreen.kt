@@ -10,21 +10,24 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kaizen.bangunpc.ui.components.GoogleButton
 import com.kaizen.bangunpc.ui.components.ShowHidePasswordTextField
+import com.kaizen.bangunpc.ui.screen.auth.AuthViewModel
 import com.kaizen.bangunpc.ui.theme.AppTheme
 import com.kaizen.bangunpc.ui.theme.DarkOrange
 import com.kaizen.bangunpc.ui.theme.Gray
@@ -33,11 +36,21 @@ import com.kaizen.bangunpc.utils.rememberImeState
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
+    authViewModel: AuthViewModel = hiltViewModel(),
     navigateToRegister: (Int) -> Unit
 ){
+    val systemUiController = rememberSystemUiController()
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = Gray,
+            darkIcons = false
+        )
+    }
     val imeState = rememberImeState()
     val scrollState = rememberScrollState()
 
+    var username by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
     //  Scroll content when keyboard is shown
     LaunchedEffect(key1 = imeState.value) {
         if (imeState.value) {
@@ -51,14 +64,6 @@ fun LoginScreen(
             .padding(start = 16.dp, end = 16.dp, top = 72.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val systemUiController = rememberSystemUiController()
-        SideEffect {
-            systemUiController.setStatusBarColor(
-                color = Gray,
-                darkIcons = false
-            )
-        }
-        val username = remember { mutableStateOf(TextFieldValue()) }
         Column(
             modifier = modifier.fillMaxWidth()
         ) {
@@ -85,13 +90,16 @@ fun LoginScreen(
                 .fillMaxWidth(),
             label = { Text(text = "Email") },
             placeholder = { Text(text = "Masukkan Email Anda") },
-            value = username.value,
+            value = username,
             shape = RoundedCornerShape(percent = 20),
-            onValueChange = { username.value = it }
+            onValueChange = { username = it }
         )
 
         Spacer(modifier = Modifier.height(20.dp))
-        ShowHidePasswordTextField()
+        ShowHidePasswordTextField(
+            value = password,
+            onValueChange = {password = it}
+        )
 
         Spacer(modifier = Modifier.height(20.dp))
         Button(
@@ -111,7 +119,9 @@ fun LoginScreen(
             )
         }
         Spacer(modifier = modifier.height(20.dp))
-        GoogleButton()
+        GoogleButton(
+            onClick = authViewModel::loginWithGoogle
+        )
         Spacer(modifier = Modifier.height(20.dp))
         Row {
             Text(

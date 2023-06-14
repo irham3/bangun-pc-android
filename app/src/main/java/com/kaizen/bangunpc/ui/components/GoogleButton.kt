@@ -21,10 +21,11 @@ import com.kaizen.bangunpc.R
 
 @Composable
 fun GoogleButton(
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     OutlinedButton(
-        onClick = {},
+        onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
             .height(50.dp),

@@ -2,33 +2,33 @@ package com.kaizen.bangunpc
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kaizen.bangunpc.data.source.repository.impl.ProductRepository
-import com.kaizen.bangunpc.data.source.repository.impl.UserRepository
+import com.kaizen.bangunpc.data.source.repository.impl.ProductRepositoryImpl
+import com.kaizen.bangunpc.data.source.repository.impl.UserRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val productRepository: ProductRepository,
-    private val userRepository: UserRepository
+    private val productRepositoryImpl: ProductRepositoryImpl,
+    private val userRepositoryImpl: UserRepositoryImpl
     ) : ViewModel() {
 
     fun provideProductsData() {
         viewModelScope.launch {
-            launch { productRepository.getAllAMDPCs().collect{} }
-            launch { productRepository.getAllIntelPCs().collect{} }
-            launch { productRepository.getAllCPUs().collect{} }
-            launch { productRepository.getAllGPUs().collect{} }
-            launch { productRepository.getAllMemories().collect{} }
-            launch { productRepository.getAllCasings().collect{} }
-            launch { productRepository.getAllMotherboards().collect{} }
-            launch { productRepository.getAllPSUs().collect{} }
-            launch { productRepository.getAllStorages().collect{} }
+            launch { productRepositoryImpl.getAllAMDPCs().collect{} }
+            launch { productRepositoryImpl.getAllIntelPCs().collect{} }
+            launch { productRepositoryImpl.getAllCPUs().collect{} }
+            launch { productRepositoryImpl.getAllGPUs().collect{} }
+            launch { productRepositoryImpl.getAllMemories().collect{} }
+            launch { productRepositoryImpl.getAllCasings().collect{} }
+            launch { productRepositoryImpl.getAllMotherboards().collect{} }
+            launch { productRepositoryImpl.getAllPSUs().collect{} }
+            launch { productRepositoryImpl.getAllStorages().collect{} }
         }
     }
 
     fun getCurrentUserSession() =
-        userRepository.getCurrentSession()
+        userRepositoryImpl.getCurrentSession()
 
 }
