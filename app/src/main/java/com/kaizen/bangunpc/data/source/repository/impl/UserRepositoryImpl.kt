@@ -6,6 +6,7 @@ import com.kaizen.bangunpc.data.source.remote.dto.UserDto
 import com.kaizen.bangunpc.data.source.repository.UserRepository
 import com.kaizen.bangunpc.utils.SupabaseTables
 import io.github.jan.supabase.gotrue.GoTrue
+import io.github.jan.supabase.gotrue.SessionStatus
 import io.github.jan.supabase.gotrue.providers.builtin.Email
 import io.github.jan.supabase.gotrue.user.UserSession
 import io.github.jan.supabase.postgrest.Postgrest
@@ -21,7 +22,7 @@ class UserRepositoryImpl @Inject constructor(
     override fun getCurrentSession(): UserSession? =
         userRDS.getCurrentSession()
 
-    override suspend fun createAccount(email: String, password: String, fullname: String): Boolean {
+    override suspend fun createUserAccount(email: String, password: String, fullname: String): Boolean {
         return try {
             auth.signUpWith(Email) {
                 this.email = email
@@ -39,7 +40,31 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun loginWithEmail(email: String, password: String) : Boolean {
+        return try {
+            auth.loginWith(Email) {
+                this.email = email
+                this.password = password
+            }
+            true
+        } catch (e: Exception) {
+            false
+        }
+
+    }
+
     override suspend fun loginWithGoogle() {
         userRDS.loginWithGoogle()
+    }
+
+    override suspend fun logout(): Boolean {
+        return try {
+            auth.invalidateSession()
+            Log.d("Auth", auth.currentSessionOrNull().toString())
+            true
+        } catch (e: Exception) {
+            Log.e("Auth", auth.currentSessionOrNull().toString())
+            false
+        }
     }
 }

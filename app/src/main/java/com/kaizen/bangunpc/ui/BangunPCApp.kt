@@ -84,6 +84,9 @@ fun BangunPCApp(
                 LoginScreen(
                     navigateToRegister = {
                         navController.navigate(Screen.Register.route)
+                    },
+                    navigateToHome = {
+                        navController.navigate(Screen.Home.route)
                     }
                 )
             }

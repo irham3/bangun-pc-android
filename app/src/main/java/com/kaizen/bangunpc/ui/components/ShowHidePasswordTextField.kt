@@ -29,6 +29,7 @@ fun ShowHidePasswordTextField(
         modifier = Modifier
             .fillMaxWidth(),
         value = value,
+        maxLines = 1,
         visualTransformation =
             if (showPassword) VisualTransformation.None
             else PasswordVisualTransformation(),

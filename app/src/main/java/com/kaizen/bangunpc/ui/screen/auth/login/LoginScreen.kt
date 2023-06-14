@@ -1,5 +1,6 @@
 package com.kaizen.bangunpc.ui.screen.auth.login
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -25,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.kaizen.bangunpc.ui.components.GoogleButton
 import com.kaizen.bangunpc.ui.components.ShowHidePasswordTextField
 import com.kaizen.bangunpc.ui.screen.auth.AuthViewModel
 import com.kaizen.bangunpc.ui.theme.AppTheme
@@ -37,7 +37,8 @@ import com.kaizen.bangunpc.utils.rememberImeState
 fun LoginScreen(
     modifier: Modifier = Modifier,
     authViewModel: AuthViewModel = hiltViewModel(),
-    navigateToRegister: (Int) -> Unit
+    navigateToRegister: (Int) -> Unit,
+    navigateToHome: () -> Unit
 ){
     val systemUiController = rememberSystemUiController()
     SideEffect {
@@ -49,7 +50,7 @@ fun LoginScreen(
     val imeState = rememberImeState()
     val scrollState = rememberScrollState()
 
-    var username by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     //  Scroll content when keyboard is shown
     LaunchedEffect(key1 = imeState.value) {
@@ -88,11 +89,12 @@ fun LoginScreen(
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth(),
+            maxLines = 1,
             label = { Text(text = "Email") },
             placeholder = { Text(text = "Masukkan Email Anda") },
-            value = username,
+            value = email,
             shape = RoundedCornerShape(percent = 20),
-            onValueChange = { username = it }
+            onValueChange = { email = it }
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -103,7 +105,12 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
         Button(
-            onClick = { },
+            onClick = {
+                authViewModel.loginWithEmail(email, password)
+                if (authViewModel.isAuth.value) {
+                    navigateToHome()
+                }
+                },
             shape = RoundedCornerShape(8.dp),
             modifier = Modifier
                 .fillMaxWidth()
@@ -118,10 +125,16 @@ fun LoginScreen(
                 )
             )
         }
-        Spacer(modifier = modifier.height(20.dp))
-        GoogleButton(
-            onClick = authViewModel::loginWithGoogle
-        )
+//        Spacer(modifier = modifier.height(20.dp))
+//        GoogleButton(
+//            onClick = authViewModel::loginWithGoogle
+//        )
+        AnimatedVisibility(visible = authViewModel.isLoading.value) {
+            CircularProgressIndicator(
+                color = DarkOrange,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+        }
         Spacer(modifier = Modifier.height(20.dp))
         Row {
             Text(
@@ -152,6 +165,6 @@ fun LoginScreen(
 @Composable
 private fun LoginPreview() {
     AppTheme {
-        LoginScreen(navigateToRegister = {})
+        LoginScreen(navigateToRegister = {}, navigateToHome = {})
     }
 }

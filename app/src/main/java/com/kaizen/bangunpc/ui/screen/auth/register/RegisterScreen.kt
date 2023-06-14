@@ -24,13 +24,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.kaizen.bangunpc.ui.components.GoogleButton
 import com.kaizen.bangunpc.ui.components.ShowHidePasswordTextField
 import com.kaizen.bangunpc.ui.screen.auth.AuthViewModel
 import com.kaizen.bangunpc.ui.theme.AppTheme
@@ -100,6 +98,7 @@ fun RegisterScreen(
                     .fillMaxWidth(),
                 label = { Text(text = "Nama Lengkap") },
                 value = fullname,
+                maxLines = 1,
                 shape = RoundedCornerShape(percent = 20),
                 onValueChange = { fullname = it }
             )
@@ -108,6 +107,7 @@ fun RegisterScreen(
                     .fillMaxWidth(),
                 label = { Text(text = "Email") },
                 value = email,
+                maxLines = 1,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 shape = RoundedCornerShape(percent = 20),
                 onValueChange = { email = it }
@@ -125,7 +125,7 @@ fun RegisterScreen(
 
         Spacer(modifier = modifier.height(20.dp))
         Button(
-            onClick = { authViewModel.loginWithEmail(email, password, fullname) },
+            onClick = { authViewModel.createUserAccount(email, password, fullname) },
             shape = RoundedCornerShape(8.dp),
             modifier = modifier
                 .fillMaxWidth()
@@ -140,10 +140,10 @@ fun RegisterScreen(
                 )
             )
         }
-        Spacer(modifier = modifier.height(20.dp))
-        GoogleButton(
-            onClick = authViewModel::loginWithGoogle
-        )
+//        Spacer(modifier = modifier.height(20.dp))
+//        GoogleButton(
+//            onClick = authViewModel::loginWithGoogle
+//        )
         Spacer(modifier = modifier.height(20.dp))
         Row {
             Text(
