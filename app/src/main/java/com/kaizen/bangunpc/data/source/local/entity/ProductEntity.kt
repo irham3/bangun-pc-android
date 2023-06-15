@@ -22,6 +22,9 @@ data class ProductEntity (
     @ColumnInfo(name = "description")
     var description: String = "",
 
+    @ColumnInfo(name = "quantity")
+    var quantity: Int = 0,
+
     @ColumnInfo(name = "image")
     var image: String = "",
 

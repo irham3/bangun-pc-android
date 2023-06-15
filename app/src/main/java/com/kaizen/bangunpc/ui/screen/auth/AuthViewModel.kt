@@ -27,6 +27,7 @@ class AuthViewModel @Inject constructor(
             if(repository.createUserAccount(email, password, fullname)) {
                 _isLoading.value = false
                 _isAuth.value = true
+                loginWithEmail(email,password)
                 Log.d("Auth", "Success")
             } else{
                 _isAuth.value = false

@@ -41,6 +41,11 @@ fun WishlistScreen(
                 UiState.Loading -> {wishlistViewModel.getWishlist()}
                 is UiState.Error -> {}
                 is UiState.Success -> {
+                    if(wishlistViewModel.isEmpty.value){
+                        Column(modifier = Modifier.fillMaxSize()) {
+                            
+                        }
+                    }
                     ProductVerticalList(
                         listProduct = uiState.data,
                         navigateToDetailProduct = navigateToDetailProduct

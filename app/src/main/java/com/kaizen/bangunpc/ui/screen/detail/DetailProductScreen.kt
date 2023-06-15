@@ -167,6 +167,13 @@ private fun DetailHeader(
                         fontStyle = FontStyle.Normal
                     )
                 )
+                Text(
+                    color = Color.Black,
+                    text = "Stok: "+detailProduct.quantity.toString(),
+                    style = MaterialTheme.typography.body1.copy(
+                        fontStyle = FontStyle.Normal
+                    )
+                )
             }
             FavoriteIcon(setFavorite = setFavorite, isFavorite = isFavorite)
         }

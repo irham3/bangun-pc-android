@@ -62,7 +62,7 @@ fun ListItem(
                     fontWeight = FontWeight.Bold,
                 )
                 Text(
-                    color = Orange,
+                    color = Color.Black,
                     text = price.toRupiahFormat(),
                     style = MaterialTheme.typography.body1.copy(
                         fontStyle = FontStyle.Italic

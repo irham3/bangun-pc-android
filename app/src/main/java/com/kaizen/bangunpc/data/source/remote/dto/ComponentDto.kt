@@ -13,6 +13,7 @@ data class Gxcomp(
     val image: String,
     val price: Int,
     val name: String,
+    val quantity: Int,
     val description: String,
     val id: Int,
     val url: String

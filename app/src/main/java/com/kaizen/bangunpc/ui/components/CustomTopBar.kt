@@ -33,6 +33,7 @@ import com.kaizen.bangunpc.ui.theme.Orange
 fun CustomTopBar(
     modifier: Modifier = Modifier,
     height: Dp = 60.dp,
+    padding: Dp = 12.dp,
     content: @Composable (() -> Unit)? = null
 ) {
     Box(modifier = modifier.shadow(8.dp)) {
@@ -42,7 +43,7 @@ fun CustomTopBar(
                 .fillMaxWidth()
                 .background(color = Orange)
                 .height(height)
-                .padding(12.dp)
+                .padding(padding)
         ){
             if (content != null) content()
         }

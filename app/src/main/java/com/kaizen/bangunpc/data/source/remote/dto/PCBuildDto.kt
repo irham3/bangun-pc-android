@@ -9,6 +9,7 @@ data class PCBuildDto(
     val url: String,
     val name: String,
     val image: String,
+    val quantity: Int,
     val description: String,
     val category: Int,
 )
