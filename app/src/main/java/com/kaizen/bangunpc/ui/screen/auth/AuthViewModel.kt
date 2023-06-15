@@ -6,9 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kaizen.bangunpc.data.source.repository.impl.UserRepositoryImpl
-import com.kaizen.bangunpc.ui.common.UiState
+import com.kaizen.bangunpc.ui.common.MessageState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.jan.supabase.gotrue.user.UserSession
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -22,6 +21,9 @@ class AuthViewModel @Inject constructor(
     val isLoading: State<Boolean>
         get() = _isLoading
 
+    private val _toastMessage: MutableStateFlow<MessageState<String>> = MutableStateFlow(MessageState.Loading)
+    val toastMessageState = _toastMessage.asStateFlow()
+
     private val _isAuth = mutableStateOf(false)
     val isAuth: State<Boolean>
         get() = _isAuth
@@ -30,7 +32,9 @@ class AuthViewModel @Inject constructor(
     val userSession = _userSession.asStateFlow()
 
     init {
-        loadUserSession()
+        viewModelScope.launch {
+            loadUserSession()
+        }
     }
 
     fun createUserAccount(email: String, password: String, fullname: String) {
@@ -48,42 +52,43 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    private fun loadUserSession() {
-        repository.getCurrentSession().let {
-            _userSession.value = AuthUiState.UserSession(it)
-        }
+    private suspend fun loadUserSession() {
+        repository.getCurrentSession()
+            .collect{
+                _userSession.value = AuthUiState.UserSession(it)
+            }
     }
 
 
     fun loginWithEmail(email: String, password: String) {
         viewModelScope.launch {
             _isLoading.value = true
+            if (email.isEmpty()) _toastMessage.value = MessageState.Warning("Email masih kosong")
+            if (password.isEmpty()) _toastMessage.value = MessageState.Warning("Password masih kosong")
             if(repository.loginWithEmail(email, password)) {
                 _isLoading.value = false
                 _isAuth.value = true
-                Log.d("Auth", "Success")
+                _toastMessage.value = MessageState.Success("Berhasil masuk")
             } else{
+                _toastMessage.value = MessageState.Error("Email atau password salah")
                 _isAuth.value = false
                 _isLoading.value = false
             }
         }
     }
 
-    fun loginWithGoogle() {
-        viewModelScope.launch {
-            repository.loginWithGoogle()
-        }
-    }
-
     fun logout() {
-        _isLoading.value = true
         viewModelScope.launch {
+            _isLoading.value = true
+            Log.d("Auth", "isLoading before logout = $isLoading")
             if(repository.logout()) {
                 _isLoading.value = false
                 _isAuth.value = true
+                Log.d("Auth", "isLoading in logout = $isLoading")
             } else{
                 _isAuth.value = false
                 _isLoading.value = false
+                Log.d("Auth", "isLoading after logout = $isLoading")
             }
         }
     }

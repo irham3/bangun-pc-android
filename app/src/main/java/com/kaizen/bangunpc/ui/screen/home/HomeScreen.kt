@@ -85,7 +85,7 @@ fun HomeScreen(
                         modifier = Modifier
                             .clip(CircleShape)
                             .shadow(20.dp, CircleShape)
-                            .size(47.dp)
+                            .size(40.dp)
                             .clickable {
                                 navigateToAbout()
                             }

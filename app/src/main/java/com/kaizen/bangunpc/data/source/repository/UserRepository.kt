@@ -1,9 +1,10 @@
 package com.kaizen.bangunpc.data.source.repository
 
 import io.github.jan.supabase.gotrue.user.UserSession
+import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
-    fun getCurrentSession() : UserSession?
+    fun getCurrentSession() : Flow<UserSession?>
     suspend fun createUserAccount(email: String, password: String, fullname: String) : Boolean
 
     suspend fun loginWithEmail(email: String, password: String) : Boolean

@@ -6,10 +6,11 @@ import com.kaizen.bangunpc.data.source.remote.dto.UserDto
 import com.kaizen.bangunpc.data.source.repository.UserRepository
 import com.kaizen.bangunpc.utils.SupabaseTables
 import io.github.jan.supabase.gotrue.GoTrue
-import io.github.jan.supabase.gotrue.SessionStatus
 import io.github.jan.supabase.gotrue.providers.builtin.Email
 import io.github.jan.supabase.gotrue.user.UserSession
 import io.github.jan.supabase.postgrest.Postgrest
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,8 +20,9 @@ class UserRepositoryImpl @Inject constructor(
     private val auth: GoTrue,
     private val postgrest: Postgrest
 ) : UserRepository {
-    override fun getCurrentSession(): UserSession? =
-        userRDS.getCurrentSession()
+    override fun getCurrentSession() : Flow<UserSession?> = flow {
+        emit(auth.currentSessionOrNull())
+    }
 
     override suspend fun createUserAccount(email: String, password: String, fullname: String): Boolean {
         return try {

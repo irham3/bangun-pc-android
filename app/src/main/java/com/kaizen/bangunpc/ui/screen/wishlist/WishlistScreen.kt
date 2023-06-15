@@ -53,8 +53,6 @@ fun WishlistScreen(
                         )
                     }
                 }
-
-                else -> {}
             }
         }
     }

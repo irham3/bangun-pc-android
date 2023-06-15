@@ -3,15 +3,13 @@ package com.kaizen.bangunpc
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kaizen.bangunpc.data.source.repository.impl.ProductRepositoryImpl
-import com.kaizen.bangunpc.data.source.repository.impl.UserRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val productRepositoryImpl: ProductRepositoryImpl,
-    private val userRepositoryImpl: UserRepositoryImpl
+    private val productRepositoryImpl: ProductRepositoryImpl
     ) : ViewModel() {
 
     fun provideProductsData() {
@@ -27,8 +25,5 @@ class MainViewModel @Inject constructor(
             launch { productRepositoryImpl.getAllStorages().collect{} }
         }
     }
-
-    fun getCurrentUserSession() =
-        userRepositoryImpl.getCurrentSession()
 
 }

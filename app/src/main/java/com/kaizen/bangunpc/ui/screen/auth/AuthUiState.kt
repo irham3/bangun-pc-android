@@ -1,8 +1,5 @@
 package com.kaizen.bangunpc.ui.screen.auth
 
-import com.kaizen.bangunpc.data.source.local.entity.ProductEntity
-import io.github.jan.supabase.gotrue.user.UserSession
-
 interface AuthUiState {
     val error: String
 

@@ -89,7 +89,8 @@ fun BangunPCApp(
                     },
                     navigateToHome = {
                         navController.navigate(Screen.Home.route)
-                    }
+                    },
+                    navigateBack = {navController.navigateUp()}
                 )
             }
             composable(Screen.Register.route) {
