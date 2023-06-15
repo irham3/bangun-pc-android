@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.kaizen.bangunpc.ui.theme.AppTheme
-import com.kaizen.bangunpc.ui.theme.Orange
 import com.kaizen.bangunpc.utils.toRupiahFormat
 
 @Composable
@@ -63,7 +62,7 @@ fun ListItem(
                 )
                 Text(
                     color = Color.Black,
-                    text = price.toRupiahFormat(),
+                    text = price.toRupiahFormat().dropLast(3),
                     style = MaterialTheme.typography.body1.copy(
                         fontStyle = FontStyle.Italic
                     )

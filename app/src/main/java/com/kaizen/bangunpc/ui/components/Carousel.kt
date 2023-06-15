@@ -23,6 +23,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -118,7 +119,10 @@ val carouselItems = listOf(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun GXCompCarousel() {
+fun GXCompCarousel(
+    isShimmer: Boolean,
+    onAsyncImageSuccess: () -> Unit
+) {
     val ctx = LocalContext.current
     Card(
         modifier = Modifier.padding(16.dp),
@@ -131,7 +135,9 @@ fun GXCompCarousel() {
                     model = carouselItems[index].first,
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
+                    onSuccess = { onAsyncImageSuccess() },
                     modifier = Modifier
+                        .background(shimmerBrush(targetValue = 1300f, showShimmer = isShimmer))
                         .height(160.dp)
                         .clickable {
                             val urlIntent = Intent(
@@ -139,7 +145,7 @@ fun GXCompCarousel() {
                                 Uri.parse(carouselItems[index].second)
                             )
                             ctx.startActivity(urlIntent)
-                        }
+                        },
                 )
             }
         )
@@ -150,6 +156,10 @@ fun GXCompCarousel() {
 @Composable
 fun CarouselPreview() {
     AppTheme {
-        GXCompCarousel()
+        val showShimmer = remember { mutableStateOf(true) }
+        GXCompCarousel(
+            isShimmer = showShimmer.value,
+            onAsyncImageSuccess = { showShimmer.value = false }
+        )
     }
 }

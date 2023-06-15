@@ -1,5 +1,6 @@
 package com.kaizen.bangunpc.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -10,6 +11,8 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -29,6 +32,7 @@ fun GridItem(
     name: String,
     price: Int,
 ) {
+    val showShimmer = remember { mutableStateOf(true) }
     Card(
         modifier = modifier
             .shadow(8.dp)
@@ -40,8 +44,10 @@ fun GridItem(
                 model = image,
                 contentDescription = name,
                 contentScale = ContentScale.Crop,
+                onSuccess = {showShimmer.value = false},
                 modifier = Modifier
                     .fillMaxWidth()
+                    .background(shimmerBrush(targetValue = 1300f, showShimmer = showShimmer.value))
                     .height(80.dp)
                     .clip(RoundedCornerShape(8.dp))
             )
@@ -57,7 +63,9 @@ fun GridItem(
                 )
                 Text(
                     color = Color.Black,
-                    text = price.toRupiahFormat(),
+                    text = price.toRupiahFormat().dropLast(3),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.subtitle2,
                 )
             }

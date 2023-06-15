@@ -19,6 +19,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -38,6 +40,7 @@ import com.kaizen.bangunpc.R
 import com.kaizen.bangunpc.ui.components.CircleButton
 import com.kaizen.bangunpc.ui.components.CustomTopBar
 import com.kaizen.bangunpc.ui.components.ScreenTitleText
+import com.kaizen.bangunpc.ui.components.shimmerBrush
 import com.kaizen.bangunpc.ui.theme.AppTheme
 import com.kaizen.bangunpc.ui.theme.Orange
 
@@ -46,6 +49,7 @@ fun ServiceScreen(
     modifier: Modifier = Modifier
 ) {
     val systemUiController = rememberSystemUiController()
+    val isShimmer = remember { mutableStateOf(true) }
     SideEffect {
         systemUiController.setStatusBarColor(
             color = Orange,
@@ -64,8 +68,10 @@ fun ServiceScreen(
             AsyncImage(
                 model = "https://images.tokopedia.net/img/cache/900/VqbcmM/2022/11/18/71c0fe32-b704-4730-b3a1-e5e46256b5bf.png",
                 contentDescription = "GXComp ",
+                onSuccess = {isShimmer.value = false},
                 contentScale = ContentScale.Crop,
                 modifier = modifier
+                    .background(shimmerBrush(showShimmer = isShimmer.value, targetValue = 1300F))
                     .height(160.dp)
                     .clip(RoundedCornerShape(16.dp))
             )

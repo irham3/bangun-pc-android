@@ -36,6 +36,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -57,6 +60,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kaizen.bangunpc.R
 import com.kaizen.bangunpc.data.source.local.entity.ProductEntity
 import com.kaizen.bangunpc.ui.components.CircleButton
+import com.kaizen.bangunpc.ui.components.shimmerBrush
 import com.kaizen.bangunpc.ui.theme.Green
 import com.kaizen.bangunpc.ui.theme.Orange
 import com.kaizen.bangunpc.utils.toRupiahFormat
@@ -78,6 +82,7 @@ fun DetailProductScreen(
     }
     val detailState by viewModel.detailState.collectAsState()
     val isFavorite by viewModel.isFavorite
+    var isShimmer by remember { mutableStateOf(true) }
 
     viewModel.getDetailProduct(productId)
     Scaffold(
@@ -91,7 +96,9 @@ fun DetailProductScreen(
                 detailProduct = detailState.data,
                 setFavorite = viewModel::setFavorite,
                 navigateBack = navigateBack,
-                isFavorite = isFavorite
+                isFavorite = isFavorite,
+                isShimmer = isShimmer,
+                onAsyncImageSuccess = {isShimmer = false}
             )
             DetailDescription(detailProduct = detailState.data)
         }
@@ -105,15 +112,19 @@ private fun DetailHeader(
     navigateBack: () -> Unit,
     detailProduct: ProductEntity,
     setFavorite: () -> Unit,
-    isFavorite: Boolean
+    isFavorite: Boolean,
+    isShimmer: Boolean,
+    onAsyncImageSuccess: () -> Unit
 ) {
-    Box(modifier = modifier){
+    Box(modifier = modifier) {
         AsyncImage(
             model = detailProduct.image,
             contentDescription = detailProduct.name,
+            onSuccess = { onAsyncImageSuccess() },
             contentScale = ContentScale.Crop,
             modifier = modifier
                 .fillMaxWidth()
+                .background(shimmerBrush(targetValue = 1300f, showShimmer = isShimmer))
                 .height(200.dp)
                 .clip(RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp))
         )
