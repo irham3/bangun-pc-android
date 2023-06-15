@@ -71,6 +71,12 @@ fun LoginScreen(
         }
     }
 
+    LaunchedEffect(key1 = authViewModel.isAuth.value) {
+        if(authViewModel.isAuth.value) {
+            navigateToHome()
+        }
+    }
+
     Column(
         modifier = modifier
             .verticalScroll(scrollState)
@@ -184,11 +190,6 @@ fun LoginScreen(
                     fontFamily = FontFamily.Default
                 )
             )
-        }
-    }
-    LaunchedEffect(key1 = authViewModel.isAuth.value) {
-        if(authViewModel.isAuth.value) {
-            navigateToHome()
         }
     }
 }

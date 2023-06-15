@@ -1,6 +1,5 @@
 package com.kaizen.bangunpc.ui.screen.auth
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -32,31 +31,47 @@ class AuthViewModel @Inject constructor(
     val userSession = _userSession.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            loadUserSession()
-        }
+        loadUserSession()
     }
 
-    fun createUserAccount(email: String, password: String, fullname: String) {
+    fun createUserAccount(email: String, password: String, confirmPassword: String, fullname: String) {
         viewModelScope.launch {
             _isLoading.value = true
-            if(repository.createUserAccount(email, password, fullname)) {
+            if (email.isEmpty()){
+                _isLoading.value = false
+                _toastMessage.value = MessageState.Warning("Email masih kosong")
+            }
+            else if (password.isEmpty()){
+                _isLoading.value = false
+                _toastMessage.value = MessageState.Warning("Password masih kosong")
+            }
+            else if (password != confirmPassword) {
+                _isLoading.value = false
+                _toastMessage.value = MessageState.Warning("Konfirmasi Password Salah")
+            }
+            else if (password.length < 6){
+                _isLoading.value = false
+                _toastMessage.value = MessageState.Warning("Password minimal 6 karakter")
+            }
+            else if(repository.createUserAccount(email, password, fullname)) {
                 _isLoading.value = false
                 _isAuth.value = true
                 loginWithEmail(email,password)
-                Log.d("Auth", "Success")
             } else{
+                _toastMessage.value = MessageState.Error("Gagal membuat akun")
                 _isAuth.value = false
                 _isLoading.value = false
             }
         }
     }
 
-    private suspend fun loadUserSession() {
-        repository.getCurrentSession()
-            .collect{
-                _userSession.value = AuthUiState.UserSession(it)
-            }
+    private fun loadUserSession() {
+        viewModelScope.launch{
+            repository.getCurrentSession()
+                .collect{
+                    _userSession.value = AuthUiState.UserSession(it)
+                }
+        }
     }
 
 
@@ -73,22 +88,6 @@ class AuthViewModel @Inject constructor(
                 _toastMessage.value = MessageState.Error("Email atau password salah")
                 _isAuth.value = false
                 _isLoading.value = false
-            }
-        }
-    }
-
-    fun logout() {
-        viewModelScope.launch {
-            _isLoading.value = true
-            Log.d("Auth", "isLoading before logout = $isLoading")
-            if(repository.logout()) {
-                _isLoading.value = false
-                _isAuth.value = true
-                Log.d("Auth", "isLoading in logout = $isLoading")
-            } else{
-                _isAuth.value = false
-                _isLoading.value = false
-                Log.d("Auth", "isLoading after logout = $isLoading")
             }
         }
     }

@@ -1,11 +1,13 @@
 package com.kaizen.bangunpc.ui.screen.profile
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -17,7 +19,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
@@ -49,25 +50,28 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kaizen.bangunpc.R
 import com.kaizen.bangunpc.ui.components.CustomTopBar
 import com.kaizen.bangunpc.ui.components.ScreenTitleText
-import com.kaizen.bangunpc.ui.screen.auth.AuthViewModel
 import com.kaizen.bangunpc.ui.theme.AppTheme
 import com.kaizen.bangunpc.ui.theme.Orange
+import com.talhafaki.composablesweettoast.util.SweetToastUtil
 
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
     navigateToWelcome: () -> Unit,
-    authViewModel: AuthViewModel = hiltViewModel()
+    profileViewModel: ProfileViewModel = hiltViewModel()
 ) {
-    val userSessionState by authViewModel.userSession.collectAsState()
+    val userSessionState by profileViewModel.userSession.collectAsState()
+    val userDataState by profileViewModel.userData.collectAsState()
     val systemUiController = rememberSystemUiController()
+
     SideEffect {
         systemUiController.setStatusBarColor(
             color = Orange,
             darkIcons = false
         )
     }
+
     Column {
         CustomTopBar(
             content = {
@@ -92,18 +96,29 @@ fun ProfileScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
 
         ){
+            if (!profileViewModel.isAuth.value) {
+                SweetToastUtil.SweetInfo(
+                    message = "Akun Anda telah keluar",
+                    duration = Toast.LENGTH_SHORT,
+                    padding = PaddingValues(bottom = 16.dp),
+                    contentAlignment = Alignment.BottomCenter
+                )
+                LaunchedEffect(key1 = !profileViewModel.isAuth.value) {
+                    navigateToWelcome()
+                }
+            }
             ImageProfile()
             Text(
-                text = stringResource(R.string.author_name),
+                text = userDataState.data?.fullname.toString(),
                 style = MaterialTheme.typography.h5.copy(
                     fontWeight = FontWeight.ExtraBold
                 )
             )
-            Text(text = stringResource(R.string.author_email))
+            Text(text = userSessionState.data?.user?.email.toString())
             Spacer(modifier = modifier.height(20.dp))
-            if(userSessionState.data != null) {
+            if(profileViewModel.isAuth.value) {
                 Button(
-                    onClick = { authViewModel.logout() },
+                    onClick = { profileViewModel.logout() },
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = Color.Red,
                         contentColor = Color.White
@@ -113,7 +128,7 @@ fun ProfileScreen(
                         .fillMaxWidth()
                         .height(50.dp)
                 ) {
-                    if(authViewModel.isLoading.value) {
+                    if(profileViewModel.isLoading.value) {
                         CircularProgressIndicator(color = MaterialTheme.colors.onPrimary)
                     } else {
                         Text(
@@ -132,11 +147,6 @@ fun ProfileScreen(
                 verticalArrangement = Arrangement.Bottom
             ) {
             }
-        }
-    }
-    LaunchedEffect(key1 = userSessionState.data) {
-        if(userSessionState.data == null) {
-            navigateToWelcome()
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.kaizen.bangunpc.ui.screen.auth.register
 
+import android.widget.Toast
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,18 +11,23 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -31,17 +38,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.kaizen.bangunpc.R
+import com.kaizen.bangunpc.ui.common.MessageState
 import com.kaizen.bangunpc.ui.components.ShowHidePasswordTextField
 import com.kaizen.bangunpc.ui.screen.auth.AuthViewModel
 import com.kaizen.bangunpc.ui.theme.AppTheme
 import com.kaizen.bangunpc.ui.theme.DarkOrange
 import com.kaizen.bangunpc.ui.theme.Gray
 import com.kaizen.bangunpc.utils.rememberImeState
+import com.talhafaki.composablesweettoast.util.SweetToastUtil
 
 @Composable
 fun RegisterScreen(
     modifier: Modifier = Modifier,
     authViewModel: AuthViewModel = hiltViewModel(),
+    navigateBack: () -> Unit,
+    navigateToHome: () -> Unit,
     navigateToLogin: (Int) -> Unit
 ) {
     val systemUiController = rememberSystemUiController()
@@ -54,6 +66,7 @@ fun RegisterScreen(
     val imeState = rememberImeState()
     val scrollState = rememberScrollState()
 
+    val toastMessage by authViewModel.toastMessageState.collectAsState(initial = MessageState.Loading)
     var fullname by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -64,16 +77,60 @@ fun RegisterScreen(
             scrollState.animateScrollTo(scrollState.maxValue, animationSpec = tween(250))
         }
     }
+
+    LaunchedEffect(key1 = authViewModel.isAuth.value) {
+        if(authViewModel.isAuth.value) {
+            navigateToHome()
+        }
+    }
+
     Column(
         modifier = modifier
             .verticalScroll(scrollState)
             .padding(start = 16.dp, end = 16.dp, top = 72.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
+        toastMessage.let {messageState ->
+            when(messageState) {
+                MessageState.Loading -> {}
+                is MessageState.Warning -> {
+                    SweetToastUtil.SweetWarning(
+                        message = messageState.warningMessage,
+                        duration = Toast.LENGTH_SHORT,
+                        padding = PaddingValues(bottom = 16.dp),
+                        contentAlignment = Alignment.BottomCenter
+                    )
+                }
+                is MessageState.Error -> {
+                    SweetToastUtil.SweetError(
+                        message = messageState.errorMessage,
+                        duration = Toast.LENGTH_SHORT,
+                        padding = PaddingValues(bottom = 16.dp),
+                        contentAlignment = Alignment.BottomCenter
+                    )
+                }
+                is MessageState.Success -> {
+                    SweetToastUtil.SweetSuccess(
+                        message = messageState.successMessage,
+                        duration = Toast.LENGTH_SHORT,
+                        padding = PaddingValues(bottom = 16.dp),
+                        contentAlignment = Alignment.BottomCenter
+                    )
+                }
+            }
+        }
         Column(
             modifier = modifier.fillMaxWidth()
         ) {
+            Spacer(modifier = modifier.height(20.dp))
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = stringResource(R.string.back),
+                modifier = Modifier
+                    .size(36.dp)
+                    .clickable { navigateBack() }
+            )
+            Spacer(modifier = modifier.height(20.dp))
             Text(
                 text = "Daftar",
                 fontWeight = FontWeight.Bold,
@@ -127,7 +184,7 @@ fun RegisterScreen(
 
         Spacer(modifier = modifier.height(20.dp))
         Button(
-            onClick = { authViewModel.createUserAccount(email, password, fullname) },
+            onClick = { authViewModel.createUserAccount(email, password, confirmPassword, fullname) },
             shape = RoundedCornerShape(8.dp),
             modifier = modifier
                 .fillMaxWidth()
@@ -180,6 +237,6 @@ fun RegisterScreen(
 @Composable
 private fun RegisterPreview() {
     AppTheme {
-        RegisterScreen(navigateToLogin = {})
+        RegisterScreen(navigateToLogin = {}, navigateBack = {}, navigateToHome = {})
     }
 }

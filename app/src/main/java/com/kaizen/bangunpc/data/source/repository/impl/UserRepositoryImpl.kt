@@ -1,6 +1,5 @@
 package com.kaizen.bangunpc.data.source.repository.impl
 
-import android.util.Log
 import com.kaizen.bangunpc.data.source.remote.dataresource.UserRDS
 import com.kaizen.bangunpc.data.source.remote.dto.UserDto
 import com.kaizen.bangunpc.data.source.repository.UserRepository
@@ -9,8 +8,10 @@ import io.github.jan.supabase.gotrue.GoTrue
 import io.github.jan.supabase.gotrue.providers.builtin.Email
 import io.github.jan.supabase.gotrue.user.UserSession
 import io.github.jan.supabase.postgrest.Postgrest
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,9 +21,20 @@ class UserRepositoryImpl @Inject constructor(
     private val auth: GoTrue,
     private val postgrest: Postgrest
 ) : UserRepository {
-    override fun getCurrentSession() : Flow<UserSession?> = flow {
-        emit(auth.currentSessionOrNull())
-    }
+    override fun getCurrentSession() : Flow<UserSession?> =
+        flow {
+            emit(auth.currentSessionOrNull())
+        }
+
+    override suspend fun getUserData(userSession: UserSession) : Flow<UserDto> =
+        flow {
+            val result = postgrest[SupabaseTables.users]
+                .select {
+                    eq("email", userSession.user?.email.toString())
+                }
+            val userData = result.decodeSingle<UserDto>()
+            emit(userData)
+        }.flowOn(Dispatchers.IO)
 
     override suspend fun createUserAccount(email: String, password: String, fullname: String): Boolean {
         return try {
@@ -37,7 +49,6 @@ class UserRepositoryImpl @Inject constructor(
             postgrest[SupabaseTables.users].insert(value = userDto, upsert = true)
             true
         } catch (e: Exception) {
-            Log.e("Auth", e.toString())
             false
         }
     }
@@ -62,10 +73,8 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun logout(): Boolean {
         return try {
             auth.invalidateSession()
-            Log.d("Auth", auth.currentSessionOrNull().toString())
             true
         } catch (e: Exception) {
-            Log.e("Auth", auth.currentSessionOrNull().toString())
             false
         }
     }

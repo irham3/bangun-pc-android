@@ -90,13 +90,21 @@ fun BangunPCApp(
                     navigateToHome = {
                         navController.navigate(Screen.Home.route)
                     },
-                    navigateBack = {navController.navigateUp()}
+                    navigateBack = {
+                        navController.navigateUp()
+                    }
                 )
             }
             composable(Screen.Register.route) {
                 RegisterScreen(
                     navigateToLogin = {
                         navController.navigate(Screen.Login.route)
+                    },
+                     navigateBack = {
+                         navController.navigateUp()
+                     },
+                    navigateToHome = {
+                        navController.navigate(Screen.Home.route)
                     }
                 )
             }
@@ -129,7 +137,9 @@ fun BangunPCApp(
             }
             composable(Screen.Profile.route) {
                 ProfileScreen(
-                    navigateBack = {navController.navigateUp()},
+                    navigateBack = {
+                        navController.navigateUp()
+                    },
                     navigateToWelcome = {
                         navController.navigate(Screen.Welcome.route)
                     }
