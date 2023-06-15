@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -27,7 +28,10 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -53,8 +57,10 @@ import com.kaizen.bangunpc.ui.theme.Orange
 fun ProfileScreen(
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
+    navigateToWelcome: () -> Unit,
     authViewModel: AuthViewModel = hiltViewModel()
 ) {
+    val userSessionState by authViewModel.userSession.collectAsState()
     val systemUiController = rememberSystemUiController()
     SideEffect {
         systemUiController.setStatusBarColor(
@@ -95,31 +101,42 @@ fun ProfileScreen(
             )
             Text(text = stringResource(R.string.author_email))
             Spacer(modifier = modifier.height(20.dp))
-            Button(
-                onClick = { authViewModel.logout() },
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.Red,
-                    contentColor = Color.White
-                ),
-                shape = RoundedCornerShape(8.dp),
-                modifier = modifier
-                    .fillMaxWidth()
-                    .height(50.dp)
-            ) {
-                Text(
-                    text = "Keluar Akun",
-                    fontWeight = FontWeight.Bold,
-                    style = TextStyle(
-                        fontSize = 20.sp,
-                        fontFamily = FontFamily.SansSerif
-                    )
-                )
+            if(userSessionState.data != null) {
+                Button(
+                    onClick = { authViewModel.logout() },
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = Color.Red,
+                        contentColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(8.dp),
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .height(50.dp)
+                ) {
+                    if(authViewModel.isLoading.value) {
+                        CircularProgressIndicator(color = MaterialTheme.colors.onPrimary)
+                    } else {
+                        Text(
+                            text = "Keluar Akun",
+                            fontWeight = FontWeight.Bold,
+                            style = TextStyle(
+                                fontSize = 20.sp,
+                                fontFamily = FontFamily.SansSerif
+                            )
+                        )
+                    }
+                }
             }
             Column(
                 modifier = modifier.fillMaxHeight(),
                 verticalArrangement = Arrangement.Bottom
             ) {
             }
+        }
+    }
+    LaunchedEffect(key1 = userSessionState.data) {
+        if(userSessionState.data == null) {
+            navigateToWelcome()
         }
     }
 }
@@ -151,7 +168,7 @@ fun ImageProfile(modifier: Modifier = Modifier) {
 fun ProfileScreenPreview() {
     AppTheme {
         Scaffold {
-            ProfileScreen(navigateBack = {})
+            ProfileScreen(navigateBack = {}, navigateToWelcome = {})
         }
     }
 }

@@ -3,6 +3,7 @@ package com.kaizen.bangunpc.ui
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
@@ -36,6 +37,7 @@ fun BangunPCApp(
     authViewModel: AuthViewModel = hiltViewModel(),
     navController: NavHostController = rememberNavController()
 ) {
+    val userSessionState by authViewModel.userSession.collectAsState()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val bottomBarRoutes = listOf(
@@ -52,7 +54,7 @@ fun BangunPCApp(
         },
         modifier = modifier
     ) { innerPadding ->
-        val startDestination = if(authViewModel.getCurrentUserSession() != null)
+        val startDestination = if(userSessionState.data != null)
             Screen.Home.route else Screen.Welcome.route
         NavHost(
             navController = navController,
@@ -125,7 +127,12 @@ fun BangunPCApp(
                 ServiceScreen()
             }
             composable(Screen.Profile.route) {
-                ProfileScreen(navigateBack = {navController.navigateUp()})
+                ProfileScreen(
+                    navigateBack = {navController.navigateUp()},
+                    navigateToWelcome = {
+                        navController.navigate(Screen.Welcome.route)
+                    }
+                )
             }
             composable(
                 route = Screen.DetailProduct.route,

@@ -6,7 +6,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kaizen.bangunpc.data.source.repository.impl.UserRepositoryImpl
+import com.kaizen.bangunpc.ui.common.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.github.jan.supabase.gotrue.user.UserSession
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,6 +25,14 @@ class AuthViewModel @Inject constructor(
     private val _isAuth = mutableStateOf(false)
     val isAuth: State<Boolean>
         get() = _isAuth
+
+    private val _userSession = MutableStateFlow(AuthUiState.UserSession())
+    val userSession = _userSession.asStateFlow()
+
+    init {
+        loadUserSession()
+    }
+
     fun createUserAccount(email: String, password: String, fullname: String) {
         viewModelScope.launch {
             _isLoading.value = true
@@ -36,6 +48,13 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+    private fun loadUserSession() {
+        repository.getCurrentSession().let {
+            _userSession.value = AuthUiState.UserSession(it)
+        }
+    }
+
+
     fun loginWithEmail(email: String, password: String) {
         viewModelScope.launch {
             _isLoading.value = true
@@ -47,8 +66,6 @@ class AuthViewModel @Inject constructor(
                 _isAuth.value = false
                 _isLoading.value = false
             }
-
-            Log.d("Auth", repository.getCurrentSession().toString())
         }
     }
 
@@ -59,11 +76,15 @@ class AuthViewModel @Inject constructor(
     }
 
     fun logout() {
+        _isLoading.value = true
         viewModelScope.launch {
-            repository.logout()
+            if(repository.logout()) {
+                _isLoading.value = false
+                _isAuth.value = true
+            } else{
+                _isAuth.value = false
+                _isLoading.value = false
+            }
         }
     }
-
-    fun getCurrentUserSession() =
-        repository.getCurrentSession()
 }

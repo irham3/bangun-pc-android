@@ -107,34 +107,29 @@ fun LoginScreen(
         Button(
             onClick = {
                 authViewModel.loginWithEmail(email, password)
-                if (authViewModel.isAuth.value) {
-                    navigateToHome()
-                }
                 },
             shape = RoundedCornerShape(8.dp),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
         ) {
-            Text(
-                text = "Masuk",
-                fontWeight = FontWeight.Medium,
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily.SansSerif
+            if (authViewModel.isLoading.value) {
+                CircularProgressIndicator(color = MaterialTheme.colors.onPrimary)
+            } else {
+                Text(
+                    text = "Masuk",
+                    fontWeight = FontWeight.Medium,
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        fontFamily = FontFamily.SansSerif
+                    )
                 )
-            )
+            }
         }
 //        Spacer(modifier = modifier.height(20.dp))
 //        GoogleButton(
 //            onClick = authViewModel::loginWithGoogle
 //        )
-        AnimatedVisibility(visible = authViewModel.isLoading.value) {
-            CircularProgressIndicator(
-                color = DarkOrange,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-        }
         Spacer(modifier = Modifier.height(20.dp))
         Row {
             Text(
@@ -154,6 +149,11 @@ fun LoginScreen(
                     fontFamily = FontFamily.Default
                 )
             )
+        }
+    }
+    LaunchedEffect(key1 = authViewModel.isAuth.value) {
+        if(authViewModel.isAuth.value) {
+            navigateToHome()
         }
     }
 }

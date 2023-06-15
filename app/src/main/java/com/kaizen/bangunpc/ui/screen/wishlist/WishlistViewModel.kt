@@ -34,7 +34,10 @@ class WishlistViewModel @Inject constructor(
                 }
                 .collect {
                     if (it.isEmpty()) _isEmpty.value  = true
-                    _wishlistState.value = UiState.Success(it)
+                    else {
+                        _isEmpty.value = false
+                        _wishlistState.value = UiState.Success(it)
+                    }
                 }
         }
     }

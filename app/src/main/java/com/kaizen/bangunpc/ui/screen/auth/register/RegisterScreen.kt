@@ -8,6 +8,8 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -131,14 +133,18 @@ fun RegisterScreen(
                 .fillMaxWidth()
                 .height(50.dp)
         ) {
-            Text(
-                text = "Daftar",
-                fontWeight = FontWeight.Bold,
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily.SansSerif
+            if (authViewModel.isLoading.value) {
+                CircularProgressIndicator(color = MaterialTheme.colors.onPrimary)
+            } else {
+                Text(
+                    text = "Daftar",
+                    fontWeight = FontWeight.Bold,
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        fontFamily = FontFamily.SansSerif
+                    )
                 )
-            )
+            }
         }
 //        Spacer(modifier = modifier.height(20.dp))
 //        GoogleButton(
