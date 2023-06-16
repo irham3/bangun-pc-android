@@ -8,7 +8,6 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.ButtonDefaults
@@ -47,6 +46,7 @@ fun CatalogScreen(
     navigateToDetailProduct: (Int) -> Unit = {},
     viewModel: CatalogViewModel = hiltViewModel()
 ) {
+    // Change status bar color
     val systemUiController = rememberSystemUiController()
     SideEffect {
         systemUiController.setStatusBarColor(

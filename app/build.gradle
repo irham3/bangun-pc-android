@@ -109,7 +109,11 @@ dependencies {
     implementation 'androidx.room:room-ktx:2.5.1'
     kapt 'androidx.room:room-compiler:2.5.1'
 
+    // Sweet Toast
     implementation 'com.github.tfaki:ComposableSweetToast:1.0.1'
+
+    // LottieFiles Library
+    implementation "com.airbnb.android:lottie-compose:6.0.1"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

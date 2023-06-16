@@ -1,14 +1,11 @@
 package com.kaizen.bangunpc.ui.screen.wishlist
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -33,8 +30,9 @@ fun WishlistScreen(
         )
     }
     val wishlist by wishlistViewModel.wishlistState.collectAsState(initial = UiState.Loading)
-    Column(modifier = Modifier
-        .fillMaxSize()
+
+    Column(
+        modifier = Modifier.fillMaxSize()
     ) {
         CustomTopBar(
             content = { ScreenTitleText(title = stringResource(R.string.wishlist)) }
@@ -44,27 +42,12 @@ fun WishlistScreen(
                 UiState.Loading -> {wishlistViewModel.getWishlist()}
                 is UiState.Error -> {}
                 is UiState.Success -> {
-                    if(wishlistViewModel.isEmpty.value)
-                        EmptyDataText()
-                    else {
-                        ProductVerticalList(
-                            listProduct = uiState.data,
-                            navigateToDetailProduct = navigateToDetailProduct
-                        )
-                    }
+                    ProductVerticalList(
+                        listProduct = uiState.data,
+                        navigateToDetailProduct = navigateToDetailProduct
+                    )
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun EmptyDataText() {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = "Belum ada wishlist yang ditambahkan")
     }
 }

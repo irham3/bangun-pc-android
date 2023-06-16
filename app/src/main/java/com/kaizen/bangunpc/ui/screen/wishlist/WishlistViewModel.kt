@@ -1,7 +1,5 @@
 package com.kaizen.bangunpc.ui.screen.wishlist
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kaizen.bangunpc.data.source.repository.impl.ProductRepositoryImpl
@@ -22,10 +20,6 @@ class WishlistViewModel @Inject constructor(
         UiState.Loading)
     val wishlistState = _wishlistState.asStateFlow()
 
-    private val _isEmpty = mutableStateOf(false)
-    val isEmpty: State<Boolean>
-        get() = _isEmpty
-
     fun getWishlist() {
         viewModelScope.launch {
             repository.getWishlist()
@@ -33,11 +27,7 @@ class WishlistViewModel @Inject constructor(
                     _wishlistState.value = UiState.Error(it.message.toString())
                 }
                 .collect {
-                    if (it.isEmpty()) _isEmpty.value  = true
-                    else {
-                        _isEmpty.value = false
-                        _wishlistState.value = UiState.Success(it)
-                    }
+                    _wishlistState.value = UiState.Success(it)
                 }
         }
     }
